@@ -1,7 +1,0 @@
-{
-    "parent": "bbb:block/template/frame/diagonal_right",
-    "textures": {
-        "texture": "bbb:block/frame/spruce_sticks",
-        "particle": "block/spruce_planks"
-    }
-}

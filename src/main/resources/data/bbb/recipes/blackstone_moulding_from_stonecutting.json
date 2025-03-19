@@ -1,8 +1,0 @@
-{
-    "type": "minecraft:stonecutting",
-    "ingredient": {
-        "item": "minecraft:blackstone"
-    },
-    "result": "bbb:blackstone_moulding",
-    "count": 1
-}

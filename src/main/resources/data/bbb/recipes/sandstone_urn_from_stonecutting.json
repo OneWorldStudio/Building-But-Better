@@ -1,8 +1,0 @@
-{
-    "type": "minecraft:stonecutting",
-    "ingredient": {
-        "item": "minecraft:sandstone"
-    },
-    "result": "bbb:sandstone_urn",
-    "count": 1
-}

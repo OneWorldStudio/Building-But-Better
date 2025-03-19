@@ -1,7 +1,0 @@
-{
-    "parent": "bbb:block/template/frame/vertical",
-    "textures": {
-        "texture": "bbb:block/frame/mangrove_sticks",
-        "particle": "block/mangrove_planks"
-    }
-}

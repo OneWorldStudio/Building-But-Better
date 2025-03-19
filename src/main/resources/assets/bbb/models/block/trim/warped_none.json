@@ -1,8 +1,0 @@
-{
-    "parent": "minecraft:block/cube_column",
-    "textures": {
-        "end": "bbb:block/sanded_planks/warped",
-        "side": "bbb:block/trim/warped",
-        "particle": "block/warped_planks"
-    }
-}

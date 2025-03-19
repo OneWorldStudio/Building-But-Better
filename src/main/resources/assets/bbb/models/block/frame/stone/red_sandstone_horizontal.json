@@ -1,7 +1,0 @@
-{
-    "parent": "bbb:block/template/frame/stone/horizontal",
-    "textures": {
-        "texture": "bbb:block/frame/stone/red_sandstone",
-        "particle": "block/red_sandstone"
-    }
-}

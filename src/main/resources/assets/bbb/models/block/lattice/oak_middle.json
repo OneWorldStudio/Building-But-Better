@@ -1,8 +1,0 @@
-{
-	"parent": "bbb:block/template/lattice/middle",
-	"texture_size": [32, 32],
-	"textures": {
-		"texture": "bbb:block/lattice/oak",
-		"particle": "block/oak_planks"
-	}
-}

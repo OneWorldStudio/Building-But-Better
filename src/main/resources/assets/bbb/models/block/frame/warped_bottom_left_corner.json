@@ -1,7 +1,0 @@
-{
-    "parent": "bbb:block/template/frame/bottom_left_corner",
-    "textures": {
-        "texture": "bbb:block/frame/warped",
-        "particle": "block/warped_planks"
-    }
-}

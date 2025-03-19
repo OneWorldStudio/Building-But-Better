@@ -1,8 +1,0 @@
-{
-    "parent": "minecraft:block/slab",
-    "textures": {
-        "bottom": "bbb:block/beam/warped_top",
-        "side": "bbb:block/beam/warped",
-        "top": "bbb:block/beam/warped_top"
-    }
-}

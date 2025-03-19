@@ -1,7 +1,0 @@
-{
-    "parent": "minecraft:block/ladder",
-    "textures": {
-        "particle": "bbb:block/ladder/cherry/spruce",
-        "texture": "bbb:block/ladder/cherry/spruce"
-    }
-}
