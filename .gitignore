@@ -6,3 +6,5 @@
 /forge/run/
 /forge/build/
 /forge/.gradle/
+/.gradle/*
+/.idea/*
