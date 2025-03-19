@@ -1,0 +1,7 @@
+{
+    "parent": "bbb:block/template/frame/horizontal",
+    "textures": {
+        "texture": "bbb:block/frame/mangrove_sticks",
+        "particle": "block/mangrove_planks"
+    }
+}

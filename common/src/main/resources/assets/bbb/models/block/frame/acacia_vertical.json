@@ -1,0 +1,7 @@
+{
+    "parent": "bbb:block/template/frame/vertical",
+    "textures": {
+        "texture": "bbb:block/frame/acacia_sticks",
+        "particle": "block/acacia_planks"
+    }
+}

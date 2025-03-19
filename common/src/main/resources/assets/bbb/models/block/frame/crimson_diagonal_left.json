@@ -1,0 +1,7 @@
+{
+    "parent": "bbb:block/template/frame/diagonal_left",
+    "textures": {
+        "texture": "bbb:block/frame/crimson_sticks",
+        "particle": "block/crimson_planks"
+    }
+}

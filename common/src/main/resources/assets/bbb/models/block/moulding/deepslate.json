@@ -1,0 +1,7 @@
+{
+    "parent": "bbb:block/template/moulding",
+    "textures": {
+        "texture": "bbb:block/moulding/deepslate",
+        "particle": "block/polished_deepslate"
+    }
+}

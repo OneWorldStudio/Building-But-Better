@@ -1,0 +1,7 @@
+{
+    "parent": "bbb:block/template/moulding_inner",
+    "textures": {
+        "texture": "bbb:block/moulding/blackstone",
+        "particle": "block/polished_blackstone"
+    }
+}

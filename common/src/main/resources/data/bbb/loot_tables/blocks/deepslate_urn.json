@@ -1,0 +1,38 @@
+{
+    "type": "minecraft:block",
+    "pools": [
+        {
+            "bonus_rolls": 0.0,
+            "conditions": [
+                {
+                    "condition": "minecraft:survives_explosion"
+                }
+            ],
+            "entries": [
+                {
+                    "type": "minecraft:item",
+                    "name": "bbb:deepslate_urn"
+                }
+            ],
+            "rolls": 1.0
+        },
+        {
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "minecraft:item",
+                    "name": "minecraft:dirt",
+                    "conditions": [
+                        {
+                            "condition": "minecraft:block_state_property",
+                            "block": "bbb:deepslate_urn",
+                            "properties": {
+                                "soiled": "true"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

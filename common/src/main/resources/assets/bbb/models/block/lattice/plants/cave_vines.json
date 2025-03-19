@@ -1,0 +1,8 @@
+{
+	"parent": "bbb:block/template/lattice/plant",
+	"texture_size": [32, 32],
+	"textures": {
+		"plant": "block/cave_vines_plant",
+		"particle": "block/cave_vines_plant"
+	}
+}

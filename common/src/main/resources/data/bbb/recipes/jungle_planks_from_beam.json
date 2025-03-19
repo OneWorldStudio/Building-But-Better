@@ -1,0 +1,14 @@
+{
+    "category": "building",
+    "group": "planks",
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+        {
+            "item": "bbb:jungle_beam"
+        }
+    ],
+    "result": {
+        "item": "minecraft:jungle_planks",
+        "count": 2
+    }
+}
