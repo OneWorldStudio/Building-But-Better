@@ -36,7 +36,7 @@ public class BBBLadderBlock extends LadderBlock {
     protected ItemInteractionResult useItemOn(ItemStack itemStack, BlockState blockState, Level level, BlockPos blockPos, Player player, InteractionHand interactionHand, BlockHitResult blockHitResult) {
         if (player.getItemInHand(interactionHand).is(BBBTags.BBBItemTags.HAMMERS)) {
             level.setBlock(blockPos, blockState.cycle(STYLE), 3);
-            level.playSound(null, blockPos, Blocks.SCAFFOLDING.getSoundType(level.getBlockState(blockPos)).getPlaceSound(), player.getSoundSource(), 1.0F, 1.0F);
+            level.playSound(null, blockPos, Blocks.SCAFFOLDING.defaultBlockState().getSoundType().getPlaceSound(), player.getSoundSource(), 1.0F, 1.0F);
             return ItemInteractionResult.SUCCESS;
         }
         return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;

@@ -1,5 +1,5 @@
 modLoader = "javafml"
-loaderVersion = "[47,)"
+loaderVersion = "[4,)"
 #issueTrackerURL = ""
 license = "https://github.com/starfish-studios/Building-But-Better/blob/main/LICENSE"
 
@@ -14,22 +14,25 @@ A mod focused on adding new building blocks with customizability and interaction
 #logoFile = ""
 
 [[dependencies.building_but_better]]
-modId = "forge"
-mandatory = true
-versionRange = "[47,)"
+modId = "neoforge"
+type = "required"
+versionRange = "[21.1,)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.building_but_better]]
 modId = "minecraft"
-mandatory = true
-versionRange = "[1.20.1,)"
+type = "required"
+versionRange = "[1.21.1,)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.building_but_better]]
 modId = "architectury"
-mandatory = true
-versionRange = "[9.2.14,)"
+type = "required"
+versionRange = "[13.0.8,)"
 ordering = "AFTER"
 side = "BOTH"
+
+[[mixins]]
+config = "bbb.mixins.json"

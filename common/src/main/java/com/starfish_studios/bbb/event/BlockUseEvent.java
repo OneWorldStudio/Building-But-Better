@@ -36,10 +36,10 @@ public class BlockUseEvent {
         if (isHammer && isMoulding) {
             if (level.getBlockState(blockPos).getValue(MouldingBlock.DENTIL)) {
                 level.setBlock(blockPos, level.getBlockState(blockPos).setValue(MouldingBlock.DENTIL, false), 3);
-                level.playSound(player, blockPos, level.getBlockState(blockPos).getBlock().getSoundType(level.getBlockState(blockPos)).getBreakSound(), player.getSoundSource(), 1.0F, 1.0F);
+                level.playSound(player, blockPos, level.getBlockState(blockPos).getSoundType().getBreakSound(), player.getSoundSource(), 1.0F, 1.0F);
             } else {
                 level.setBlock(blockPos, level.getBlockState(blockPos).setValue(MouldingBlock.DENTIL, true), 3);
-                level.playSound(player, blockPos, level.getBlockState(blockPos).getBlock().getSoundType(level.getBlockState(blockPos)).getPlaceSound(), player.getSoundSource(), 1.0F, 1.0F);
+                level.playSound(player, blockPos, level.getBlockState(blockPos).getSoundType().getPlaceSound(), player.getSoundSource(), 1.0F, 1.0F);
             }
             return EventResult.interruptTrue();
         }
@@ -70,7 +70,7 @@ public class BlockUseEvent {
                     level.setBlock(blockPos, level.getBlockState(blockPos).setValue(StoneFenceBlock.SIDE_FILL, true), 3);
                 }
             }
-            level.playSound(player, blockPos, level.getBlockState(blockPos).getBlock().getSoundType(level.getBlockState(blockPos)).getPlaceSound(), player.getSoundSource(), 1.0F, 1.0F);
+            level.playSound(player, blockPos, level.getBlockState(blockPos).getSoundType().getPlaceSound(), player.getSoundSource(), 1.0F, 1.0F);
             return EventResult.interruptTrue();
 
         }

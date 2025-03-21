@@ -106,7 +106,7 @@ public class FrameBlock extends Block implements SimpleWaterloggedBlock {
                 blockState = blockState.setValue(FRAME_CENTER, FrameStickDirection.VERTICAL);
             }
             level.setBlock(blockPos, blockState, 3);
-            level.playSound(player, blockPos, Blocks.SCAFFOLDING.getSoundType(level.getBlockState(blockPos)).getPlaceSound(), player.getSoundSource(), 1.0F, 1.0F);
+            level.playSound(player, blockPos, Blocks.SCAFFOLDING.defaultBlockState().getSoundType().getPlaceSound(), player.getSoundSource(), 1.0F, 1.0F);
             return ItemInteractionResult.SUCCESS;
             // endregion
         } else return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
@@ -117,7 +117,7 @@ public class FrameBlock extends Block implements SimpleWaterloggedBlock {
         if (!level.isClientSide) {
             if (blockState.getValue(FRAME_CENTER) != FrameStickDirection.NONE) {
                 level.setBlock(blockPos, blockState.setValue(FRAME_CENTER, FrameStickDirection.NONE), 3);
-                level.playSound(null, blockPos, Blocks.SCAFFOLDING.getSoundType(level.getBlockState(blockPos)).getBreakSound(), player.getSoundSource(), 1.0F, 1.0F);
+                level.playSound(null, blockPos, Blocks.SCAFFOLDING.defaultBlockState().getSoundType().getBreakSound(), player.getSoundSource(), 1.0F, 1.0F);
             }
         }
     }

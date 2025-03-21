@@ -94,7 +94,7 @@ public class BBBModule extends SimpleModule {
         
         beams = SimpleEntrySet.builder(WoodType.class, "beam",
                         getModBlock("oak_beam"), () -> WoodTypeRegistry.OAK_TYPE,
-                        w -> new RotatedPillarBlock(BlockBehaviour.Properties.copy(BBBBlocks.BEAM.get(BBBWoodType.OAK).get())))
+                        w -> new RotatedPillarBlock(BlockBehaviour.Properties.ofFullCopy(BBBBlocks.BEAM.get(BBBWoodType.OAK).get())))
                 .addTag(modRes("beams"), Registries.BLOCK)
                 .addTag(modRes("beams"), Registries.ITEM)
                 .copyParentDrop()

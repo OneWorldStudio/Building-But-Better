@@ -157,7 +157,7 @@ public class PalletBlock extends HorizontalDirectionalBlock implements SimpleWat
             }
 
             level.setBlock(blockPos, blockState, 2);
-            level.playSound(player, blockPos, Blocks.SCAFFOLDING.getSoundType(level.getBlockState(blockPos)).getPlaceSound(), player.getSoundSource(), 1.0F, 1.0F);
+            level.playSound(player, blockPos, Blocks.SCAFFOLDING.defaultBlockState().getSoundType().getPlaceSound(), player.getSoundSource(), 1.0F, 1.0F);
             return ItemInteractionResult.SUCCESS;
         }
         else if (player.isShiftKeyDown()) {

@@ -1,0 +1,46 @@
+modLoader = "javafml"
+loaderVersion = "[4,)"
+#issueTrackerURL = ""
+license = "https://github.com/starfish-studios/Building-But-Better/blob/main/LICENSE"
+
+[[mods]]
+modId = "bbb"
+version = "1.0.0"
+displayName = "Building But Better"
+authors = "Starfish Studios"
+description = '''
+A mod focused on adding new building blocks with customizability and interactions!
+§c§l§u§o! Pre-releases WILL be buggy ! §cPlease report any issues on our GitHub or Discord.
+§9§l§uCHANGELOG (2.0pre1)§7
+- Added Stone Frames and fixed Frames crashing when connecting to non-solid blocks.
+- Added Balustrades
+- Added Lattices
+- Added native EveryCompat support.
+- There's a config now !!
+- Urns can now be interacted with Dirt -- when they are filled in this way, plants can be placed atop them. Use a Shovel to remove the Dirt.
+'''
+#logoFile = ""
+
+[[dependencies.building_but_better]]
+modId = "neoforge"
+type = "required"
+versionRange = "[21.1,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.building_but_better]]
+modId = "minecraft"
+type = "required"
+versionRange = "[1.21.1,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.building_but_better]]
+modId = "architectury"
+type = "required"
+versionRange = "[13.0.8,)"
+ordering = "AFTER"
+side = "BOTH"
+
+[[mixins]]
+config = "bbb.mixins.json"

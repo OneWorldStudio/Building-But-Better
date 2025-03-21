@@ -118,7 +118,7 @@ public class SupportBlock extends HorizontalDirectionalBlock implements SimpleWa
             } else {
                 level.setBlock(blockPos, blockState.setValue(SUPPORT, true), 3);
             }
-            level.playSound(player, blockPos, Blocks.SCAFFOLDING.getSoundType(level.getBlockState(blockPos)).getPlaceSound(), player.getSoundSource(), 1.0F, 1.0F);
+            level.playSound(player, blockPos, Blocks.SCAFFOLDING.defaultBlockState().getSoundType().getPlaceSound(), player.getSoundSource(), 1.0F, 1.0F);
             return ItemInteractionResult.SUCCESS;
         }
         return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;

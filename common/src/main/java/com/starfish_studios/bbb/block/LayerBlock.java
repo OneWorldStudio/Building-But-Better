@@ -6,6 +6,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -74,10 +75,8 @@ public class LayerBlock extends Block implements SimpleWaterloggedBlock {
             if (blockState.getValue(LAYERS) > 1) {
                 level.setBlock(blockPos, blockState.setValue(LAYERS, blockState.getValue(LAYERS) - 1), 3);
                 Block.popResource(level, blockPos, this.asItem().getDefaultInstance());
-                player.getItemInHand(interactionHand).hurtAndBreak(1, player, (playerEntity) -> {
-                    playerEntity.broadcastBreakEvent(interactionHand);
-                });
-                level.playSound(player, blockPos, level.getBlockState(blockPos).getBlock().getSoundType(level.getBlockState(blockPos)).getBreakSound(), player.getSoundSource(), 1.0F, 1.0F);
+                player.getItemInHand(interactionHand).hurtAndBreak(1, player, LivingEntity.getSlotForHand(interactionHand));
+                level.playSound(player, blockPos, level.getBlockState(blockPos).getSoundType().getBreakSound(), player.getSoundSource(), 1.0F, 1.0F);
                 return ItemInteractionResult.SUCCESS;
             } else if (blockState.getValue(LAYERS) == 1) {
                 return ItemInteractionResult.FAIL;

@@ -1,0 +1,74 @@
+---- Minecraft Crash Report ----
+// Don't be sad. I'll do better next time, I promise!
+
+Time: 2025-03-21 13:41:32
+Description: Mod loading failures have occurred; consult the issue messages for more details
+
+net.neoforged.neoforge.logging.CrashReportExtender$ModLoadingCrashException: Mod loading has failed
+
+
+A detailed walkthrough of the error, its code path and all known details is as follows:
+---------------------------------------------------------------------------------------
+
+-- Mod loading issue --
+Details:
+	Mod file: <No mod information provided>
+	Failure message: File /home/mrsterner/IdeaProjects/Building-But-Better/neoforge/build/resources/main is for Minecraft Forge or an older version of NeoForge, and cannot be loaded
+	Mod version: <No mod information provided>
+	Mod issues URL: <No issues URL found>
+	Exception message: <No associated exception found>
+
+-- System Details --
+Details:
+	Minecraft Version: 1.21.1
+	Minecraft Version ID: 1.21.1
+	Operating System: Linux (amd64) version 6.12.17-1-MANJARO
+	Java Version: 21.0.6, Arch Linux
+	Java VM Version: OpenJDK 64-Bit Server VM (mixed mode, sharing), Arch Linux
+	Memory: 770297888 bytes (734 MiB) / 1711276032 bytes (1632 MiB) up to 8363442176 bytes (7976 MiB)
+	CPUs: 24
+	Processor Vendor: GenuineIntel
+	Processor Name: 13th Gen Intel(R) Core(TM) i7-13700HX
+	Identifier: Intel64 Family 6 Model 183 Stepping 1
+	Microarchitecture: Raptor Lake
+	Frequency (GHz): -0.00
+	Number of physical packages: 1
+	Number of physical CPUs: 16
+	Number of logical CPUs: 24
+	Graphics card #0 name: AD107M [GeForce RTX 4060 Max-Q / Mobile]
+	Graphics card #0 vendor: NVIDIA Corporation (0x10de)
+	Graphics card #0 VRAM (MiB): 8224.00
+	Graphics card #0 deviceId: 0x28e0
+	Graphics card #0 versionInfo: unknown
+	Virtual memory max (MiB): 51039.77
+	Virtual memory used (MiB): 16169.63
+	Swap memory total (MiB): 35091.52
+	Swap memory used (MiB): 32.47
+	Space in storage for jna.tmpdir (MiB): <path not set>
+	Space in storage for org.lwjgl.system.SharedLibraryExtractPath (MiB): <path not set>
+	Space in storage for io.netty.native.workdir (MiB): <path not set>
+	Space in storage for java.io.tmpdir (MiB): available: 15866.40, total: 15948.25
+	Space in storage for workdir (MiB): available: 40358.10, total: 444783.09
+	JVM Flags: 0 total; 
+	ModLauncher: 11.0.4+main.d2e20e43
+	ModLauncher launch target: forgeclientuserdev
+	ModLauncher services: 
+		sponge-mixin-0.15.2+mixin.0.8.7.jar mixin PLUGINSERVICE 
+		loader-4.0.34.jar slf4jfixer PLUGINSERVICE 
+		loader-4.0.34.jar runtime_enum_extender PLUGINSERVICE 
+		unprotect-1.2.0.jar unprotect PLUGINSERVICE 
+		at-modlauncher-10.0.1.jar accesstransformer PLUGINSERVICE 
+		loader-4.0.34.jar runtimedistcleaner PLUGINSERVICE 
+		modlauncher-11.0.4.jar mixin TRANSFORMATIONSERVICE 
+		modlauncher-11.0.4.jar fml TRANSFORMATIONSERVICE 
+	FML Language Providers: 
+		javafml@4.0
+		lowcodefml@4.0
+		minecraft@4.0
+	Mod List: 
+		architectury-neoforge-13.0.8.jar                  |Architectury                  |architectury                  |13.0.8              |Manifest: NOSIGNATURE
+		every-compat-neoforge_1.21-2.9.6.jar              |Every Compat                  |everycomp                     |1.21-2.9.6          |Manifest: NOSIGNATURE
+		midnightlib-1.6.9+1.21-neoforge.jar               |MidnightLib                   |midnightlib                   |1.6.9               |Manifest: NOSIGNATURE
+		neoforge-21.1.84-minecraft-merged-fe1a1d750b-1.21.|Minecraft                     |minecraft                     |1.21.1              |Manifest: NOSIGNATURE
+		moonlight-neoforge_1.21-2.17.23.jar               |Moonlight Lib                 |moonlight                     |1.21-2.17.23        |Manifest: NOSIGNATURE
+		neoforge-21.1.84-minecraft-merged-fe1a1d750b-1.21.|NeoForge                      |neoforge                      |21.1.84             |Manifest: NOSIGNATURE

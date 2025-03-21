@@ -1,0 +1,15 @@
+#Disables specific entries
+[entries]
+
+		[entries.wood_type.bbb]
+			frame = true
+			trim = true
+			beam_slab = true
+			support = true
+			lantern = true
+			beam = true
+			ladder = true
+			layer = true
+			wall = true
+			pallet = true
+			beam_stairs = true

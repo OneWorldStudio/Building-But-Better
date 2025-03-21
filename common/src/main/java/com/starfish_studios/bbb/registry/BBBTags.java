@@ -5,6 +5,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.block.Block;
 
 import static com.starfish_studios.bbb.BuildingButBetter.MOD_ID;
@@ -54,6 +55,10 @@ public interface BBBTags {
         TagKey<Item> LADDERS = TagKey.create(Registries.ITEM, BuildingButBetter.id("ladders"));
         TagKey<Item> HAMMERS = TagKey.create(Registries.ITEM, BuildingButBetter.id("hammers"));
         TagKey<Item> STONE_FENCES = TagKey.create(Registries.ITEM, BuildingButBetter.id("stone_fences"));
+    }
+
+    interface BBBEnchantmentTags {
+        TagKey<Enchantment> PREVENTS_BRAZIER_DAMAGE = TagKey.create(Registries.ENCHANTMENT, BuildingButBetter.id("prevents_brazier_damage"));
     }
 
 }

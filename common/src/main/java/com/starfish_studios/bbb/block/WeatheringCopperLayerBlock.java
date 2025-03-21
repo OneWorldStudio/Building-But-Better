@@ -3,6 +3,7 @@ package com.starfish_studios.bbb.block;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.block.CopperBulbBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -14,8 +15,9 @@ public class WeatheringCopperLayerBlock extends LayerBlock implements Weathering
         this.weatherState = weatherState;
     }
 
+    @Override
     public void randomTick(BlockState blockState, ServerLevel serverLevel, BlockPos blockPos, RandomSource randomSource) {
-        this.onRandomTick(blockState, serverLevel, blockPos, randomSource);
+        this.changeOverTime(blockState, serverLevel, blockPos, randomSource);
     }
 
     public boolean isRandomlyTicking(BlockState blockState) {

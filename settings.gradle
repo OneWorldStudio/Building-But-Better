@@ -7,7 +7,7 @@ pluginManagement {
     }
 }
 
-rootProject.name = 'building_but_better'
+rootProject.name = 'bbb'
 
 include 'common'
 include 'fabric'

@@ -50,10 +50,10 @@ public class WoodenLanternBlock extends LanternBlock {
         if (player.getItemInHand(interactionHand).is(BBBTags.BBBItemTags.HAMMERS)) {
             if (!blockState.getValue(BlockStateProperties.HANGING)) {
                 level.setBlockAndUpdate(blockPos, blockState.setValue(BlockStateProperties.HANGING, true));
-                level.playSound(player, blockPos, level.getBlockState(blockPos).getBlock().getSoundType(level.getBlockState(blockPos)).getPlaceSound(), player.getSoundSource(), 1.0F, 1.0F);
+                level.playSound(player, blockPos, level.getBlockState(blockPos).getSoundType().getPlaceSound(), player.getSoundSource(), 1.0F, 1.0F);
             } else if (blockState.getValue(BlockStateProperties.HANGING)) {
                 level.setBlockAndUpdate(blockPos, blockState.setValue(BlockStateProperties.HANGING, false));
-                level.playSound(player, blockPos, level.getBlockState(blockPos).getBlock().getSoundType(level.getBlockState(blockPos)).getBreakSound(), player.getSoundSource(), 1.0F, 1.0F);
+                level.playSound(player, blockPos, level.getBlockState(blockPos).getSoundType().getBreakSound(), player.getSoundSource(), 1.0F, 1.0F);
 
                 if (!level.getBlockState(blockPos.below()).isSolid()) {
 

@@ -1,12 +1,19 @@
 package com.starfish_studios.bbb.block;
 
+import com.starfish_studios.bbb.registry.BBBTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Holder;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.EnchantmentTags;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -17,11 +24,14 @@ import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -57,7 +67,7 @@ public class BrazierBlock extends Block implements SimpleWaterloggedBlock {
         }
 
         if(itemStack.getItem() == Items.FLINT_AND_STEEL && !blockState.getValue(LIT)) {
-            itemStack.hurtAndBreak(1, player, (playerEntity) -> { playerEntity.broadcastBreakEvent(interactionHand); });
+            itemStack.hurtAndBreak(1, player, LivingEntity.getSlotForHand(interactionHand));
             level.playSound(null, blockPos, SoundEvents.FLINTANDSTEEL_USE, SoundSource.BLOCKS, 1.0F, level.random.nextFloat() * 0.4F + 0.8F);
             level.setBlock(blockPos, blockState.setValue(LIT, true), 11);
             return InteractionResult.SUCCESS;
@@ -65,10 +75,25 @@ public class BrazierBlock extends Block implements SimpleWaterloggedBlock {
         return InteractionResult.PASS;
     }
 
+    public static boolean hasEnchantmentTag(LivingEntity livingEntity, TagKey<Enchantment> tag) {
+        Iterable<ItemStack> iterable = livingEntity.getArmorSlots();
+
+        for (ItemStack itemStack : iterable) {
+            if (EnchantmentHelper.hasTag(itemStack, tag)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public void entityInside(BlockState blockState, Level level, BlockPos blockPos, Entity entity) {
-        if (blockState.getValue(LIT) && entity instanceof LivingEntity && !EnchantmentHelper.hasFrostWalker((LivingEntity)entity)) {
-            int fireDamage = 3;
-            entity.hurt(level.damageSources().inFire(), (float) fireDamage);
+        if (entity instanceof LivingEntity livingEntity) {
+
+            if (blockState.getValue(LIT) && entity instanceof LivingEntity && !hasEnchantmentTag(livingEntity, BBBTags.BBBEnchantmentTags.PREVENTS_BRAZIER_DAMAGE)) {
+                int fireDamage = 3;
+                entity.hurt(level.damageSources().inFire(), (float) fireDamage);
+            }
         }
 
         super.entityInside(blockState, level, blockPos, entity);
