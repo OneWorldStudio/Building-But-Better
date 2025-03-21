@@ -1,28 +1,16 @@
 package com.starfish_studios.bbb.event;
 
 import com.starfish_studios.bbb.block.BalustradeBlock;
-import com.starfish_studios.bbb.block.FrameBlock;
 import com.starfish_studios.bbb.block.MouldingBlock;
 import com.starfish_studios.bbb.block.StoneFenceBlock;
-import com.starfish_studios.bbb.block.properties.FrameStickDirection;
 import com.starfish_studios.bbb.registry.BBBTags;
 import dev.architectury.event.EventResult;
-import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
-import net.minecraft.world.phys.BlockHitResult;
-
-import static com.starfish_studios.bbb.block.FrameBlock.FRAME_CENTER;
 
 public class BlockUseEvent {
 

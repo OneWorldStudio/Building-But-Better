@@ -42,11 +42,6 @@ dependencies {
     modImplementation include ("maven.modrinth:moonlight:${project.moonlight_lib_fabric}")
     modImplementation include ("maven.modrinth:every-compat:${project.every_compat_fabric}")
 
-    modImplementation("com.simibubi.create:create-fabric-$minecraft_version:$create_fabric_version")
-
-    modImplementation ("curse.maven:every-compat-628539:5670282") // WoodGood + its dependency, Selene
-    modImplementation ("curse.maven:selene-499980:5666908")
-
     modImplementation include ("maven.modrinth:midnightlib:${project.midnightlib_version_fabric}")
 
     common(project(path: ':common', configuration: 'namedElements')) { transitive false }

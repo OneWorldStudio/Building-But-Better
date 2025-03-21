@@ -1,16 +1,15 @@
 package com.starfish_studios.bbb.forge;
 
 import com.starfish_studios.bbb.client.model.BlockModel;
-import net.minecraft.client.model.geom.ModelLayerLocation;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.event.EntityRenderersEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 
 import static com.starfish_studios.bbb.client.model.BBBModelLayers.*;
 
-@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD)
 public class BBBClientEventForge {
 
     @OnlyIn(Dist.CLIENT)

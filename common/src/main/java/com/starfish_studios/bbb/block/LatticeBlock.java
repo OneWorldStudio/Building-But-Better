@@ -244,7 +244,7 @@ public class LatticeBlock extends Block implements SimpleWaterloggedBlock, Bonem
     }
 
     @Override
-    public boolean isValidBonemealTarget(LevelReader levelReader, BlockPos blockPos, BlockState blockState, boolean bl) {
+    public boolean isValidBonemealTarget(LevelReader levelReader, BlockPos blockPos, BlockState blockState) {
         return !blockState.getValue(BERRIES) && blockState.getValue(PLANT_TYPE) == LatticePlantType.CAVE_VINES;
     }
 

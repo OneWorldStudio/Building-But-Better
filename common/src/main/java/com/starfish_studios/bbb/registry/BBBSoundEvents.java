@@ -18,7 +18,7 @@ public class BBBSoundEvents {
     public static RegistrySupplier<SoundEvent> LAYER_HAMMER = register("block.layer.hammer");
 
     public static RegistrySupplier<SoundEvent>  register(String name) {
-        ResourceLocation id = new ResourceLocation(BuildingButBetter.MOD_ID, name);
+        ResourceLocation id = BuildingButBetter.id(name);
         return SOUNDS.register(id, () -> SoundEvent.createVariableRangeEvent(id));
     }
 }

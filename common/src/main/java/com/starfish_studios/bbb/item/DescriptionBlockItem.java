@@ -19,10 +19,10 @@ public class DescriptionBlockItem extends BlockItem {
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, Level level, List<Component> tooltip, TooltipFlag flagIn) {
+    public void appendHoverText(ItemStack itemStack, TooltipContext tooltipContext, List<Component> tooltip, TooltipFlag tooltipFlag) {
         if (!BBBConfig.disableShiftTooltips) {
 
-            if (stack.is(BBBTags.BBBItemTags.BALUSTRADES)) {
+            if (itemStack.is(BBBTags.BBBItemTags.BALUSTRADES)) {
                 if (Screen.hasShiftDown()) {
                     tooltip.add(Component.translatable("description.bbb.pencil").withStyle(ChatFormatting.BLUE)
                             .append(Component.translatable("description.bbb.balustrade1").withStyle(ChatFormatting.GRAY)));
@@ -36,7 +36,7 @@ public class DescriptionBlockItem extends BlockItem {
                     tooltip.add(Component.literal("[").append(Component.translatable("key.keyboard.left.shift")).append(Component.literal("]")).withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
             }
 
-            if (stack.is(BBBTags.BBBItemTags.URNS)) {
+            if (itemStack.is(BBBTags.BBBItemTags.URNS)) {
                 if (Screen.hasShiftDown()) {
                     tooltip.add(Component.translatable("description.bbb.pencil").withStyle(ChatFormatting.BLUE)
                             .append(Component.translatable("description.bbb.urn1").withStyle(ChatFormatting.GRAY)));
@@ -48,7 +48,7 @@ public class DescriptionBlockItem extends BlockItem {
                     tooltip.add(Component.literal("[").append(Component.translatable("key.keyboard.left.shift")).append(Component.literal("]")).withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
             }
 
-            if (stack.is(BBBTags.BBBItemTags.LATTICES)) {
+            if (itemStack.is(BBBTags.BBBItemTags.LATTICES)) {
                 if (Screen.hasShiftDown()) {
                     tooltip.add(Component.translatable("description.bbb.pencil").withStyle(ChatFormatting.BLUE)
                             .append(Component.translatable("description.bbb.lattice1").withStyle(ChatFormatting.GRAY)));
@@ -61,7 +61,7 @@ public class DescriptionBlockItem extends BlockItem {
             }
 
 
-            if (stack.is(BBBTags.BBBItemTags.LANTERNS)) {
+            if (itemStack.is(BBBTags.BBBItemTags.LANTERNS)) {
                 if (Screen.hasShiftDown()) {
                     tooltip.add(Component.translatable("description.bbb.pencil").withStyle(ChatFormatting.BLUE)
                             .append(Component.translatable("description.bbb.lantern1").withStyle(ChatFormatting.GRAY)));
@@ -70,7 +70,7 @@ public class DescriptionBlockItem extends BlockItem {
                     tooltip.add(Component.literal("[").append(Component.translatable("key.keyboard.left.shift")).append(Component.literal("]")).withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
             }
 
-            if (stack.is(BBBTags.BBBItemTags.STONE_FENCES)) {
+            if (itemStack.is(BBBTags.BBBItemTags.STONE_FENCES)) {
                 if (Screen.hasShiftDown()) {
                     tooltip.add(Component.translatable("description.bbb.pencil").withStyle(ChatFormatting.BLUE).append(Component.translatable("description.bbb.stone_fence1").withStyle(ChatFormatting.GRAY)));
                     tooltip.add(Component.translatable("description.bbb.stone_fence2").withStyle(ChatFormatting.GRAY));
@@ -80,7 +80,7 @@ public class DescriptionBlockItem extends BlockItem {
                     tooltip.add(Component.literal("[").append(Component.translatable("key.keyboard.left.shift")).append(Component.literal("]")).withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
             }
 
-            if (stack.is(BBBTags.BBBItemTags.MOULDINGS)) {
+            if (itemStack.is(BBBTags.BBBItemTags.MOULDINGS)) {
                 if (Screen.hasShiftDown()) {
                     tooltip.add(Component.translatable("description.bbb.pencil").withStyle(ChatFormatting.BLUE).append(Component.translatable("description.bbb.moulding1").withStyle(ChatFormatting.GRAY)));
                     tooltip.add(Component.translatable("description.bbb.moulding2").withStyle(ChatFormatting.GRAY));
@@ -88,13 +88,13 @@ public class DescriptionBlockItem extends BlockItem {
                     tooltip.add(Component.literal("[").append(Component.translatable("key.keyboard.left.shift")).append(Component.literal("]")).withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
             }
 
-            if (stack.is(BBBTags.BBBItemTags.SUPPORTS)) {
+            if (itemStack.is(BBBTags.BBBItemTags.SUPPORTS)) {
                 if (Screen.hasShiftDown()) {
                     tooltip.add(Component.translatable("description.bbb.pencil").withStyle(ChatFormatting.BLUE).append(Component.translatable("description.bbb.support1").withStyle(ChatFormatting.GRAY)));
                     tooltip.add(Component.translatable("description.bbb.support2").withStyle(ChatFormatting.GRAY));
                 } else
                     tooltip.add(Component.literal("[").append(Component.translatable("key.keyboard.left.shift")).append(Component.literal("]")).withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
-            } else if (stack.is(BBBTags.BBBItemTags.PALLETS)) {
+            } else if (itemStack.is(BBBTags.BBBItemTags.PALLETS)) {
                 if (Screen.hasShiftDown()) {
                     tooltip.add(Component.translatable("description.bbb.pencil").withStyle(ChatFormatting.BLUE).append(Component.translatable("description.bbb.pallet1").withStyle(ChatFormatting.GRAY)));
                     tooltip.add(Component.translatable("description.bbb.pallet2").withStyle(ChatFormatting.GRAY));
@@ -103,19 +103,19 @@ public class DescriptionBlockItem extends BlockItem {
                     tooltip.add(Component.translatable("description.bbb.pallet5").withStyle(ChatFormatting.GRAY));
                 } else
                     tooltip.add(Component.literal("[").append(Component.translatable("key.keyboard.left.shift")).append(Component.literal("]")).withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
-            } else if (stack.is(BBBTags.BBBItemTags.LADDERS)) {
+            } else if (itemStack.is(BBBTags.BBBItemTags.LADDERS)) {
                 if (Screen.hasShiftDown()) {
                     tooltip.add(Component.translatable("description.bbb.pencil").withStyle(ChatFormatting.BLUE).append(Component.translatable("description.bbb.ladder1").withStyle(ChatFormatting.GRAY)));
                     tooltip.add(Component.translatable("description.bbb.ladder2").withStyle(ChatFormatting.GRAY));
                 } else
                     tooltip.add(Component.literal("[").append(Component.translatable("key.keyboard.left.shift")).append(Component.literal("]")).withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
-            } else if (stack.is(BBBTags.BBBItemTags.COLUMNS)) {
+            } else if (itemStack.is(BBBTags.BBBItemTags.COLUMNS)) {
                 if (Screen.hasShiftDown()) {
                     tooltip.add(Component.translatable("description.bbb.pencil").withStyle(ChatFormatting.BLUE).append(Component.translatable("description.bbb.column1").withStyle(ChatFormatting.GRAY)));
                     tooltip.add(Component.translatable("description.bbb.column2").withStyle(ChatFormatting.GRAY));
                 } else
                     tooltip.add(Component.literal("[").append(Component.translatable("key.keyboard.left.shift")).append(Component.literal("]")).withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
-            } else if (stack.is(BBBTags.BBBItemTags.LAYERS)) {
+            } else if (itemStack.is(BBBTags.BBBItemTags.LAYERS)) {
                 if (Screen.hasShiftDown()) {
                     tooltip.add(Component.translatable("description.bbb.pencil").withStyle(ChatFormatting.BLUE).append(Component.translatable("description.bbb.layer1").withStyle(ChatFormatting.GRAY)));
                     tooltip.add(Component.translatable("description.bbb.layer2").withStyle(ChatFormatting.GRAY));
@@ -123,7 +123,7 @@ public class DescriptionBlockItem extends BlockItem {
                     tooltip.add(Component.translatable("description.bbb.layer4").withStyle(ChatFormatting.GRAY));
                 } else
                     tooltip.add(Component.literal("[").append(Component.translatable("key.keyboard.left.shift")).append(Component.literal("]")).withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
-            } else if (stack.is(BBBTags.BBBItemTags.FRAMES) || stack.is(BBBTags.BBBItemTags.STONE_FRAMES)) {
+            } else if (itemStack.is(BBBTags.BBBItemTags.FRAMES) || itemStack.is(BBBTags.BBBItemTags.STONE_FRAMES)) {
                 if (Screen.hasShiftDown()) {
                     tooltip.add(Component.translatable("description.bbb.pencil").withStyle(ChatFormatting.BLUE).append(Component.translatable("description.bbb.frame1").withStyle(ChatFormatting.GRAY)));
                     tooltip.add(Component.translatable("description.bbb.frame2").withStyle(ChatFormatting.GRAY));
@@ -145,7 +145,7 @@ public class DescriptionBlockItem extends BlockItem {
                 } else
                     tooltip.add(Component.literal("[").append(Component.translatable("key.keyboard.left.shift")).append(Component.literal("]")).withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
             } else {
-                super.appendHoverText(stack, level, tooltip, flagIn);
+                super.appendHoverText(itemStack, tooltipContext, tooltip, tooltipFlag);
             }
         }
     }

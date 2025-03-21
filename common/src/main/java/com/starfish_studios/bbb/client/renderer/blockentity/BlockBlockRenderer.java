@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.starfish_studios.bbb.BuildingButBetter;
 import com.starfish_studios.bbb.block.AbstractBlockBlock;
 import com.starfish_studios.bbb.block.BlockBlock;
 import com.starfish_studios.bbb.block.WallBlockBlock;
@@ -36,13 +37,13 @@ import java.util.Map;
 public class BlockBlockRenderer implements BlockEntityRenderer<BlockBlockEntity> {
     private final ImmutableMap<BlockBlock.Types, BlockModel> modelByType;
     private static final Map<BlockBlock.Type, ResourceLocation> TEXTURE_BY_TYPE = Util.make(Maps.newHashMap(), hashMap -> {
-        hashMap.put(BlockBlock.Types.STONE, new ResourceLocation("bbb:textures/block/block/stone.png"));
-        hashMap.put(BlockBlock.Types.BLACKSTONE, new ResourceLocation("bbb:textures/block/block/blackstone.png"));
-        hashMap.put(BlockBlock.Types.DEEPSLATE, new ResourceLocation("bbb:textures/block/block/deepslate.png"));
-        hashMap.put(BlockBlock.Types.NETHER_BRICK, new ResourceLocation("bbb:textures/block/block/nether_brick.png"));
-        hashMap.put(BlockBlock.Types.SANDSTONE, new ResourceLocation("bbb:textures/block/block/sandstone.png"));
-        hashMap.put(BlockBlock.Types.RED_SANDSTONE, new ResourceLocation("bbb:textures/block/block/red_sandstone.png"));
-        hashMap.put(BlockBlock.Types.QUARTZ, new ResourceLocation("bbb:textures/block/block/quartz.png"));
+        hashMap.put(BlockBlock.Types.STONE, BuildingButBetter.id("textures/block/block/stone.png"));
+        hashMap.put(BlockBlock.Types.BLACKSTONE, BuildingButBetter.id("textures/block/block/blackstone.png"));
+        hashMap.put(BlockBlock.Types.DEEPSLATE, BuildingButBetter.id("textures/block/block/deepslate.png"));
+        hashMap.put(BlockBlock.Types.NETHER_BRICK, BuildingButBetter.id("textures/block/block/nether_brick.png"));
+        hashMap.put(BlockBlock.Types.SANDSTONE, BuildingButBetter.id("textures/block/block/sandstone.png"));
+        hashMap.put(BlockBlock.Types.RED_SANDSTONE, BuildingButBetter.id("textures/block/block/red_sandstone.png"));
+        hashMap.put(BlockBlock.Types.QUARTZ, BuildingButBetter.id("textures/block/block/quartz.png"));
     });
 
     public static ImmutableMap<BlockBlock.Types, BlockModel> createBlockRenderers(EntityModelSet entityModelSet) {
@@ -100,7 +101,7 @@ public class BlockBlockRenderer implements BlockEntityRenderer<BlockBlockEntity>
         poseStack.translate(0.0f, -1.5f, 0.0f);
         VertexConsumer vertexConsumer = multiBufferSource.getBuffer(renderType);
         blockModel.setupAnim(g, f, 0.0f);
-        blockModel.renderToBuffer(poseStack, vertexConsumer, i, OverlayTexture.NO_OVERLAY, 1.0f, 1.0f, 1.0f, 1.0f);
+        blockModel.renderToBuffer(poseStack, vertexConsumer, i, OverlayTexture.NO_OVERLAY, 1);
         poseStack.popPose();
     }
 

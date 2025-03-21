@@ -233,7 +233,7 @@ public class TallDoorBlock extends Block {
         return blockState.hasProperty(BlockStateProperties.WATERLOGGED) ? blockState.setValue(BlockStateProperties.WATERLOGGED, levelReader.isWaterAt(blockPos)) : blockState;
     }
 
-    public void playerWillDestroy(Level level, BlockPos blockPos, BlockState blockState, Player player) {
+    public BlockState playerWillDestroy(Level level, BlockPos blockPos, BlockState blockState, Player player) {
         if (!level.isClientSide) {
             if (player.isCreative()) {
                 preventCreativeDropFromBottomPart(level, blockPos, blockState, player);
@@ -242,7 +242,7 @@ public class TallDoorBlock extends Block {
             }
         }
 
-        super.playerWillDestroy(level, blockPos, blockState, player);
+        return super.playerWillDestroy(level, blockPos, blockState, player);
     }
 
     public void playerDestroy(Level level, Player player, BlockPos blockPos, BlockState blockState, @Nullable BlockEntity blockEntity, ItemStack itemStack) {

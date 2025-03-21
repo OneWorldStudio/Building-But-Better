@@ -3,18 +3,14 @@ package com.starfish_studios.bbb.block;
 import com.starfish_studios.bbb.BBBConfig;
 import com.starfish_studios.bbb.block.properties.BBBBlockStateProperties;
 import com.starfish_studios.bbb.block.properties.FrameStickDirection;
-import com.starfish_studios.bbb.registry.BBBItems;
 import com.starfish_studios.bbb.registry.BBBTags;
-import com.tterrag.registrate.util.entry.RegistryEntry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -94,7 +90,7 @@ public class FrameBlock extends Block implements SimpleWaterloggedBlock {
     }
 
     @Override
-    public InteractionResult use(BlockState blockState, Level level, BlockPos blockPos, Player player, InteractionHand interactionHand, BlockHitResult blockHitResult) {
+    protected ItemInteractionResult useItemOn(ItemStack itemStack, BlockState blockState, Level level, BlockPos blockPos, Player player, InteractionHand interactionHand, BlockHitResult blockHitResult) {
         if (player.getItemInHand(interactionHand).is(BBBTags.BBBItemTags.HAMMERS)) {
             // TODO: This cycles through the frame center options, rotating it sort of like an Item Frame
             // region FRAME CENTER CYCLING
@@ -111,9 +107,9 @@ public class FrameBlock extends Block implements SimpleWaterloggedBlock {
             }
             level.setBlock(blockPos, blockState, 3);
             level.playSound(player, blockPos, Blocks.SCAFFOLDING.getSoundType(level.getBlockState(blockPos)).getPlaceSound(), player.getSoundSource(), 1.0F, 1.0F);
-            return InteractionResult.SUCCESS;
+            return ItemInteractionResult.SUCCESS;
             // endregion
-        } else return InteractionResult.PASS;
+        } else return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }
 
     @Override
@@ -241,7 +237,7 @@ public class FrameBlock extends Block implements SimpleWaterloggedBlock {
     }
 
     @Override
-    public boolean isPathfindable(BlockState state, BlockGetter level, BlockPos pos, PathComputationType type) {
+    protected boolean isPathfindable(BlockState blockState, PathComputationType pathComputationType) {
         return false;
     }
 

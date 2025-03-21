@@ -1,5 +1,6 @@
 package com.starfish_studios.bbb.block;
 
+import com.mojang.serialization.MapCodec;
 import com.starfish_studios.bbb.block.properties.BBBBlockStateProperties;
 import com.starfish_studios.bbb.registry.BBBTags;
 import net.fabricmc.api.EnvType;
@@ -14,7 +15,9 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
@@ -71,6 +74,11 @@ public class PalletBlock extends HorizontalDirectionalBlock implements SimpleWat
     }
 
     @Override
+    protected MapCodec<? extends HorizontalDirectionalBlock> codec() {
+        return simpleCodec(PalletBlock::new);
+    }
+
+    @Override
     public VoxelShape getShape(BlockState blockState, BlockGetter blockGetter, BlockPos blockPos, CollisionContext collisionContext) {
         if (blockState.getValue(OPEN)) {
             return switch (blockState.getValue(FACING)) {
@@ -91,11 +99,11 @@ public class PalletBlock extends HorizontalDirectionalBlock implements SimpleWat
     }
 
     @Override
-    public boolean isPathfindable(BlockState blockState, BlockGetter blockGetter, BlockPos blockPos, PathComputationType pathComputationType) {
+    protected boolean isPathfindable(BlockState blockState, PathComputationType pathComputationType) {
         if (blockState.getValue(OPEN)) {
             return false;
         } else {
-            return super.isPathfindable(blockState, blockGetter, blockPos, pathComputationType);
+            return super.isPathfindable(blockState, pathComputationType);
         }
     }
 
@@ -105,7 +113,7 @@ public class PalletBlock extends HorizontalDirectionalBlock implements SimpleWat
     }
 
     @Override
-    public InteractionResult use(BlockState blockState, Level level, BlockPos blockPos, Player player, InteractionHand interactionHand, BlockHitResult blockHitResult) {
+    protected ItemInteractionResult useItemOn(ItemStack itemStack, BlockState blockState, Level level, BlockPos blockPos, Player player, InteractionHand interactionHand, BlockHitResult blockHitResult) {
         if (player.getItemInHand(interactionHand).is(BBBTags.BBBItemTags.HAMMERS)) {
             if (blockHitResult.getLocation().z - (double)blockPos.getZ() > 0.5 && blockState.getValue(FACING) == Direction.NORTH) {
                 if (blockHitResult.getLocation().z - (double)blockPos.getZ() < 0.75) {
@@ -150,18 +158,18 @@ public class PalletBlock extends HorizontalDirectionalBlock implements SimpleWat
 
             level.setBlock(blockPos, blockState, 2);
             level.playSound(player, blockPos, Blocks.SCAFFOLDING.getSoundType(level.getBlockState(blockPos)).getPlaceSound(), player.getSoundSource(), 1.0F, 1.0F);
-            return InteractionResult.SUCCESS;
+            return ItemInteractionResult.SUCCESS;
         }
-         else if (player.isShiftKeyDown()) {
+        else if (player.isShiftKeyDown()) {
             blockState = blockState.cycle(OPEN);
             level.setBlock(blockPos, blockState, 2);
             if (blockState.getValue(WATERLOGGED)) {
                 level.scheduleTick(blockPos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
             }
             this.playSound(player, level, blockPos, blockState.getValue(OPEN));
-            return InteractionResult.SUCCESS;
+            return ItemInteractionResult.SUCCESS;
         }
-        return InteractionResult.PASS;
+        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }
 
     @Override

@@ -11,4 +11,4 @@ rootProject.name = 'building_but_better'
 
 include 'common'
 include 'fabric'
-include 'forge'
+include 'neoforge'

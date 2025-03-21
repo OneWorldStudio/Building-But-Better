@@ -1,10 +1,16 @@
 package com.starfish_studios.bbb.block;
 
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.starfish_studios.bbb.registry.BBBBlockEntityType;
 import net.minecraft.core.BlockPos;
+import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.item.Equipable;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -13,6 +19,9 @@ import net.minecraft.world.level.block.state.properties.RotationSegment;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+
+import java.util.Locale;
+import java.util.function.Function;
 
 public class BlockBlock extends AbstractBlockBlock implements Equipable {
     public static final int MAX = RotationSegment.getMaxSegmentIndex();
@@ -56,10 +65,24 @@ public class BlockBlock extends AbstractBlockBlock implements Equipable {
         builder.add(ROTATION);
     }
 
+    @Override
+    protected MapCodec<? extends BaseEntityBlock> codec() {
+        return CODEC;
+    }
+
+    public static final Codec<Types> TYPES_CODEC = StringRepresentable.fromEnum(Types::values);
+    public static final Codec<Type> TYPE_CODEC = TYPES_CODEC.xmap(t -> t, t -> (Types) t);
+    public static final MapCodec<BlockBlock> CODEC = RecordCodecBuilder.mapCodec(
+            instance -> instance.group(
+                    TYPE_CODEC.fieldOf("type").forGetter(block -> block.type),
+                    propertiesCodec()
+            ).apply(instance, BlockBlock::new)
+    );
+
     public interface Type {
     }
 
-    public enum Types implements Type
+    public enum Types implements Type, StringRepresentable
     {
         STONE,
         BLACKSTONE,
@@ -67,7 +90,11 @@ public class BlockBlock extends AbstractBlockBlock implements Equipable {
         NETHER_BRICK,
         SANDSTONE,
         RED_SANDSTONE,
-        QUARTZ
+        QUARTZ;
 
+        @Override
+        public String getSerializedName() {
+            return name().toLowerCase(Locale.ROOT);
+        }
     }
 }

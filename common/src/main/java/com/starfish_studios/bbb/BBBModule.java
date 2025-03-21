@@ -5,8 +5,7 @@ import com.starfish_studios.bbb.item.DescriptionBlockItem;
 import com.starfish_studios.bbb.registry.BBBBlocks;
 import com.starfish_studios.bbb.registry.BBBItems;
 import com.starfish_studios.bbb.registry.BBBWoodType;
-import io.github.fabricators_of_create.porting_lib.common.util.PlantType;
-import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
+import dev.architectury.registry.client.rendering.ColorHandlerRegistry;
 import net.mehvahdjukaar.every_compat.api.*;
 import net.mehvahdjukaar.moonlight.api.platform.ClientHelper;
 import net.mehvahdjukaar.moonlight.api.set.leaves.LeavesType;
@@ -55,16 +54,9 @@ public class BBBModule extends SimpleModule {
     @Override
     public void registerBlockColors(ClientHelper.BlockColorEvent event) {
         super.registerBlockColors(event);
-        ColorProviderRegistry<Block, BlockColor> blockColor = ColorProviderRegistry.BLOCK;
-//        blockColor.register((state, world, pos, tintIndex) -> {
-//                    if (world == null || pos == null) {
-//                        return FoliageColor.getDefaultColor();
-//                    }
-//                    return BiomeColors.getAverageFoliageColor(world, pos);
-//                }
-//        );
+
         for (Map.Entry<WoodType, Block> entry : lattices.blocks.entrySet()) {
-            blockColor.register((state, world, pos, tintIndex) -> {
+            ColorHandlerRegistry.registerBlockColors((state, world, pos, tintIndex) -> {
                         if (world == null || pos == null) {
                             return FoliageColor.getDefaultColor();
                         }
@@ -82,7 +74,7 @@ public class BBBModule extends SimpleModule {
 
         trims = SimpleEntrySet.builder(WoodType.class, "trim",
                         getModBlock("oak_trim"), () -> WoodTypeRegistry.OAK_TYPE,
-                        w -> new FacingConnectingBlock(BlockBehaviour.Properties.copy(BBBBlocks.TRIM.get(BBBWoodType.OAK).get())))
+                        w -> new FacingConnectingBlock(BlockBehaviour.Properties.ofFullCopy(BBBBlocks.TRIM.get(BBBWoodType.OAK).get())))
                 .addTag(modRes("trims"), Registries.BLOCK)
                 .addTag(modRes("trims"), Registries.ITEM)
                 .copyParentDrop()
@@ -119,7 +111,7 @@ public class BBBModule extends SimpleModule {
         
         beamStairs = SimpleEntrySet.builder(WoodType.class, "beam_stairs",
                         getModBlock("oak_beam_stairs"), () -> WoodTypeRegistry.OAK_TYPE,
-                        w -> new StairBlock((Blocks.OAK_PLANKS.defaultBlockState()), BlockBehaviour.Properties.copy(BBBBlocks.BEAM_STAIRS.get(BBBWoodType.OAK).get())))
+                        w -> new StairBlock((Blocks.OAK_PLANKS.defaultBlockState()), BlockBehaviour.Properties.ofFullCopy(BBBBlocks.BEAM_STAIRS.get(BBBWoodType.OAK).get())))
                 .addTag(modRes("beams"), Registries.BLOCK)
                 .addTag(modRes("beams"), Registries.ITEM)
                 .copyParentDrop()
@@ -136,7 +128,7 @@ public class BBBModule extends SimpleModule {
         
         beamSlabs = SimpleEntrySet.builder(WoodType.class, "beam_slab",
                         getModBlock("oak_beam_slab"), () -> WoodTypeRegistry.OAK_TYPE,
-                        w -> new FacingSlabBlock(BlockBehaviour.Properties.copy(BBBBlocks.BEAM_SLAB.get(BBBWoodType.OAK).get())))
+                        w -> new FacingSlabBlock(BlockBehaviour.Properties.ofFullCopy(BBBBlocks.BEAM_SLAB.get(BBBWoodType.OAK).get())))
                 .addTag(modRes("beams"), Registries.BLOCK)
                 .addTag(modRes("beams"), Registries.ITEM)
                 .copyParentDrop()
@@ -153,7 +145,7 @@ public class BBBModule extends SimpleModule {
         
         pallets = SimpleEntrySet.builder(WoodType.class, "pallet",
                         getModBlock("oak_pallet"), () -> WoodTypeRegistry.OAK_TYPE,
-                        w -> new PalletBlock(BlockBehaviour.Properties.copy(BBBBlocks.PALLET.get(BBBWoodType.OAK).get())))
+                        w -> new PalletBlock(BlockBehaviour.Properties.ofFullCopy(BBBBlocks.PALLET.get(BBBWoodType.OAK).get())))
                 .addTag(modRes("pallets"), Registries.BLOCK)
                 .addTag(modRes("pallets"), Registries.ITEM)
                 .addCustomItem((wood, block, properties) -> new DescriptionBlockItem(block, properties))
@@ -170,7 +162,7 @@ public class BBBModule extends SimpleModule {
         
         supports = SimpleEntrySet.builder(WoodType.class, "support",
                         getModBlock("oak_support"), () -> WoodTypeRegistry.OAK_TYPE,
-                        w -> new SupportBlock(BlockBehaviour.Properties.copy(BBBBlocks.SUPPORT.get(BBBWoodType.OAK).get())))
+                        w -> new SupportBlock(BlockBehaviour.Properties.ofFullCopy(BBBBlocks.SUPPORT.get(BBBWoodType.OAK).get())))
                 .addTag(modRes("supports"), Registries.BLOCK)
                 .addTag(modRes("supports"), Registries.ITEM)
                 .addCustomItem((wood, block, properties) -> new DescriptionBlockItem(block, properties))
@@ -188,7 +180,7 @@ public class BBBModule extends SimpleModule {
 
         balustrades = SimpleEntrySet.builder(WoodType.class, "balustrade",
                         getModBlock("oak_balustrade"), () -> WoodTypeRegistry.OAK_TYPE,
-                        w -> new BalustradeBlock(BlockBehaviour.Properties.copy(BBBBlocks.BALUSTRADES.get(BBBWoodType.OAK).get())))
+                        w -> new BalustradeBlock(BlockBehaviour.Properties.ofFullCopy(BBBBlocks.BALUSTRADES.get(BBBWoodType.OAK).get())))
                 .addTag(modRes("balustrades"), Registries.BLOCK)
                 .addTag(modRes("balustrades"), Registries.ITEM)
                 .addCustomItem((wood, block, properties) -> new DescriptionBlockItem(block, properties))
@@ -206,7 +198,7 @@ public class BBBModule extends SimpleModule {
 
         walls = SimpleEntrySet.builder(WoodType.class, "wall",
                         getModBlock("oak_wall"), () -> WoodTypeRegistry.OAK_TYPE,
-                        w -> new WoodenWallBlock(BlockBehaviour.Properties.copy(BBBBlocks.WALL.get(BBBWoodType.OAK).get())))
+                        w -> new WoodenWallBlock(BlockBehaviour.Properties.ofFullCopy(BBBBlocks.WALL.get(BBBWoodType.OAK).get())))
                 .addTag(modRes("wooden_walls"), Registries.BLOCK)
 //                .addTag(modRes("wooden_walls"), Registries.ITEM)
                 .copyParentDrop()
@@ -223,7 +215,7 @@ public class BBBModule extends SimpleModule {
 
         frames = SimpleEntrySet.builder(WoodType.class, "frame",
                         getModBlock("oak_frame"), () -> WoodTypeRegistry.OAK_TYPE,
-                        w -> new FrameBlock(BlockBehaviour.Properties.copy(BBBBlocks.FRAMES.get(BBBWoodType.OAK).get())))
+                        w -> new FrameBlock(BlockBehaviour.Properties.ofFullCopy(BBBBlocks.FRAMES.get(BBBWoodType.OAK).get())))
                 .addTag(modRes("frames"), Registries.BLOCK)
                 .addTag(modRes("frames"), Registries.ITEM)
                 .addCustomItem((wood, block, properties) -> new DescriptionBlockItem(block, properties))
@@ -241,7 +233,7 @@ public class BBBModule extends SimpleModule {
 
         lanterns = SimpleEntrySet.builder(WoodType.class, "lantern",
                         getModBlock("oak_lantern"), () -> WoodTypeRegistry.OAK_TYPE,
-                        w -> new WoodenLanternBlock(BlockBehaviour.Properties.copy(BBBBlocks.LANTERN.get(BBBWoodType.OAK).get())))
+                        w -> new WoodenLanternBlock(BlockBehaviour.Properties.ofFullCopy(BBBBlocks.LANTERN.get(BBBWoodType.OAK).get())))
                 .addTag(modRes("lanterns"), Registries.BLOCK)
                 .addTag(modRes("lanterns"), Registries.ITEM)
                 .addCustomItem((wood, block, properties) -> new DescriptionBlockItem(block, properties))
@@ -281,7 +273,7 @@ public class BBBModule extends SimpleModule {
 
         lattices = SimpleEntrySet.builder(WoodType.class, "lattice",
                         getModBlock("oak_lattice"), () -> WoodTypeRegistry.OAK_TYPE,
-                        w -> new LatticeBlock(BlockBehaviour.Properties.copy(BBBBlocks.LATTICE.get(BBBWoodType.OAK).get())))
+                        w -> new LatticeBlock(BlockBehaviour.Properties.ofFullCopy(BBBBlocks.LATTICE.get(BBBWoodType.OAK).get())))
                 .addTag(modRes("lattices"), Registries.BLOCK)
                 .addTag(modRes("lattices"), Registries.ITEM)
                 .addCustomItem((wood, block, properties) -> new DescriptionBlockItem(block, properties))

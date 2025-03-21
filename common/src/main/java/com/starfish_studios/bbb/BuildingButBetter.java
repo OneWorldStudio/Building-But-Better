@@ -5,9 +5,14 @@ import com.starfish_studios.bbb.event.BlockUseEvent;
 import com.starfish_studios.bbb.registry.*;
 import dev.architectury.event.events.common.InteractionEvent;
 import eu.midnightdust.lib.config.MidnightConfig;
+import net.minecraft.resources.ResourceLocation;
 
 public final class BuildingButBetter {
     public static final String MOD_ID = "bbb";
+
+    public static ResourceLocation id(String name){
+        return ResourceLocation.fromNamespaceAndPath(MOD_ID, name);
+    }
 
     public static void init() {
         MidnightConfig.init(MOD_ID, BBBConfig.class);

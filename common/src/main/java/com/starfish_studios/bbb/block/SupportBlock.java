@@ -1,11 +1,14 @@
 package com.starfish_studios.bbb.block;
 
+import com.mojang.serialization.MapCodec;
 import com.starfish_studios.bbb.registry.BBBTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -87,6 +90,11 @@ public class SupportBlock extends HorizontalDirectionalBlock implements SimpleWa
     }
 
     @Override
+    protected MapCodec<? extends HorizontalDirectionalBlock> codec() {
+        return simpleCodec(SupportBlock::new);
+    }
+
+    @Override
     public @NotNull VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
         return switch (state.getValue(FACING)) {
             case NORTH -> state.getValue(HALF) == Half.BOTTOM ? BOTTOM_NORTH_AABB : TOP_NORTH_AABB;
@@ -103,7 +111,7 @@ public class SupportBlock extends HorizontalDirectionalBlock implements SimpleWa
     }
 
     @Override
-    public InteractionResult use(BlockState blockState, Level level, BlockPos blockPos, Player player, InteractionHand interactionHand, BlockHitResult blockHitResult) {
+    protected ItemInteractionResult useItemOn(ItemStack itemStack, BlockState blockState, Level level, BlockPos blockPos, Player player, InteractionHand interactionHand, BlockHitResult blockHitResult) {
         if (player.getItemInHand(interactionHand).is(BBBTags.BBBItemTags.HAMMERS)) {
             if (blockState.getValue(SUPPORT)) {
                 level.setBlock(blockPos, blockState.setValue(SUPPORT, false), 3);
@@ -111,9 +119,9 @@ public class SupportBlock extends HorizontalDirectionalBlock implements SimpleWa
                 level.setBlock(blockPos, blockState.setValue(SUPPORT, true), 3);
             }
             level.playSound(player, blockPos, Blocks.SCAFFOLDING.getSoundType(level.getBlockState(blockPos)).getPlaceSound(), player.getSoundSource(), 1.0F, 1.0F);
-            return InteractionResult.SUCCESS;
+            return ItemInteractionResult.SUCCESS;
         }
-        return InteractionResult.PASS;
+        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }
 
     public BlockState getStateForPlacement(BlockPlaceContext blockPlaceContext) {
