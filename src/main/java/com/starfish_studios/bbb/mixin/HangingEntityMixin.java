@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(HangingEntity.class)
+@Mixin(value=HangingEntity.class, priority=900)
 public class HangingEntityMixin extends Entity {
     public HangingEntityMixin(EntityType<?> entityType, Level level) {
         super(entityType, level);
