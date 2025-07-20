@@ -28,6 +28,12 @@ configurations {
         canBeConsumed = false
     }
 }
+repositories {
+    maven {
+        name = "ModMaven"
+        url  = uri("https://modmaven.dev/")
+    }
+}
 
 dependencies {
     modImplementation "net.fabricmc:fabric-loader:$rootProject.fabric_loader_version"
@@ -39,8 +45,8 @@ dependencies {
     modImplementation "dev.architectury:architectury-fabric:$rootProject.architectury_api_version"
 
     modImplementation "com.terraformersmc:modmenu:${project.mod_menu_version}"
-    modImplementation include ("maven.modrinth:moonlight:${project.moonlight_lib_fabric}")
-    modImplementation include ("maven.modrinth:every-compat:${project.every_compat_fabric}")
+    modImplementation ("maven.modrinth:moonlight:${project.moonlight_lib_fabric}")
+    modImplementation ("maven.modrinth:every-compat:${project.every_compat_fabric}")
 
     modImplementation("com.simibubi.create:create-fabric-$minecraft_version:$create_fabric_version")
 

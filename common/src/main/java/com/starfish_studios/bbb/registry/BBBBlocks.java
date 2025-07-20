@@ -244,7 +244,6 @@ public class BBBBlocks {
     // endregion
 
     // region LAYERS
-
     public static final RegistrySupplier<Block> MOSS_LAYER = BLOCKS.register("moss_layer", () -> new LayerBlock(BlockBehaviour.Properties.copy((Blocks.MOSS_BLOCK))));
     public static final RegistrySupplier<Block> STONE_LAYER = BLOCKS.register("stone_layer", () -> new LayerBlock(BlockBehaviour.Properties.copy((Blocks.STONE))));
     public static final RegistrySupplier<Block> COBBLESTONE_LAYER = BLOCKS.register("cobblestone_layer", () -> new LayerBlock(BlockBehaviour.Properties.copy((Blocks.COBBLESTONE))));

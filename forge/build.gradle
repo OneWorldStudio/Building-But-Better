@@ -31,6 +31,14 @@ configurations {
     }
 }
 
+
+repositories {
+    maven {
+        name = "ModMaven"
+        url  = uri("https://modmaven.dev/")
+    }
+}
+
 dependencies {
     forge "net.minecraftforge:forge:$rootProject.forge_version"
 
@@ -38,8 +46,8 @@ dependencies {
     modImplementation "dev.architectury:architectury-forge:$rootProject.architectury_api_version"
 
     modImplementation include ("maven.modrinth:midnightlib:${project.midnightlib_version_forge}")
-    modImplementation include ("maven.modrinth:moonlight:${project.moonlight_lib_forge}")
-    modImplementation include ("maven.modrinth:every-compat:${project.every_compat_forge}")
+    modImplementation ("maven.modrinth:moonlight:${project.moonlight_lib_forge}")
+    modImplementation ("maven.modrinth:every-compat:${project.every_compat_forge}")
 
     // Create and its dependencies
     //modImplementation("com.simibubi.create:create-$minecraft_version:$create_forge_version:slim") { transitive = false }

@@ -10,6 +10,7 @@
     "bbb:cherry_frame",
     "bbb:bamboo_frame",
     "bbb:crimson_frame",
-    "bbb:warped_frame"
+    "bbb:warped_frame",
+    "#bbb:stone_frames"
   ]
 }

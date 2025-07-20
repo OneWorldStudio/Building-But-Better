@@ -5,6 +5,8 @@ import com.starfish_studios.bbb.event.BlockUseEvent;
 import com.starfish_studios.bbb.registry.*;
 import dev.architectury.event.events.common.InteractionEvent;
 import eu.midnightdust.lib.config.MidnightConfig;
+import net.fabricmc.loader.api.FabricLoader;
+import net.mehvahdjukaar.every_compat.EveryCompat;
 
 public final class BuildingButBetter {
     public static final String MOD_ID = "bbb";
@@ -12,12 +14,11 @@ public final class BuildingButBetter {
     public static void init() {
         MidnightConfig.init(MOD_ID, BBBConfig.class);
 
-        //if(FabricLoader.getInstance().isModLoaded("everycomp")){
-          //  EveryCompat.ACTIVE_MODULES.put(MOD_ID, new BBBModule(MOD_ID));
-        //}
+//        if(FabricLoader.getInstance().isModLoaded("everycomp")){
+//            EveryCompat.addModule(
+//        }
 
         //BlockUseEvent.EVENT.register(new BlockUseEvent());
-
 
         InteractionEvent.RIGHT_CLICK_BLOCK.register(BlockUseEvent::interact);
 

@@ -3,18 +3,12 @@ package com.starfish_studios.bbb.block;
 import com.starfish_studios.bbb.BBBConfig;
 import com.starfish_studios.bbb.block.properties.BBBBlockStateProperties;
 import com.starfish_studios.bbb.block.properties.FrameStickDirection;
-import com.starfish_studios.bbb.registry.BBBItems;
 import com.starfish_studios.bbb.registry.BBBTags;
-import com.tterrag.registrate.util.entry.RegistryEntry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -22,24 +16,26 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
-import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.block.state.properties.*;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.EntityCollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import org.jetbrains.annotations.Nullable;
+import net.minecraft.world.level.pathfinder.PathComputationType;
+import com.google.common.collect.Maps;
+import net.minecraft.Util;
+import org.jetbrains.annotations.NotNull;
+
+import javax.annotation.Nullable;
+import java.util.EnumMap;
+import java.util.Map;
 
 public class FrameBlock extends Block implements SimpleWaterloggedBlock {
     public static final BooleanProperty CORNERS = BooleanProperty.create("corners");
     public static final EnumProperty<FrameStickDirection> FRAME_CENTER = BBBBlockStateProperties.FRAME_CENTER;
-
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     public static final BooleanProperty TOP = BBBBlockStateProperties.TOP;
@@ -47,42 +43,76 @@ public class FrameBlock extends Block implements SimpleWaterloggedBlock {
     public static final BooleanProperty LEFT = BBBBlockStateProperties.LEFT;
     public static final BooleanProperty RIGHT = BBBBlockStateProperties.RIGHT;
 
+
+    // full-block outline shapes
     private static final VoxelShape NORTH = Block.box(0, 0, 8, 16, 16, 16);
-    private static final VoxelShape EAST = Block.box(0, 0, 0, 8, 16, 16);
+    private static final VoxelShape EAST  = Block.box(0, 0, 0, 8, 16, 16);
     private static final VoxelShape SOUTH = Block.box(0, 0, 0, 16, 16, 8);
-    private static final VoxelShape WEST = Block.box(8, 0, 0, 16, 16, 16);
+    private static final VoxelShape WEST  = Block.box(8, 0, 0, 16, 16, 16);
 
+    // center-stick collision shapes
+    private static final VoxelShape NORTH_CENTER = Block.box(4, 0, 13, 12, 16, 16);
+    private static final VoxelShape EAST_CENTER  = Block.box(0, 0, 4, 3, 16, 12);
+    private static final VoxelShape SOUTH_CENTER = Block.box(4, 0, 0, 12, 16, 3);
+    private static final VoxelShape WEST_CENTER  = Block.box(13, 0, 4, 16, 16, 12);
 
-    private static final VoxelShape NORTH_RIGHT_AABB = Block.box(0, 0, 13, 1, 16, 16);
-    private static final VoxelShape NORTH_LEFT_AABB = Block.box(15, 0, 13, 16, 16, 16);
-    private static final VoxelShape NORTH_TOP_AABB = Block.box(0, 15, 13, 16, 16, 16);
-    private static final VoxelShape NORTH_BOTTOM_AABB = Block.box(0, -1, 13, 16, 0, 16);
-    private static final VoxelShape NORTH_CENTER_AABB = Block.box(4, 0, 13, 12, 16, 16);
+    // side-sticks
+    private static final VoxelShape[] NORTH_SIDES = {
+            Block.box(0, 15, 13, 16, 16, 16),
+            Block.box(0, -1, 13, 16, 0, 16),
+            Block.box(15, 0, 13, 16, 16, 16),
+            Block.box(0, 0, 13, 1, 16, 16)
+    };
 
-    private static final VoxelShape WEST_LEFT_AABB = Block.box(13, 0, 0, 16, 16, 1);
-    private static final VoxelShape WEST_RIGHT_AABB = Block.box(13, 0, 15, 16, 16, 16);
-    private static final VoxelShape WEST_TOP_AABB = Block.box(13, 15, 0, 16, 16, 16);
-    private static final VoxelShape WEST_BOTTOM_AABB = Block.box(13, -1, 0, 16, 0, 16);
-    private static final VoxelShape WEST_CENTER_AABB = Block.box(13, 0, 4, 16, 16, 12);
+    private static final VoxelShape[] EAST_SIDES  = {
+            Block.box(0, 15, 0, 3, 16, 16),
+            Block.box(0, -1, 0, 3, 0, 16),
+            Block.box(0, 0, 15, 3, 16, 16),
+            Block.box(0, 0, 0, 3, 16, 1)
+    };
 
-    private static final VoxelShape SOUTH_LEFT_AABB = Block.box(0, 0, 0, 3, 16, 3);
-    private static final VoxelShape SOUTH_RIGHT_AABB = Block.box(13, 0, 0, 16, 16, 3);
-    private static final VoxelShape SOUTH_TOP_AABB = Block.box(0, 15, 0, 16, 16, 3);
-    private static final VoxelShape SOUTH_BOTTOM_AABB = Block.box(0, -1, 0, 16, 0, 3);
-    private static final VoxelShape SOUTH_CENTER_AABB = Block.box(4, 0, 0, 12, 16, 3);
+    private static final VoxelShape[] SOUTH_SIDES = {
+            Block.box(0, 15, 0, 16, 16, 3),
+            Block.box(0, -1, 0, 16, 0, 3),
+            Block.box(0, 0, 0, 1, 16, 3),
+            Block.box(15, 0, 0, 16, 16, 3)
+    };
 
+    private static final VoxelShape[] WEST_SIDES  = {
+            Block.box(13, 15, 0, 16, 16, 16),
+            Block.box(13, -1, 0, 16, 0, 16),
+            Block.box(13, 0, 0, 16, 16, 1),
+            Block.box(13, 0, 15, 16, 16, 16)
+    };
+    private static final Map<Direction, VoxelShape> FULL_SHAPES = Util.make(Maps.newEnumMap(Direction.class), m -> {
+        m.put(Direction.NORTH, NORTH);
+        m.put(Direction.EAST,  EAST);
+        m.put(Direction.SOUTH, SOUTH);
+        m.put(Direction.WEST,  WEST);
+    });
 
-    private static final VoxelShape EAST_LEFT_AABB = Block.box(0, 0, 15, 3, 16, 16);
-    private static final VoxelShape EAST_RIGHT_AABB = Block.box(0, 0, 0, 3, 16, 1);
-    private static final VoxelShape EAST_TOP_AABB = Block.box(0, 15, 0, 3, 16, 16);
-    private static final VoxelShape EAST_BOTTOM_AABB = Block.box(0, -1, 0, 3, 0, 16);
-    private static final VoxelShape EAST_CENTER_AABB = Block.box(0, 0, 4, 3, 16, 12);
+    private static final Map<Direction, VoxelShape> CENTER_SHAPES = Map.of(
+            Direction.NORTH, NORTH_CENTER,
+            Direction.EAST,  EAST_CENTER,
+            Direction.SOUTH, SOUTH_CENTER,
+            Direction.WEST,  WEST_CENTER
+    );
 
+    private static final Map<Direction, VoxelShape[]> SIDE_SHAPES = Map.of(
+            Direction.NORTH, NORTH_SIDES,
+            Direction.EAST,  EAST_SIDES,
+            Direction.SOUTH, SOUTH_SIDES,
+            Direction.WEST,  WEST_SIDES
+    );
 
+    private static final int TOP_IDX    = 0;
+    private static final int BOTTOM_IDX = 1;
+    private static final int LEFT_IDX   = 2;
+    private static final int RIGHT_IDX  = 3;
 
     public FrameBlock(Properties properties) {
         super(properties);
-        registerDefaultState(this.stateDefinition.any()
+        this.registerDefaultState(this.stateDefinition.any()
                 .setValue(FACING, Direction.NORTH)
                 .setValue(WATERLOGGED, false)
                 .setValue(TOP, true)
@@ -90,139 +120,106 @@ public class FrameBlock extends Block implements SimpleWaterloggedBlock {
                 .setValue(LEFT, true)
                 .setValue(RIGHT, true)
                 .setValue(CORNERS, true)
-                .setValue(FRAME_CENTER, FrameStickDirection.NONE));
+                .setValue(FRAME_CENTER, FrameStickDirection.NONE)
+        );
     }
 
+    @SuppressWarnings("deprecation")
     @Override
-    public InteractionResult use(BlockState blockState, Level level, BlockPos blockPos, Player player, InteractionHand interactionHand, BlockHitResult blockHitResult) {
-        if (player.getItemInHand(interactionHand).is(BBBTags.BBBItemTags.HAMMERS)) {
-            // TODO: This cycles through the frame center options, rotating it sort of like an Item Frame
-            // region FRAME CENTER CYCLING
-            if (blockState.getValue(FRAME_CENTER) == FrameStickDirection.NONE) {
-                blockState = blockState.setValue(FRAME_CENTER, FrameStickDirection.VERTICAL);
-            } else if (blockState.getValue(FRAME_CENTER) == FrameStickDirection.VERTICAL) {
-                blockState = blockState.setValue(FRAME_CENTER, FrameStickDirection.RIGHT);
-            } else if (blockState.getValue(FRAME_CENTER) == FrameStickDirection.RIGHT) {
-                blockState = blockState.setValue(FRAME_CENTER, FrameStickDirection.HORIZONTAL);
-            } else if (blockState.getValue(FRAME_CENTER) == FrameStickDirection.HORIZONTAL) {
-                blockState = blockState.setValue(FRAME_CENTER, FrameStickDirection.LEFT);
-            } else if (blockState.getValue(FRAME_CENTER) == FrameStickDirection.LEFT) {
-                blockState = blockState.setValue(FRAME_CENTER, FrameStickDirection.VERTICAL);
-            }
-            level.setBlock(blockPos, blockState, 3);
-            level.playSound(player, blockPos, Blocks.SCAFFOLDING.getSoundType(level.getBlockState(blockPos)).getPlaceSound(), player.getSoundSource(), 1.0F, 1.0F);
-            return InteractionResult.SUCCESS;
-            // endregion
-        } else return InteractionResult.PASS;
-    }
-
-    @Override
-    public void attack(BlockState blockState, Level level, BlockPos blockPos, Player player) {
-        if (!level.isClientSide) {
-            if (blockState.getValue(FRAME_CENTER) != FrameStickDirection.NONE) {
-                level.setBlock(blockPos, blockState.setValue(FRAME_CENTER, FrameStickDirection.NONE), 3);
-                level.playSound(null, blockPos, Blocks.SCAFFOLDING.getSoundType(level.getBlockState(blockPos)).getBreakSound(), player.getSoundSource(), 1.0F, 1.0F);
-            }
-        }
-    }
-
-    @Override
-    // TODO: Make these use tags instead of direct items.
-    public VoxelShape getShape(BlockState blockState, BlockGetter blockGetter, BlockPos blockPos, CollisionContext collisionContext) {
-        if (collisionContext instanceof EntityCollisionContext entityContext && entityContext.getEntity() instanceof Player player && player.isHolding(stack ->
-        stack.is(BBBTags.BBBItemTags.FRAMES) ||
-        stack.is(BBBTags.BBBItemTags.HAMMERS) || player.isShiftKeyDown() && !BBBConfig.disableFrameCrouchHitbox) || BBBConfig.alwaysShowFrameHitboxes) {
-            return switch (blockState.getValue(FACING)) {
-                case EAST -> EAST;
-                case SOUTH -> SOUTH;
-                case WEST -> WEST;
-                default -> NORTH;
+    public @NotNull InteractionResult use(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, Player player, @NotNull InteractionHand hand, @NotNull BlockHitResult hit) {
+        if (player.getItemInHand(hand).is(BBBTags.BBBItemTags.HAMMERS)) {
+            FrameStickDirection[] cycle = {
+                    FrameStickDirection.LEFT,
+                    FrameStickDirection.VERTICAL,
+                    FrameStickDirection.RIGHT,
+                    FrameStickDirection.HORIZONTAL
             };
-        }
-        VoxelShape shape = Shapes.empty();
+            FrameStickDirection current = state.getValue(FRAME_CENTER);
+            int idx = java.util.Arrays.asList(cycle).indexOf(current);
+            FrameStickDirection next = cycle[(idx + 1) % cycle.length];
 
-        if (blockState.getValue(FACING) == Direction.NORTH) {
-            if (blockState.getValue(LEFT)) shape = Shapes.or(shape, NORTH_LEFT_AABB);
-            if (blockState.getValue(RIGHT)) shape = Shapes.or(shape, NORTH_RIGHT_AABB);
-            if (blockState.getValue(TOP)) shape = Shapes.or(shape, NORTH_TOP_AABB);
-            if (blockState.getValue(BOTTOM)) shape = Shapes.or(shape, NORTH_BOTTOM_AABB);
-        } else if (blockState.getValue(FACING) == Direction.EAST) {
-            if (blockState.getValue(LEFT)) shape = Shapes.or(shape, EAST_LEFT_AABB);
-            if (blockState.getValue(RIGHT)) shape = Shapes.or(shape, EAST_RIGHT_AABB);
-            if (blockState.getValue(TOP)) shape = Shapes.or(shape, EAST_TOP_AABB);
-            if (blockState.getValue(BOTTOM)) shape = Shapes.or(shape, EAST_BOTTOM_AABB);
-        } else if (blockState.getValue(FACING) == Direction.SOUTH) {
-            if (blockState.getValue(LEFT)) shape = Shapes.or(shape, SOUTH_LEFT_AABB);
-            if (blockState.getValue(RIGHT)) shape = Shapes.or(shape, SOUTH_RIGHT_AABB);
-            if (blockState.getValue(TOP)) shape = Shapes.or(shape, SOUTH_TOP_AABB);
-            if (blockState.getValue(BOTTOM)) shape = Shapes.or(shape, SOUTH_BOTTOM_AABB);
-        } else if (blockState.getValue(FACING) == Direction.WEST) {
-            if (blockState.getValue(LEFT)) shape = Shapes.or(shape, WEST_LEFT_AABB);
-            if (blockState.getValue(RIGHT)) shape = Shapes.or(shape, WEST_RIGHT_AABB);
-            if (blockState.getValue(TOP)) shape = Shapes.or(shape, WEST_TOP_AABB);
-            if (blockState.getValue(BOTTOM)) shape = Shapes.or(shape, WEST_BOTTOM_AABB);
+            BlockState updated = state.setValue(FRAME_CENTER, next);
+            level.setBlock(pos, updated, 3);
+            level.playSound(player, pos,
+                    Blocks.SCAFFOLDING.defaultBlockState()
+                            .getSoundType()
+                            .getPlaceSound(),
+                    player.getSoundSource(),
+                    1.0F,
+                    1.0F);
+            return InteractionResult.SUCCESS;
         }
-        return shape;
+        return InteractionResult.PASS;
     }
 
+
+    @SuppressWarnings("deprecation")
     @Override
-    public VoxelShape getCollisionShape(BlockState blockState, BlockGetter blockGetter, BlockPos blockPos, CollisionContext collisionContext) {
-        VoxelShape shape = Shapes.empty();
+    public void attack(@NotNull BlockState state, Level level, @NotNull BlockPos pos, @NotNull Player player) {
+        if (!level.isClientSide && state.getValue(FRAME_CENTER) != FrameStickDirection.NONE) {
+            BlockState reset = state.setValue(FRAME_CENTER, FrameStickDirection.NONE);
+            level.setBlock(pos, reset, 3);
+            level.playSound(null, pos, Blocks.SCAFFOLDING.defaultBlockState().getSoundType().getBreakSound(), player.getSoundSource(), 1.0F, 1.0F);
+        }
+    }
 
-        if (blockState.getValue(FRAME_CENTER) != FrameStickDirection.NONE) {
-            if (blockState.getValue(FACING) == Direction.NORTH) {
-                if (blockState.getValue(FRAME_CENTER) != FrameStickDirection.NONE) return Shapes.or(shape, NORTH_CENTER_AABB);
-            } else if (blockState.getValue(FACING) == Direction.EAST) {
-                if (blockState.getValue(FRAME_CENTER) != FrameStickDirection.NONE) return Shapes.or(shape, EAST_CENTER_AABB);
-            } else if (blockState.getValue(FACING) == Direction.SOUTH) {
-                if (blockState.getValue(FRAME_CENTER) != FrameStickDirection.NONE) return Shapes.or(shape, SOUTH_CENTER_AABB);
-            } else if (blockState.getValue(FACING) == Direction.WEST) {
-                if (blockState.getValue(FRAME_CENTER) != FrameStickDirection.NONE) return Shapes.or(shape, WEST_CENTER_AABB);
-            }
+    @SuppressWarnings("deprecation")
+    @Override
+    public @NotNull VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter level, @NotNull BlockPos pos, @NotNull CollisionContext context) {
+        if (showsFullOutline(context, state)) {
+            return FULL_SHAPES.get(state.getValue(FACING));
         }
-        if (blockState.getValue(FACING) == Direction.NORTH) {
-            if (blockState.getValue(LEFT)) shape = Shapes.or(shape, NORTH_LEFT_AABB);
-            if (blockState.getValue(RIGHT)) shape = Shapes.or(shape, NORTH_RIGHT_AABB);
-            if (blockState.getValue(TOP)) shape = Shapes.or(shape, NORTH_TOP_AABB);
-            if (blockState.getValue(BOTTOM)) shape = Shapes.or(shape, NORTH_BOTTOM_AABB);
-        } else if (blockState.getValue(FACING) == Direction.EAST) {
-            if (blockState.getValue(LEFT)) shape = Shapes.or(shape, EAST_LEFT_AABB);
-            if (blockState.getValue(RIGHT)) shape = Shapes.or(shape, EAST_RIGHT_AABB);
-            if (blockState.getValue(TOP)) shape = Shapes.or(shape, EAST_TOP_AABB);
-            if (blockState.getValue(BOTTOM)) shape = Shapes.or(shape, EAST_BOTTOM_AABB);
-        } else if (blockState.getValue(FACING) == Direction.SOUTH) {
-            if (blockState.getValue(LEFT)) shape = Shapes.or(shape, SOUTH_LEFT_AABB);
-            if (blockState.getValue(RIGHT)) shape = Shapes.or(shape, SOUTH_RIGHT_AABB);
-            if (blockState.getValue(TOP)) shape = Shapes.or(shape, SOUTH_TOP_AABB);
-            if (blockState.getValue(BOTTOM)) shape = Shapes.or(shape, SOUTH_BOTTOM_AABB);
-        } else if (blockState.getValue(FACING) == Direction.WEST) {
-            if (blockState.getValue(LEFT)) shape = Shapes.or(shape, WEST_LEFT_AABB);
-            if (blockState.getValue(RIGHT)) shape = Shapes.or(shape, WEST_RIGHT_AABB);
-            if (blockState.getValue(TOP)) shape = Shapes.or(shape, WEST_TOP_AABB);
-            if (blockState.getValue(BOTTOM)) shape = Shapes.or(shape, WEST_BOTTOM_AABB);
+        return buildShape(state);
+    }
+
+    @SuppressWarnings("deprecation")
+    @Override
+    public @NotNull VoxelShape getCollisionShape(@NotNull BlockState state, @NotNull BlockGetter level, @NotNull BlockPos pos, @NotNull CollisionContext context) {
+        return buildShape(state);
+    }
+
+    private boolean showsFullOutline(CollisionContext context, BlockState state) {
+        if (context instanceof EntityCollisionContext ec && ec.getEntity() instanceof Player player) {
+            return player.isHolding(s -> s.is(BBBTags.BBBItemTags.FRAMES) || s.is(BBBTags.BBBItemTags.HAMMERS))
+                    || (player.isShiftKeyDown() && !BBBConfig.disableFrameCrouchHitbox)
+                    || BBBConfig.alwaysShowFrameHitboxes;
         }
+        return false;
+    }
+
+    private VoxelShape buildShape(BlockState state) {
+        Direction facing = state.getValue(FACING);
+        if (state.getValue(FRAME_CENTER) != FrameStickDirection.NONE) {
+            return CENTER_SHAPES.get(facing);
+        }
+        VoxelShape[] parts = SIDE_SHAPES.get(facing);
+        VoxelShape shape = Shapes.empty();
+        if (state.getValue(TOP))    shape = Shapes.or(shape, parts[TOP_IDX]);
+        if (state.getValue(BOTTOM)) shape = Shapes.or(shape, parts[BOTTOM_IDX]);
+        if (state.getValue(LEFT))   shape = Shapes.or(shape, parts[LEFT_IDX]);
+        if (state.getValue(RIGHT))  shape = Shapes.or(shape, parts[RIGHT_IDX]);
         return shape;
     }
 
-    public boolean propagatesSkylightDown(BlockState blockState, BlockGetter blockGetter, BlockPos blockPos) {
-        return true;
+    @SuppressWarnings("deprecation")
+    @Override
+    public @NotNull BlockState updateShape(BlockState state, @NotNull Direction direction, @NotNull BlockState neighbor, @NotNull LevelAccessor level, @NotNull BlockPos pos, @NotNull BlockPos neighborPos) {
+        if (state.getValue(WATERLOGGED)) {
+            level.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
+        }
+        return getConnectedState(state, level, pos);
+    }
+
+    @SuppressWarnings("deprecation")
+    @Override
+    public @NotNull FluidState getFluidState(BlockState state) {
+        return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
     }
 
     @Nullable
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
-        return super.getStateForPlacement(context).setValue(FACING, context.getHorizontalDirection().getOpposite());
-    }
-
-    @Override
-    public BlockState updateShape(BlockState state, Direction direction, BlockState neighborState, LevelAccessor level, BlockPos currentPos, BlockPos neighborPos) {
-        if (state.getValue(WATERLOGGED)) level.scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
-        return getConnections(state, level, currentPos);
-    }
-
-    @Override
-    public FluidState getFluidState(BlockState state) {
-        return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
+        return this.defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
     }
 
     @Override
@@ -230,82 +227,58 @@ public class FrameBlock extends Block implements SimpleWaterloggedBlock {
         builder.add(FACING, WATERLOGGED, TOP, BOTTOM, LEFT, RIGHT, CORNERS, FRAME_CENTER);
     }
 
+    @SuppressWarnings("deprecation")
     @Override
-    public BlockState rotate(BlockState state, Rotation rotation) {
-        return state.setValue(FACING, rotation.rotate(state.getValue(FACING)));
+    public @NotNull BlockState rotate(BlockState state, Rotation rot) {
+        return state.setValue(FACING, rot.rotate(state.getValue(FACING)));
     }
 
+    @SuppressWarnings("deprecation")
     @Override
-    public BlockState mirror(BlockState state, Mirror mirror) {
+    public @NotNull BlockState mirror(BlockState state, Mirror mirror) {
         return state.rotate(mirror.getRotation(state.getValue(FACING)));
     }
 
+    @SuppressWarnings("deprecation")
     @Override
-    public boolean isPathfindable(BlockState state, BlockGetter level, BlockPos pos, PathComputationType type) {
-        return false;
+    public boolean isPathfindable(@NotNull BlockState state, @NotNull BlockGetter level, @NotNull BlockPos pos, @NotNull PathComputationType type) {
+        return type == PathComputationType.LAND
+                && !state.getValue(TOP)
+                && !state.getValue(BOTTOM)
+                && !state.getValue(LEFT)
+                && !state.getValue(RIGHT);
     }
 
-    public BlockState getConnections(BlockState state, LevelAccessor level, BlockPos pos) {
-        boolean n = validConnection(level.getBlockState(pos.north()), level, pos.north());
-        boolean e = validConnection(level.getBlockState(pos.east()), level, pos.east());
-        boolean s = validConnection(level.getBlockState(pos.south()), level, pos.south());
-        boolean w = validConnection(level.getBlockState(pos.west()), level, pos.west());
-        boolean t = validConnection(level.getBlockState(pos.above()), level, pos.above());
-        boolean b = validConnection(level.getBlockState(pos.below()), level, pos.below());
-        if (state.getValue(FACING) == Direction.NORTH) {
-            boolean top = !t || !validConnection(level.getBlockState(pos.above()), level, pos.above());
-            boolean bottom = !b || !validConnection(level.getBlockState(pos.below()), level, pos.below());
-            boolean left = !e || !validConnection(level.getBlockState(pos.east()), level, pos.east());
-            boolean right = !w || !validConnection(level.getBlockState(pos.west()), level, pos.west());
-            return state
-                    .setValue(TOP, top)
-                    .setValue(BOTTOM, bottom)
-                    .setValue(LEFT, left)
-                    .setValue(RIGHT, right);
-        } else if (state.getValue(FACING) == Direction.EAST) {
-            boolean top = !t || !validConnection(level.getBlockState(pos.above()), level, pos.above());
-            boolean bottom = !b || !validConnection(level.getBlockState(pos.below()), level, pos.below());
-            boolean left = !s || !validConnection(level.getBlockState(pos.south()), level, pos.south());
-            boolean right = !n || !validConnection(level.getBlockState(pos.north()), level, pos.north());
-            return state
-                    .setValue(TOP, top)
-                    .setValue(BOTTOM, bottom)
-                    .setValue(LEFT, left)
-                    .setValue(RIGHT, right);
-        } else if (state.getValue(FACING) == Direction.SOUTH) {
-            boolean top = !t || !validConnection(level.getBlockState(pos.above()), level, pos.above());
-            boolean bottom = !b || !validConnection(level.getBlockState(pos.below()), level, pos.below());
-            boolean left = !w || !validConnection(level.getBlockState(pos.west()), level, pos.west());
-            boolean right = !e || !validConnection(level.getBlockState(pos.east()), level, pos.east());
-            return state
-                    .setValue(TOP, top)
-                    .setValue(BOTTOM, bottom)
-                    .setValue(LEFT, left)
-                    .setValue(RIGHT, right);
-        } else if (state.getValue(FACING) == Direction.WEST) {
-            boolean top = !t || !validConnection(level.getBlockState(pos.above()), level, pos.above());
-            boolean bottom = !b || !validConnection(level.getBlockState(pos.below()), level, pos.below());
-            boolean left = !n || !validConnection(level.getBlockState(pos.north()), level, pos.north());
-            boolean right = !s || !validConnection(level.getBlockState(pos.south()), level, pos.south());
-            return state
-                    .setValue(TOP, top)
-                    .setValue(BOTTOM, bottom)
-                    .setValue(LEFT, left)
-                    .setValue(RIGHT, right);
+
+    private BlockState getConnectedState(BlockState state, LevelAccessor level, BlockPos pos) {
+        EnumMap<Direction, Boolean> connections = new EnumMap<>(Direction.class);
+        for (Direction direction : Direction.values()) {
+            BlockPos off = pos.relative(direction);
+            connections.put(direction, validConnection(level.getBlockState(off), level, off, direction));
         }
-        return state;
+        Direction facing = state.getValue(FACING);
+        return state.setValue(TOP, !connections.get(Direction.UP))
+                .setValue(BOTTOM, !connections.get(Direction.DOWN))
+                .setValue(LEFT, !connections.get(facing.getClockWise()))
+                .setValue(RIGHT, !connections.get(facing.getCounterClockWise()));
     }
 
-    public boolean validConnection(BlockState state, BlockGetter getter, BlockPos pos) {
-        if (state.isFaceSturdy(getter, pos, Direction.UP) ||
-                state.isFaceSturdy(getter, pos, Direction.DOWN) ||
-                state.isFaceSturdy(getter, pos, Direction.NORTH) ||
-                state.isFaceSturdy(getter, pos, Direction.EAST) ||
-                state.isFaceSturdy(getter, pos, Direction.SOUTH) ||
-                state.isFaceSturdy(getter, pos, Direction.WEST)) {
+    public boolean validConnection(BlockState state, BlockGetter getter, BlockPos pos, Direction direction) {
+        if (state.getBlock() instanceof LayerBlock) {
+            Direction layerFacing = state.getValue(LayerBlock.FACING);
+            return layerFacing == direction;
+        }
+        if (state.getBlock() instanceof SlabBlock) {
+            SlabType type = state.getValue(SlabBlock.TYPE);
+            if (type == SlabType.BOTTOM && direction == Direction.UP) {
+                return true;
+            }
+            return type == SlabType.TOP && direction == Direction.DOWN;
+        }
+        if (state.is(BBBTags.BBBBlockTags.FRAMES)) {
             return true;
         }
-
-        return state.is(BBBTags.BBBBlockTags.FRAMES) || state.is(BBBTags.BBBBlockTags.STONE_FRAMES);
+        return state.isSolidRender(getter, pos);
     }
 }
+

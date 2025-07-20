@@ -6,8 +6,7 @@
   "client": [
   ],
   "mixins": [
-    "BushBlockMixin",
-    "PaintingMixin"
+    "BushBlockMixin"
   ],
   "injectors": {
     "defaultRequire": 1

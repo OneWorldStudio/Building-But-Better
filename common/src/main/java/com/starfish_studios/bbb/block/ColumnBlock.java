@@ -13,149 +13,208 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.ChestBlock;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.block.state.properties.*;
+import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.shapes.CollisionContext;
-import net.minecraft.world.phys.shapes.Shapes;
-import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.phys.shapes.*;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.EnumMap;
+import java.util.Map;
 
 public class ColumnBlock extends Block implements SimpleWaterloggedBlock {
-    public static final BooleanProperty LAYER_1 = BBBBlockStateProperties.LAYER_1;
-    public static final BooleanProperty LAYER_2 = BBBBlockStateProperties.LAYER_2;
-    public static final BooleanProperty LAYER_3 = BBBBlockStateProperties.LAYER_3;
-    public static final BooleanProperty LAYER_4 = BBBBlockStateProperties.LAYER_4;
+    public static final BooleanProperty LAYER_1_AABB = BBBBlockStateProperties.LAYER_1;
+    public static final BooleanProperty LAYER_2_AABB = BBBBlockStateProperties.LAYER_2;
+    public static final BooleanProperty LAYER_3_AABB = BBBBlockStateProperties.LAYER_3;
+    public static final BooleanProperty LAYER_4_AABB = BBBBlockStateProperties.LAYER_4;
+
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     public static final EnumProperty<Direction.Axis> AXIS = BlockStateProperties.AXIS;
     public static final EnumProperty<ColumnType> TYPE = BBBBlockStateProperties.COLUMN_TYPE;
 
-    public static VoxelShape LAYER_1_AABB = Block.box(0, 0, 0, 16, 4, 16);
-    public static VoxelShape LAYER_2_AABB = Block.box(0, 4, 0, 16, 8, 16);
-    public static VoxelShape LAYER_3_AABB = Block.box(0, 8, 0, 16, 12, 16);
-    public static VoxelShape LAYER_4_AABB = Block.box(0, 12, 0, 16, 16, 16);
-    public static VoxelShape CORE_AABB = Block.box(2, 0, 2, 14, 16, 14);
+    private static final Map<Direction.Axis, VoxelShape> CENTER_AABB = new EnumMap<>(Direction.Axis.class);
+    private static final Map<Direction.Axis, VoxelShape[]> LAYER_AABB = new EnumMap<>(Direction.Axis.class);
 
-    public static VoxelShape LAYER_1_AABB_Z = Block.box(0, 0, 12, 16, 16, 16);
-    public static VoxelShape LAYER_2_AABB_Z = Block.box(0, 0, 8, 16, 16, 12);
-    public static VoxelShape LAYER_3_AABB_Z = Block.box(0, 0, 4, 16, 16, 8);
-    public static VoxelShape LAYER_4_AABB_Z = Block.box(0, 0, 0, 16, 16, 4);
-    public static VoxelShape CORE_AABB_Z = Block.box(2, 2, 0, 14, 14, 16);
+    static {
+        CENTER_AABB.put(Direction.Axis.Y, Block.box(2, 0, 2, 14, 16, 14));
+        CENTER_AABB.put(Direction.Axis.X, Block.box(0, 2, 2, 16, 14, 14));
+        CENTER_AABB.put(Direction.Axis.Z, Block.box(2, 2, 0, 14, 14, 16));
 
-    public static VoxelShape LAYER_1_AABB_X = Block.box(0, 0, 0, 4, 16, 16);
-    public static VoxelShape LAYER_2_AABB_X = Block.box(4, 0, 0, 8, 16, 16);
-    public static VoxelShape LAYER_3_AABB_X = Block.box(8, 0, 0, 12, 16, 16);
-    public static VoxelShape LAYER_4_AABB_X = Block.box(12, 0, 0, 16, 16, 16);
-    public static VoxelShape CORE_AABB_X = Block.box(0, 2, 2, 16, 14, 14);
+        LAYER_AABB.put(Direction.Axis.Y, new VoxelShape[] {
+                Block.box(0, 0, 0, 16, 4, 16),
+                Block.box(0, 4, 0, 16, 8, 16),
+                Block.box(0, 8, 0, 16, 12, 16),
+                Block.box(0, 12, 0, 16, 16, 16),
+        });
+        LAYER_AABB.put(Direction.Axis.X, new VoxelShape[] {
+                Block.box(0, 0, 0, 4, 16, 16),
+                Block.box(4, 0, 0, 8, 16, 16),
+                Block.box(8, 0, 0, 12, 16, 16),
+                Block.box(12, 0, 0, 16, 16, 16),
+        });
+        LAYER_AABB.put(Direction.Axis.Z, new VoxelShape[] {
+                Block.box(0, 0, 12, 16, 16, 16),
+                Block.box(0, 0, 8, 16, 16, 12),
+                Block.box(0, 0, 4, 16, 16, 8),
+                Block.box(0, 0, 0, 16, 16, 4),
+        });
+    }
 
     public ColumnBlock(Properties properties) {
         super(properties);
-        this.registerDefaultState(this.stateDefinition.any()
-                .setValue(WATERLOGGED, false)
-                .setValue(AXIS, Direction.Axis.Y)
-                .setValue(TYPE, ColumnType.NONE)
-                .setValue(LAYER_1, true)
-                .setValue(LAYER_2, true)
-                .setValue(LAYER_3, true)
-                .setValue(LAYER_4, true));
-    }
-
-    @Override
-    public VoxelShape getShape(BlockState blockState, BlockGetter blockGetter, BlockPos blockPos, CollisionContext collisionContext) {
-        VoxelShape shape = blockState.getValue(AXIS) == Direction.Axis.X ? CORE_AABB_X : blockState.getValue(AXIS) == Direction.Axis.Z ? CORE_AABB_Z : CORE_AABB;
-        if (blockState.getValue(LAYER_1)) shape = blockState.getValue(AXIS) == Direction.Axis.X ? Shapes.or(shape, LAYER_1_AABB_X) : blockState.getValue(AXIS) == Direction.Axis.Z ? Shapes.or(shape, LAYER_1_AABB_Z) : Shapes.or(shape, LAYER_1_AABB);
-        if (blockState.getValue(LAYER_2)) shape = blockState.getValue(AXIS) == Direction.Axis.X ? Shapes.or(shape, LAYER_2_AABB_X) : blockState.getValue(AXIS) == Direction.Axis.Z ? Shapes.or(shape, LAYER_2_AABB_Z) : Shapes.or(shape, LAYER_2_AABB);
-        if (blockState.getValue(LAYER_3)) shape = blockState.getValue(AXIS) == Direction.Axis.X ? Shapes.or(shape, LAYER_3_AABB_X) : blockState.getValue(AXIS) == Direction.Axis.Z ? Shapes.or(shape, LAYER_3_AABB_Z) : Shapes.or(shape, LAYER_3_AABB);
-        if (blockState.getValue(LAYER_4)) shape = blockState.getValue(AXIS) == Direction.Axis.X ? Shapes.or(shape, LAYER_4_AABB_X) : blockState.getValue(AXIS) == Direction.Axis.Z ? Shapes.or(shape, LAYER_4_AABB_Z) : Shapes.or(shape, LAYER_4_AABB);
-        return shape;
+        this.registerDefaultState(
+                this.defaultBlockState()
+                        .setValue(AXIS, Direction.Axis.Y)
+                        .setValue(TYPE, ColumnType.NONE)
+                        .setValue(LAYER_1_AABB, true)
+                        .setValue(LAYER_2_AABB, true)
+                        .setValue(LAYER_3_AABB, true)
+                        .setValue(LAYER_4_AABB, true)
+                        .setValue(WATERLOGGED, false)
+        );
     }
 
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
-        return this.defaultBlockState()
+        FluidState fluidState = context.getLevel().getFluidState(context.getClickedPos());
+        BlockState state = defaultBlockState()
                 .setValue(AXIS, context.getClickedFace().getAxis())
                 .setValue(TYPE, ColumnType.NONE)
-                .setValue(WATERLOGGED, context.getLevel().getFluidState(context.getClickedPos()).getType() == Fluids.WATER);
+                .setValue(LAYER_1_AABB, true)
+                .setValue(LAYER_2_AABB, true)
+                .setValue(LAYER_3_AABB, true)
+                .setValue(LAYER_4_AABB, true)
+                .setValue(WATERLOGGED, fluidState.is(Fluids.WATER));
+        return removeWaterIfFull(state);
     }
 
+    @SuppressWarnings("deprecation")
     @Override
-    public BlockState updateShape(BlockState state, Direction direction, BlockState neighbourState, LevelAccessor level, BlockPos pos, BlockPos neighbourPos) {
+    public @NotNull VoxelShape getShape(BlockState state, @NotNull BlockGetter level, @NotNull BlockPos pos, @NotNull CollisionContext context) {
         Direction.Axis axis = state.getValue(AXIS);
-        if (direction.getAxis() != axis) return state;
-        Direction.AxisDirection towards = Direction.AxisDirection.POSITIVE;
-        if (axis == Direction.Axis.Z) towards = towards.opposite();
+        VoxelShape shape = CENTER_AABB.get(axis);
+        VoxelShape[] layers = LAYER_AABB.get(axis);
 
-        ColumnType type = getType(state, getRelativeState(level, pos, axis, towards), getRelativeState(level, pos, axis, towards.opposite()));
-        state = state.setValue(TYPE, type);
+        if (state.getValue(LAYER_1_AABB)) shape = Shapes.or(shape, layers[0]);
+        if (state.getValue(LAYER_2_AABB)) shape = Shapes.or(shape, layers[1]);
+        if (state.getValue(LAYER_3_AABB)) shape = Shapes.or(shape, layers[2]);
+        if (state.getValue(LAYER_4_AABB)) shape = Shapes.or(shape, layers[3]);
+
+        return shape;
+    }
+
+    @SuppressWarnings("deprecation")
+    @Override
+    public @NotNull BlockState updateShape(BlockState state, Direction direction, @NotNull BlockState neighbor, @NotNull LevelAccessor level, @NotNull BlockPos pos, @NotNull BlockPos neighborPos) {
+        if (direction.getAxis() == state.getValue(AXIS)) {
+            Direction.Axis axis = state.getValue(AXIS);
+            BlockState above = level.getBlockState(pos.relative(Direction.fromAxisAndDirection(axis, Direction.AxisDirection.POSITIVE)));
+            BlockState below = level.getBlockState(pos.relative(Direction.fromAxisAndDirection(axis, Direction.AxisDirection.NEGATIVE)));
+            state = state.setValue(TYPE, determineColumnType(state, above, below));
+        }
+
+        state = removeWaterIfFull(state);
+        if (state.getValue(WATERLOGGED)) {
+            level.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
+        }
         return state;
     }
 
-    public BlockState getRelativeState(LevelAccessor level, BlockPos pos, Direction.Axis axis, Direction.AxisDirection towards) {
-        return level.getBlockState(pos.relative(Direction.fromAxisAndDirection(axis, towards)));
-    }
+    @SuppressWarnings("deprecation")
+    @Override
+    public @NotNull InteractionResult use(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, Player player, @NotNull InteractionHand hand, @NotNull BlockHitResult hit) {
+        if (!player.getItemInHand(hand).is(BBBTags.BBBItemTags.HAMMERS)) return InteractionResult.PASS;
 
-    public ColumnType getType(BlockState state, BlockState above, BlockState below) {
-        boolean aboveConnects = false;
-        boolean belowConnects = false;
-        boolean layer1 = state.getValue(LAYER_1);
-        boolean layer4 = state.getValue(LAYER_4);
+        Direction.Axis axis = state.getValue(AXIS);
+        double hitFraction = hit.getLocation().get(axis) - pos.get(axis);
+        if (axis == Direction.Axis.Z) hitFraction = 1 - hitFraction;
 
-        boolean stateFull = (layer1 == state.getValue(LAYER_2)) && (layer1 == state.getValue(LAYER_3)) && (layer1 == layer4);
-        if (above.is(state.getBlock()) && state.getValue(AXIS) == above.getValue(AXIS)) {
-            boolean layerAbove1 = above.getValue(LAYER_1);
-            boolean layerAbove4 = above.getValue(LAYER_4);
-            boolean aboveFull = (layerAbove1 == above.getValue(LAYER_2)) && (layerAbove1 == above.getValue(LAYER_3)) && (layerAbove1 == layerAbove4);
-            if ((stateFull && aboveFull) || (!layer4 && !layerAbove1)) aboveConnects = true;
-        }
+        int layerIndex = Math.min(3, (int)(hitFraction * 4));
+        BooleanProperty[] layers = {LAYER_1_AABB, LAYER_2_AABB, LAYER_3_AABB, LAYER_4_AABB};
+        state = state.cycle(layers[layerIndex]);
+        state = removeWaterIfFull(state);
 
-        if (below.is(state.getBlock()) && state.getValue(AXIS) == below.getValue(AXIS)) {
-            boolean layerBelow1 = below.getValue(LAYER_1);
-            boolean layerBelow4 = below.getValue(LAYER_4);
-            boolean belowFull = (layerBelow1 == below.getValue(LAYER_2)) && (layerBelow1 == below.getValue(LAYER_3)) && (layerBelow1 == layerBelow4);
-            if ((stateFull && belowFull) || (!layer1 && !layerBelow4)) belowConnects = true;
-        }
-
-        if (aboveConnects && !belowConnects) return ColumnType.BOTTOM;
-        else if (!aboveConnects && belowConnects) return ColumnType.TOP;
-        else if (aboveConnects) return ColumnType.MIDDLE;
-        return ColumnType.NONE;
-    }
-
-    public InteractionResult use(BlockState blockState, Level level, BlockPos blockPos, Player player, InteractionHand interactionHand, BlockHitResult blockHitResult) {
-        if (!player.getItemInHand(interactionHand).is(BBBTags.BBBItemTags.HAMMERS)) return InteractionResult.PASS;
-
-        Direction.Axis interactAxis = blockState.getValue(AXIS);
-
-        double interactPosAxis = blockHitResult.getLocation().get(interactAxis);
-        int blockPosAxis = blockPos.get(interactAxis);
-        double finalHitLoc = interactPosAxis - blockPosAxis;
-        if (interactAxis == Direction.Axis.Z) finalHitLoc = 1 - finalHitLoc;
-
-        if (finalHitLoc < 0.25) blockState = blockState.cycle(LAYER_1);
-        else if (finalHitLoc < 0.5) blockState = blockState.cycle(LAYER_2);
-        else if (finalHitLoc < 0.75) blockState = blockState.cycle(LAYER_3);
-        else blockState = blockState.cycle(LAYER_4);
-
-        if (blockState.getValue(WATERLOGGED) && blockState.isCollisionShapeFullBlock(level, blockPos)) blockState = blockState.setValue(WATERLOGGED, false);
-        level.setBlock(blockPos, blockState, 3);
-        level.playSound(player, blockPos, blockState.getSoundType().getPlaceSound(), player.getSoundSource(), 1.0F, 1.0F);
+        level.setBlock(pos, state, 3);
+        level.playSound(player, pos, state.getSoundType().getPlaceSound(), player.getSoundSource(), 1f, 1f);
         return InteractionResult.SUCCESS;
     }
 
-    public FluidState getFluidState(BlockState blockState) {
-        return blockState.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(blockState);
+    @Override
+    public boolean canPlaceLiquid(@NotNull BlockGetter level, @NotNull BlockPos pos, @NotNull BlockState state, @NotNull Fluid fluid) {
+        return !isFull(state) && SimpleWaterloggedBlock.super.canPlaceLiquid(level, pos, state, fluid);
     }
 
     @Override
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(LAYER_1, LAYER_2, LAYER_3, LAYER_4, WATERLOGGED, AXIS, TYPE);
+    public boolean placeLiquid(@NotNull LevelAccessor level, @NotNull BlockPos pos, @NotNull BlockState state, @NotNull FluidState fluidState) {
+        return !isFull(state) && SimpleWaterloggedBlock.super.placeLiquid(level, pos, state, fluidState);
+    }
+
+    @SuppressWarnings("deprecation")
+    @Override
+    public @NotNull FluidState getFluidState(BlockState state) {
+        return state.getValue(WATERLOGGED)
+                ? Fluids.WATER.getSource(false)
+                : super.getFluidState(state);
+    }
+
+    private static boolean isFull(BlockState state) {
+        return state.getValue(LAYER_1_AABB)
+                && state.getValue(LAYER_2_AABB)
+                && state.getValue(LAYER_3_AABB)
+                && state.getValue(LAYER_4_AABB);
+    }
+
+    private static BlockState removeWaterIfFull(BlockState state) {
+        return isFull(state) ? state.setValue(WATERLOGGED, false) : state;
+    }
+
+    private static ColumnType determineColumnType(BlockState state, BlockState up, BlockState down) {
+        boolean connectsAbove = canConnect(state, up, Direction.AxisDirection.POSITIVE);
+        boolean connectsBelow = canConnect(state, down, Direction.AxisDirection.NEGATIVE);
+        if (connectsAbove && !connectsBelow) return ColumnType.BOTTOM;
+        if (!connectsAbove && connectsBelow) return ColumnType.TOP;
+        if (connectsAbove) return ColumnType.MIDDLE;
+        return ColumnType.NONE;
+    }
+
+    private static boolean canConnect(BlockState state, BlockState other, Direction.AxisDirection dir) {
+        if (!other.is(state.getBlock()) || state.getValue(AXIS) != other.getValue(AXIS)) {
+            return false;
+        }
+
+        boolean thisFull  = isFull(state);
+        boolean otherFull = isFull(other);
+        Direction.Axis axis = state.getValue(AXIS);
+
+        boolean thisEnd, otherEnd;
+        if (axis == Direction.Axis.Z) {
+            if (dir == Direction.AxisDirection.POSITIVE) {
+                thisEnd  = !state.getValue(LAYER_1_AABB);
+                otherEnd = !other.getValue(LAYER_1_AABB);
+            } else {
+                thisEnd  = !state.getValue(LAYER_4_AABB);
+                otherEnd = !other.getValue(LAYER_4_AABB);
+            }
+        } else {
+            if (dir == Direction.AxisDirection.POSITIVE) {
+                thisEnd  = !state.getValue(LAYER_4_AABB);
+                otherEnd = !other.getValue(LAYER_4_AABB);
+            } else {
+                thisEnd  = !state.getValue(LAYER_1_AABB);
+                otherEnd = !other.getValue(LAYER_1_AABB);
+            }
+        }
+        return (thisFull && otherFull) || (thisEnd && otherEnd);
     }
 
 
+    @Override
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(LAYER_1_AABB, LAYER_2_AABB, LAYER_3_AABB, LAYER_4_AABB, WATERLOGGED, AXIS, TYPE);
+    }
 }

@@ -10,9 +10,7 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.DirectionalBlock;
-import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.*;
@@ -22,6 +20,7 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.NotNull;
 
 public class LayerBlock extends Block implements SimpleWaterloggedBlock {
     // region PROPERTIES
@@ -54,7 +53,6 @@ public class LayerBlock extends Block implements SimpleWaterloggedBlock {
     public static final VoxelShape LAYER_4_WEST = Block.box(0, 0, 0, 16, 16, 16);
     // endregion
 
-
     public LayerBlock(Properties properties) {
         super(properties);
         this.registerDefaultState(
@@ -65,26 +63,28 @@ public class LayerBlock extends Block implements SimpleWaterloggedBlock {
         );
     }
 
+    @SuppressWarnings("deprecation")
     @Override
-    public InteractionResult use(BlockState blockState, Level level, BlockPos blockPos, Player player, InteractionHand interactionHand, BlockHitResult blockHitResult) {
-        if (player.getItemInHand(interactionHand).is(BBBTags.BBBItemTags.HAMMERS)) {
-            if (blockState.getValue(LAYERS) > 1) {
-                level.setBlock(blockPos, blockState.setValue(LAYERS, blockState.getValue(LAYERS) - 1), 3);
-                Block.popResource(level, blockPos, this.asItem().getDefaultInstance());
-                player.getItemInHand(interactionHand).hurtAndBreak(1, player, (playerEntity) -> {
-                    playerEntity.broadcastBreakEvent(interactionHand);
+    public @NotNull InteractionResult use(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, Player player, @NotNull InteractionHand hand, @NotNull BlockHitResult hit) {
+        if (player.getItemInHand(hand).is(BBBTags.BBBItemTags.HAMMERS)) {
+            if (state.getValue(LAYERS) > 1) {
+                level.setBlock(pos, state.setValue(LAYERS, state.getValue(LAYERS) - 1), 3);
+                Block.popResource(level, pos, this.asItem().getDefaultInstance());
+                player.getItemInHand(hand).hurtAndBreak(1, player, (playerEntity) -> {
+                    playerEntity.broadcastBreakEvent(hand);
                 });
-                level.playSound(player, blockPos, level.getBlockState(blockPos).getBlock().getSoundType(level.getBlockState(blockPos)).getBreakSound(), player.getSoundSource(), 1.0F, 1.0F);
+                level.playSound(player, pos, level.getBlockState(pos).getBlock().getSoundType(level.getBlockState(pos)).getBreakSound(), player.getSoundSource(), 1.0F, 1.0F);
                 return InteractionResult.SUCCESS;
-            } else if (blockState.getValue(LAYERS) == 1) {
+            } else if (state.getValue(LAYERS) == 1) {
                 return InteractionResult.FAIL;
             }
         }
         return InteractionResult.PASS;
     }
 
+    @SuppressWarnings("deprecation")
     @Override
-    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+    public @NotNull VoxelShape getShape(BlockState state, @NotNull BlockGetter level, @NotNull BlockPos pos, @NotNull CollisionContext context) {
         return switch (state.getValue(LAYERS)) {
             case 1 -> switch (state.getValue(FACING)) {
                 case NORTH -> LAYER_1_NORTH;
@@ -122,74 +122,89 @@ public class LayerBlock extends Block implements SimpleWaterloggedBlock {
         };
     }
 
+    @SuppressWarnings("deprecation")
     @Override
-    public boolean canBeReplaced(BlockState blockState, BlockPlaceContext blockPlaceContext) {
-        if (blockState.getValue(FACING) != blockPlaceContext.getClickedFace()) return false;
-        return blockPlaceContext.getItemInHand().is(this.asItem()) && blockState.getValue(LAYERS) < 4 || super.canBeReplaced(blockState, blockPlaceContext);
+    public boolean canBeReplaced(BlockState state, BlockPlaceContext context) {
+        if (state.getValue(FACING) != context.getClickedFace()) return false;
+        return context.getItemInHand().is(this.asItem()) && state.getValue(LAYERS) < 4 || super.canBeReplaced(state, context);
     }
 
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         if (context.getPlayer() != null && context.getPlayer().isShiftKeyDown()) {
-            BlockState blockState = context.getLevel().getBlockState(context.getClickedPos());
+            BlockState state = context.getLevel().getBlockState(context.getClickedPos());
             Direction[] var2 = context.getNearestLookingDirections();
             FluidState fluidState = context.getLevel().getFluidState(context.getClickedPos());
 
-            if (blockState.getBlock() == this) {
-                return blockState.setValue(LAYERS, Math.min(4, blockState.getValue(LAYERS) + 1));
+            if (state.getBlock() == this) {
+                return state.setValue(LAYERS, Math.min(4, state.getValue(LAYERS) + 1));
             }
 
             for (Direction direction : var2) {
                 if (direction.getAxis() == Direction.Axis.Y) {
-                    blockState = this.defaultBlockState().setValue(FACING, context.getNearestLookingVerticalDirection().getOpposite());
+                    state = this.defaultBlockState().setValue(FACING, context.getNearestLookingVerticalDirection().getOpposite());
                 } else {
-                    blockState = this.defaultBlockState().setValue(FACING, direction.getOpposite());
+                    state = this.defaultBlockState().setValue(FACING, direction.getOpposite());
                 }
-                return blockState;
+                return state;
             }
-            if (blockState.is(this)) {
-                return blockState.setValue(WATERLOGGED, false).setValue(LAYERS, 4);
+            if (state.is(this)) {
+                return state.setValue(WATERLOGGED, false).setValue(LAYERS, 4);
             } else {
-                return blockState.setValue(WATERLOGGED, fluidState.getType() == Fluids.WATER);
+                return state.setValue(WATERLOGGED, fluidState.getType() == Fluids.WATER);
             }
         } else {
-            BlockPos blockPos = context.getClickedPos();
-            BlockState blockState = context.getLevel().getBlockState(blockPos);
-            if (blockState.is(this)) {
-                return blockState.setValue(LAYERS, Math.min(4, blockState.getValue(LAYERS) + 1));
+            BlockPos pos = context.getClickedPos();
+            BlockState state = context.getLevel().getBlockState(pos);
+            if (state.is(this)) {
+                return state.setValue(LAYERS, Math.min(4, state.getValue(LAYERS) + 1));
             }
-            FluidState fluidState = context.getLevel().getFluidState(blockPos);
-            BlockState blockState2 = this.defaultBlockState().setValue(FACING, Direction.UP).setValue(WATERLOGGED, fluidState.getType() == Fluids.WATER);
+            FluidState fluidState = context.getLevel().getFluidState(pos);
+            BlockState state2 = this.defaultBlockState().setValue(FACING, Direction.UP).setValue(WATERLOGGED, fluidState.getType() == Fluids.WATER);
             Direction direction = context.getClickedFace();
-            if (direction == Direction.DOWN || direction != Direction.UP && context.getClickLocation().y - (double) blockPos.getY() > 0.5) {
-                return blockState2.setValue(FACING, Direction.DOWN);
+            if (direction == Direction.DOWN || direction != Direction.UP && context.getClickLocation().y - (double) pos.getY() > 0.5) {
+                return state2.setValue(FACING, Direction.DOWN);
             }
-            return blockState2;
+            return state2;
         }
     }
 
+    @SuppressWarnings("deprecation")
     @Override
-    public FluidState getFluidState(BlockState blockState) {
-        return blockState.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(blockState);
+    public @NotNull FluidState getFluidState(BlockState state) {
+        return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
     }
 
     @Override
-    public boolean placeLiquid(LevelAccessor levelAccessor, BlockPos blockPos, BlockState blockState, FluidState fluidState) {
-        return blockState.getValue(LAYERS) != 4 && SimpleWaterloggedBlock.super.placeLiquid(levelAccessor, blockPos, blockState, fluidState);
+    public boolean placeLiquid(@NotNull LevelAccessor level, @NotNull BlockPos pos, BlockState state, @NotNull FluidState fluidState) {
+        return state.getValue(LAYERS) != 4 && SimpleWaterloggedBlock.super.placeLiquid(level, pos, state, fluidState);
+    }
+    
+    @SuppressWarnings("deprecation")
+    @Override
+    public @NotNull BlockState rotate(BlockState state, Rotation rotation) {
+        return state.setValue(FACING, rotation.rotate(state.getValue(FACING)));
+    }
+
+    @SuppressWarnings("deprecation")
+    @Override
+    public @NotNull BlockState mirror(BlockState state, Mirror mirror) {
+        return state.rotate(mirror.getRotation(state.getValue(FACING)));
     }
 
     @Override
-    public boolean canPlaceLiquid(BlockGetter blockGetter, BlockPos blockPos, BlockState blockState, Fluid fluid) {
-        return blockState.getValue(LAYERS) != 4 && SimpleWaterloggedBlock.super.canPlaceLiquid(blockGetter, blockPos, blockState, fluid);
+    public boolean canPlaceLiquid(@NotNull BlockGetter level, @NotNull BlockPos pos, BlockState state, @NotNull Fluid fluid) {
+        return state.getValue(LAYERS) != 4 && SimpleWaterloggedBlock.super.canPlaceLiquid(level, pos, state, fluid);
     }
 
+    @SuppressWarnings("deprecation")
     @Override
-    public BlockState updateShape(BlockState blockState, Direction direction, BlockState blockState2, LevelAccessor levelAccessor, BlockPos blockPos, BlockPos blockPos2) {
-        if (blockState.getValue(WATERLOGGED)) {
-            levelAccessor.scheduleTick(blockPos, Fluids.WATER, Fluids.WATER.getTickDelay(levelAccessor));
+    public @NotNull BlockState updateShape(BlockState state, @NotNull Direction direction, @NotNull BlockState state2, @NotNull LevelAccessor level, @NotNull BlockPos pos, @NotNull BlockPos pos2) {
+        if (state.getValue(WATERLOGGED)) {
+            level.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
         }
 
-        return super.updateShape(blockState, direction, blockState2, levelAccessor, blockPos, blockPos2);
+        return super.updateShape(state, direction, state2, level, pos, pos2);
     }
 
     @Override
