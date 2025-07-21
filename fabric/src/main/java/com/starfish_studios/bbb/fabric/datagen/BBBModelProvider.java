@@ -2,7 +2,6 @@ package com.starfish_studios.bbb.fabric.datagen;
 
 import com.starfish_studios.bbb.registry.BBBBlocks;
 import com.starfish_studios.bbb.registry.BBBItems;
-import com.starfish_studios.bbb.registry.BBBWoodType;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.minecraft.data.models.BlockModelGenerators;
@@ -23,6 +22,6 @@ public class BBBModelProvider extends FabricModelProvider {
 
     @Override
     public void generateItemModels(ItemModelGenerators itemModelGenerator) {
-        itemModelGenerator.generateFlatItem(BBBItems.FRAME_ITEMS.get(BBBWoodType.OAK).get(), ModelTemplates.FLAT_HANDHELD_ITEM);
+
     }
 }

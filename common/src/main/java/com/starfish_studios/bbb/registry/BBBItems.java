@@ -9,45 +9,172 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.*;
 
-import java.util.EnumMap;
-import java.util.List;
-import java.util.Map;
-
 public class BBBItems {
 
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(BuildingButBetter.MOD_ID, Registries.ITEM);
     /// Oak, Spruce, Birch, Jungle, Acacia, Dark Oak, Crimson, Warped, Mangrove, Bamboo, Cherry
-    public static final Map<BBBWoodType, RegistrySupplier<Item>> BALUSTRADE_ITEMS = new EnumMap<>(BBBWoodType.class);
-    public static final Map<BBBWoodType, RegistrySupplier<Item>> LATTICE_ITEMS = new EnumMap<>(BBBWoodType.class);
-    public static final Map<BBBWoodType, RegistrySupplier<Item>> WALL_ITEMS = new EnumMap<>(BBBWoodType.class);
-    public static final Map<BBBWoodType, RegistrySupplier<Item>> BEAM_ITEMS = new EnumMap<>(BBBWoodType.class);
-    public static final Map<BBBWoodType, RegistrySupplier<Item>> BEAM_STAIR_ITEMS = new EnumMap<>(BBBWoodType.class);
-    public static final Map<BBBWoodType, RegistrySupplier<Item>> BEAM_SLAB_ITEMS = new EnumMap<>(BBBWoodType.class);
-    public static final Map<BBBWoodType, RegistrySupplier<Item>> SUPPORT_ITEMS = new EnumMap<>(BBBWoodType.class);
-    public static final Map<BBBWoodType, RegistrySupplier<Item>> LADDER_ITEMS = new EnumMap<>(BBBWoodType.class);
-    public static final Map<BBBWoodType, RegistrySupplier<Item>> PALLET_ITEMS = new EnumMap<>(BBBWoodType.class);
-    public static final Map<BBBWoodType, RegistrySupplier<Item>> FRAME_ITEMS = new EnumMap<>(BBBWoodType.class);
-    public static final Map<BBBWoodType, RegistrySupplier<Item>> LANTERN_ITEMS = new EnumMap<>(BBBWoodType.class);
-    public static final Map<BBBWoodType, RegistrySupplier<Item>> TRIM_ITEMS = new EnumMap<>(BBBWoodType.class);
-    public static final Map<BBBWoodType, RegistrySupplier<Item>> LAYER_ITEMS = new EnumMap<>(BBBWoodType.class);
 
-    public static List<RegistrySupplier<Item>> getItems(BBBWoodType type){
-        return List.of(
-                BALUSTRADE_ITEMS.get(type),
-                LATTICE_ITEMS.get(type),
-                WALL_ITEMS.get(type),
-                BEAM_ITEMS.get(type),
-                BEAM_STAIR_ITEMS.get(type),
-                BEAM_SLAB_ITEMS.get(type),
-                SUPPORT_ITEMS.get(type),
-                PALLET_ITEMS.get(type),
-                FRAME_ITEMS.get(type),
-                LADDER_ITEMS.get(type),
-                LANTERN_ITEMS.get(type),
-                TRIM_ITEMS.get(type),
-                LAYER_ITEMS.get(type)
-        );
-    }
+
+    public static final RegistrySupplier<Item> OAK_BALUSTRADE = ITEMS.register("oak_balustrade", () -> new DescriptionBlockItem(BBBBlocks.OAK_BALUSTRADE.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> SPRUCE_BALUSTRADE = ITEMS.register("spruce_balustrade", () -> new DescriptionBlockItem(BBBBlocks.SPRUCE_BALUSTRADE.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> BIRCH_BALUSTRADE = ITEMS.register("birch_balustrade", () -> new DescriptionBlockItem(BBBBlocks.BIRCH_BALUSTRADE.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> JUNGLE_BALUSTRADE = ITEMS.register("jungle_balustrade", () -> new DescriptionBlockItem(BBBBlocks.JUNGLE_BALUSTRADE.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> ACACIA_BALUSTRADE = ITEMS.register("acacia_balustrade", () -> new DescriptionBlockItem(BBBBlocks.ACACIA_BALUSTRADE.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> DARK_OAK_BALUSTRADE = ITEMS.register("dark_oak_balustrade", () -> new DescriptionBlockItem(BBBBlocks.DARK_OAK_BALUSTRADE.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> CRIMSON_BALUSTRADE = ITEMS.register("crimson_balustrade", () -> new DescriptionBlockItem(BBBBlocks.CRIMSON_BALUSTRADE.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> WARPED_BALUSTRADE = ITEMS.register("warped_balustrade", () -> new DescriptionBlockItem(BBBBlocks.WARPED_BALUSTRADE.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> MANGROVE_BALUSTRADE = ITEMS.register("mangrove_balustrade", () -> new DescriptionBlockItem(BBBBlocks.MANGROVE_BALUSTRADE.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> BAMBOO_BALUSTRADE = ITEMS.register("bamboo_balustrade", () -> new DescriptionBlockItem(BBBBlocks.BAMBOO_BALUSTRADE.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> CHERRY_BALUSTRADE = ITEMS.register("cherry_balustrade", () -> new DescriptionBlockItem(BBBBlocks.CHERRY_BALUSTRADE.get(), new Item.Properties()));
+
+    public static final RegistrySupplier<Item> OAK_LATTICE = ITEMS.register("oak_lattice", () -> new DescriptionBlockItem(BBBBlocks.OAK_LATTICE.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> SPRUCE_LATTICE = ITEMS.register("spruce_lattice", () -> new DescriptionBlockItem(BBBBlocks.SPRUCE_LATTICE.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> BIRCH_LATTICE = ITEMS.register("birch_lattice", () -> new DescriptionBlockItem(BBBBlocks.BIRCH_LATTICE.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> JUNGLE_LATTICE = ITEMS.register("jungle_lattice", () -> new DescriptionBlockItem(BBBBlocks.JUNGLE_LATTICE.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> ACACIA_LATTICE = ITEMS.register("acacia_lattice", () -> new DescriptionBlockItem(BBBBlocks.ACACIA_LATTICE.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> DARK_OAK_LATTICE = ITEMS.register("dark_oak_lattice", () -> new DescriptionBlockItem(BBBBlocks.DARK_OAK_LATTICE.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> CRIMSON_LATTICE = ITEMS.register("crimson_lattice", () -> new DescriptionBlockItem(BBBBlocks.CRIMSON_LATTICE.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> WARPED_LATTICE = ITEMS.register("warped_lattice", () -> new DescriptionBlockItem(BBBBlocks.WARPED_LATTICE.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> MANGROVE_LATTICE = ITEMS.register("mangrove_lattice", () -> new DescriptionBlockItem(BBBBlocks.MANGROVE_LATTICE.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> BAMBOO_LATTICE = ITEMS.register("bamboo_lattice", () -> new DescriptionBlockItem(BBBBlocks.BAMBOO_LATTICE.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> CHERRY_LATTICE = ITEMS.register("cherry_lattice", () -> new DescriptionBlockItem(BBBBlocks.CHERRY_LATTICE.get(), new Item.Properties()));
+
+    public static final RegistrySupplier<Item> OAK_WALL = ITEMS.register("oak_wall", () -> new BlockItem(BBBBlocks.OAK_WALL.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> SPRUCE_WALL = ITEMS.register("spruce_wall", () -> new BlockItem(BBBBlocks.SPRUCE_WALL.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> BIRCH_WALL = ITEMS.register("birch_wall", () -> new BlockItem(BBBBlocks.BIRCH_WALL.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> JUNGLE_WALL = ITEMS.register("jungle_wall", () -> new BlockItem(BBBBlocks.JUNGLE_WALL.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> ACACIA_WALL = ITEMS.register("acacia_wall", () -> new BlockItem(BBBBlocks.ACACIA_WALL.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> DARK_OAK_WALL = ITEMS.register("dark_oak_wall", () -> new BlockItem(BBBBlocks.DARK_OAK_WALL.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> CRIMSON_WALL = ITEMS.register("crimson_wall", () -> new BlockItem(BBBBlocks.CRIMSON_WALL.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> WARPED_WALL = ITEMS.register("warped_wall", () -> new BlockItem(BBBBlocks.WARPED_WALL.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> MANGROVE_WALL = ITEMS.register("mangrove_wall", () -> new BlockItem(BBBBlocks.MANGROVE_WALL.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> BAMBOO_WALL = ITEMS.register("bamboo_wall", () -> new BlockItem(BBBBlocks.BAMBOO_WALL.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> CHERRY_WALL = ITEMS.register("cherry_wall", () -> new BlockItem(BBBBlocks.CHERRY_WALL.get(), new Item.Properties()));
+
+
+    public static final RegistrySupplier<Item> OAK_BEAM = ITEMS.register("oak_beam", () -> new BlockItem(BBBBlocks.OAK_BEAM.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> SPRUCE_BEAM = ITEMS.register("spruce_beam", () -> new BlockItem(BBBBlocks.SPRUCE_BEAM.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> BIRCH_BEAM = ITEMS.register("birch_beam", () -> new BlockItem(BBBBlocks.BIRCH_BEAM.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> JUNGLE_BEAM = ITEMS.register("jungle_beam", () -> new BlockItem(BBBBlocks.JUNGLE_BEAM.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> ACACIA_BEAM = ITEMS.register("acacia_beam", () -> new BlockItem(BBBBlocks.ACACIA_BEAM.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> DARK_OAK_BEAM = ITEMS.register("dark_oak_beam", () -> new BlockItem(BBBBlocks.DARK_OAK_BEAM.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> CRIMSON_BEAM = ITEMS.register("crimson_beam", () -> new BlockItem(BBBBlocks.CRIMSON_BEAM.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> WARPED_BEAM = ITEMS.register("warped_beam", () -> new BlockItem(BBBBlocks.WARPED_BEAM.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> MANGROVE_BEAM = ITEMS.register("mangrove_beam", () -> new BlockItem(BBBBlocks.MANGROVE_BEAM.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> BAMBOO_BEAM = ITEMS.register("bamboo_beam", () -> new BlockItem(BBBBlocks.BAMBOO_BEAM.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> CHERRY_BEAM = ITEMS.register("cherry_beam", () -> new BlockItem(BBBBlocks.CHERRY_BEAM.get(), new Item.Properties()));
+
+
+    public static final RegistrySupplier<Item> OAK_BEAM_STAIRS = ITEMS.register("oak_beam_stairs", () -> new BlockItem(BBBBlocks.OAK_BEAM_STAIRS.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> SPRUCE_BEAM_STAIRS = ITEMS.register("spruce_beam_stairs", () -> new BlockItem(BBBBlocks.SPRUCE_BEAM_STAIRS.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> BIRCH_BEAM_STAIRS = ITEMS.register("birch_beam_stairs", () -> new BlockItem(BBBBlocks.BIRCH_BEAM_STAIRS.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> JUNGLE_BEAM_STAIRS = ITEMS.register("jungle_beam_stairs", () -> new BlockItem(BBBBlocks.JUNGLE_BEAM_STAIRS.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> ACACIA_BEAM_STAIRS = ITEMS.register("acacia_beam_stairs", () -> new BlockItem(BBBBlocks.ACACIA_BEAM_STAIRS.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> DARK_OAK_BEAM_STAIRS = ITEMS.register("dark_oak_beam_stairs", () -> new BlockItem(BBBBlocks.DARK_OAK_BEAM_STAIRS.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> CRIMSON_BEAM_STAIRS = ITEMS.register("crimson_beam_stairs", () -> new BlockItem(BBBBlocks.CRIMSON_BEAM_STAIRS.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> WARPED_BEAM_STAIRS = ITEMS.register("warped_beam_stairs", () -> new BlockItem(BBBBlocks.WARPED_BEAM_STAIRS.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> MANGROVE_BEAM_STAIRS = ITEMS.register("mangrove_beam_stairs", () -> new BlockItem(BBBBlocks.MANGROVE_BEAM_STAIRS.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> BAMBOO_BEAM_STAIRS = ITEMS.register("bamboo_beam_stairs", () -> new BlockItem(BBBBlocks.BAMBOO_BEAM_STAIRS.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> CHERRY_BEAM_STAIRS = ITEMS.register("cherry_beam_stairs", () -> new BlockItem(BBBBlocks.CHERRY_BEAM_STAIRS.get(), new Item.Properties()));
+
+    public static final RegistrySupplier<Item> OAK_BEAM_SLAB = ITEMS.register("oak_beam_slab", () -> new BlockItem(BBBBlocks.OAK_BEAM_SLAB.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> SPRUCE_BEAM_SLAB = ITEMS.register("spruce_beam_slab", () -> new BlockItem(BBBBlocks.SPRUCE_BEAM_SLAB.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> BIRCH_BEAM_SLAB = ITEMS.register("birch_beam_slab", () -> new BlockItem(BBBBlocks.BIRCH_BEAM_SLAB.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> JUNGLE_BEAM_SLAB = ITEMS.register("jungle_beam_slab", () -> new BlockItem(BBBBlocks.JUNGLE_BEAM_SLAB.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> ACACIA_BEAM_SLAB = ITEMS.register("acacia_beam_slab", () -> new BlockItem(BBBBlocks.ACACIA_BEAM_SLAB.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> DARK_OAK_BEAM_SLAB = ITEMS.register("dark_oak_beam_slab", () -> new BlockItem(BBBBlocks.DARK_OAK_BEAM_SLAB.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> CRIMSON_BEAM_SLAB = ITEMS.register("crimson_beam_slab", () -> new BlockItem(BBBBlocks.CRIMSON_BEAM_SLAB.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> WARPED_BEAM_SLAB = ITEMS.register("warped_beam_slab", () -> new BlockItem(BBBBlocks.WARPED_BEAM_SLAB.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> MANGROVE_BEAM_SLAB = ITEMS.register("mangrove_beam_slab", () -> new BlockItem(BBBBlocks.MANGROVE_BEAM_SLAB.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> BAMBOO_BEAM_SLAB = ITEMS.register("bamboo_beam_slab", () -> new BlockItem(BBBBlocks.BAMBOO_BEAM_SLAB.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> CHERRY_BEAM_SLAB = ITEMS.register("cherry_beam_slab", () -> new BlockItem(BBBBlocks.CHERRY_BEAM_SLAB.get(), new Item.Properties()));
+
+    public static final RegistrySupplier<Item> OAK_SUPPORT = ITEMS.register("oak_support", () -> new DescriptionBlockItem(BBBBlocks.OAK_SUPPORT.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> SPRUCE_SUPPORT = ITEMS.register("spruce_support", () -> new DescriptionBlockItem(BBBBlocks.SPRUCE_SUPPORT.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> BIRCH_SUPPORT = ITEMS.register("birch_support", () -> new DescriptionBlockItem(BBBBlocks.BIRCH_SUPPORT.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> JUNGLE_SUPPORT = ITEMS.register("jungle_support", () -> new DescriptionBlockItem(BBBBlocks.JUNGLE_SUPPORT.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> ACACIA_SUPPORT = ITEMS.register("acacia_support", () -> new DescriptionBlockItem(BBBBlocks.ACACIA_SUPPORT.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> DARK_OAK_SUPPORT = ITEMS.register("dark_oak_support", () -> new DescriptionBlockItem(BBBBlocks.DARK_OAK_SUPPORT.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> CRIMSON_SUPPORT = ITEMS.register("crimson_support", () -> new DescriptionBlockItem(BBBBlocks.CRIMSON_SUPPORT.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> WARPED_SUPPORT = ITEMS.register("warped_support", () -> new DescriptionBlockItem(BBBBlocks.WARPED_SUPPORT.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> MANGROVE_SUPPORT = ITEMS.register("mangrove_support", () -> new DescriptionBlockItem(BBBBlocks.MANGROVE_SUPPORT.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> BAMBOO_SUPPORT = ITEMS.register("bamboo_support", () -> new DescriptionBlockItem(BBBBlocks.BAMBOO_SUPPORT.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> CHERRY_SUPPORT = ITEMS.register("cherry_support", () -> new DescriptionBlockItem(BBBBlocks.CHERRY_SUPPORT.get(), new Item.Properties()));
+
+    public static final RegistrySupplier<Item> OAK_PALLET = ITEMS.register("oak_pallet", () -> new DescriptionBlockItem(BBBBlocks.OAK_PALLET.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> SPRUCE_PALLET = ITEMS.register("spruce_pallet", () -> new DescriptionBlockItem(BBBBlocks.SPRUCE_PALLET.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> BIRCH_PALLET = ITEMS.register("birch_pallet", () -> new DescriptionBlockItem(BBBBlocks.BIRCH_PALLET.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> JUNGLE_PALLET = ITEMS.register("jungle_pallet", () -> new DescriptionBlockItem(BBBBlocks.JUNGLE_PALLET.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> ACACIA_PALLET = ITEMS.register("acacia_pallet", () -> new DescriptionBlockItem(BBBBlocks.ACACIA_PALLET.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> DARK_OAK_PALLET = ITEMS.register("dark_oak_pallet", () -> new DescriptionBlockItem(BBBBlocks.DARK_OAK_PALLET.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> CRIMSON_PALLET = ITEMS.register("crimson_pallet", () -> new DescriptionBlockItem(BBBBlocks.CRIMSON_PALLET.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> WARPED_PALLET = ITEMS.register("warped_pallet", () -> new DescriptionBlockItem(BBBBlocks.WARPED_PALLET.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> MANGROVE_PALLET = ITEMS.register("mangrove_pallet", () -> new DescriptionBlockItem(BBBBlocks.MANGROVE_PALLET.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> BAMBOO_PALLET = ITEMS.register("bamboo_pallet", () -> new DescriptionBlockItem(BBBBlocks.BAMBOO_PALLET.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> CHERRY_PALLET = ITEMS.register("cherry_pallet", () -> new DescriptionBlockItem(BBBBlocks.CHERRY_PALLET.get(), new Item.Properties()));
+
+    public static final RegistrySupplier<Item> OAK_FRAME = ITEMS.register("oak_frame", () -> new DescriptionBlockItem(BBBBlocks.OAK_FRAME.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> SPRUCE_FRAME = ITEMS.register("spruce_frame", () -> new DescriptionBlockItem(BBBBlocks.SPRUCE_FRAME.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> BIRCH_FRAME = ITEMS.register("birch_frame", () -> new DescriptionBlockItem(BBBBlocks.BIRCH_FRAME.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> JUNGLE_FRAME = ITEMS.register("jungle_frame", () -> new DescriptionBlockItem(BBBBlocks.JUNGLE_FRAME.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> ACACIA_FRAME = ITEMS.register("acacia_frame", () -> new DescriptionBlockItem(BBBBlocks.ACACIA_FRAME.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> DARK_OAK_FRAME = ITEMS.register("dark_oak_frame", () -> new DescriptionBlockItem(BBBBlocks.DARK_OAK_FRAME.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> CRIMSON_FRAME = ITEMS.register("crimson_frame", () -> new DescriptionBlockItem(BBBBlocks.CRIMSON_FRAME.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> WARPED_FRAME = ITEMS.register("warped_frame", () -> new DescriptionBlockItem(BBBBlocks.WARPED_FRAME.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> MANGROVE_FRAME = ITEMS.register("mangrove_frame", () -> new DescriptionBlockItem(BBBBlocks.MANGROVE_FRAME.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> BAMBOO_FRAME = ITEMS.register("bamboo_frame", () -> new DescriptionBlockItem(BBBBlocks.BAMBOO_FRAME.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> CHERRY_FRAME = ITEMS.register("cherry_frame", () -> new DescriptionBlockItem(BBBBlocks.CHERRY_FRAME.get(), new Item.Properties()));
+
+
+    public static final RegistrySupplier<Item> OAK_LANTERN = ITEMS.register("oak_lantern", () -> new DescriptionBlockItem(BBBBlocks.OAK_LANTERN.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> SPRUCE_LANTERN = ITEMS.register("spruce_lantern", () -> new DescriptionBlockItem(BBBBlocks.SPRUCE_LANTERN.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> BIRCH_LANTERN = ITEMS.register("birch_lantern", () -> new DescriptionBlockItem(BBBBlocks.BIRCH_LANTERN.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> JUNGLE_LANTERN = ITEMS.register("jungle_lantern", () -> new DescriptionBlockItem(BBBBlocks.JUNGLE_LANTERN.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> ACACIA_LANTERN = ITEMS.register("acacia_lantern", () -> new DescriptionBlockItem(BBBBlocks.ACACIA_LANTERN.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> DARK_OAK_LANTERN = ITEMS.register("dark_oak_lantern", () -> new DescriptionBlockItem(BBBBlocks.DARK_OAK_LANTERN.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> CRIMSON_LANTERN = ITEMS.register("crimson_lantern", () -> new DescriptionBlockItem(BBBBlocks.CRIMSON_LANTERN.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> WARPED_LANTERN = ITEMS.register("warped_lantern", () -> new DescriptionBlockItem(BBBBlocks.WARPED_LANTERN.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> MANGROVE_LANTERN = ITEMS.register("mangrove_lantern", () -> new DescriptionBlockItem(BBBBlocks.MANGROVE_LANTERN.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> BAMBOO_LANTERN = ITEMS.register("bamboo_lantern", () -> new DescriptionBlockItem(BBBBlocks.BAMBOO_LANTERN.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> CHERRY_LANTERN = ITEMS.register("cherry_lantern", () -> new DescriptionBlockItem(BBBBlocks.CHERRY_LANTERN.get(), new Item.Properties()));
+
+    public static final RegistrySupplier<Item> OAK_TRIM = ITEMS.register("oak_trim", () -> new BlockItem(BBBBlocks.OAK_TRIM.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> SPRUCE_TRIM = ITEMS.register("spruce_trim", () -> new BlockItem(BBBBlocks.SPRUCE_TRIM.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> BIRCH_TRIM = ITEMS.register("birch_trim", () -> new BlockItem(BBBBlocks.BIRCH_TRIM.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> JUNGLE_TRIM = ITEMS.register("jungle_trim", () -> new BlockItem(BBBBlocks.JUNGLE_TRIM.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> ACACIA_TRIM = ITEMS.register("acacia_trim", () -> new BlockItem(BBBBlocks.ACACIA_TRIM.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> DARK_OAK_TRIM = ITEMS.register("dark_oak_trim", () -> new BlockItem(BBBBlocks.DARK_OAK_TRIM.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> CRIMSON_TRIM = ITEMS.register("crimson_trim", () -> new BlockItem(BBBBlocks.CRIMSON_TRIM.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> WARPED_TRIM = ITEMS.register("warped_trim", () -> new BlockItem(BBBBlocks.WARPED_TRIM.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> MANGROVE_TRIM = ITEMS.register("mangrove_trim", () -> new BlockItem(BBBBlocks.MANGROVE_TRIM.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> BAMBOO_TRIM = ITEMS.register("bamboo_trim", () -> new BlockItem(BBBBlocks.BAMBOO_TRIM.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> CHERRY_TRIM = ITEMS.register("cherry_trim", () -> new BlockItem(BBBBlocks.CHERRY_TRIM.get(), new Item.Properties()));
+
+    public static final RegistrySupplier<Item> OAK_LAYER = ITEMS.register("oak_layer", () -> new DescriptionBlockItem(BBBBlocks.OAK_LAYER.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> SPRUCE_LAYER = ITEMS.register("spruce_layer", () -> new DescriptionBlockItem(BBBBlocks.SPRUCE_LAYER.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> BIRCH_LAYER = ITEMS.register("birch_layer", () -> new DescriptionBlockItem(BBBBlocks.BIRCH_LAYER.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> JUNGLE_LAYER = ITEMS.register("jungle_layer", () -> new DescriptionBlockItem(BBBBlocks.JUNGLE_LAYER.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> ACACIA_LAYER = ITEMS.register("acacia_layer", () -> new DescriptionBlockItem(BBBBlocks.ACACIA_LAYER.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> DARK_OAK_LAYER = ITEMS.register("dark_oak_layer", () -> new DescriptionBlockItem(BBBBlocks.DARK_OAK_LAYER.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> CRIMSON_LAYER = ITEMS.register("crimson_layer", () -> new DescriptionBlockItem(BBBBlocks.CRIMSON_LAYER.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> WARPED_LAYER = ITEMS.register("warped_layer", () -> new DescriptionBlockItem(BBBBlocks.WARPED_LAYER.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> MANGROVE_LAYER = ITEMS.register("mangrove_layer", () -> new DescriptionBlockItem(BBBBlocks.MANGROVE_LAYER.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> BAMBOO_LAYER = ITEMS.register("bamboo_layer", () -> new DescriptionBlockItem(BBBBlocks.BAMBOO_LAYER.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> CHERRY_LAYER = ITEMS.register("cherry_layer", () -> new DescriptionBlockItem(BBBBlocks.CHERRY_LAYER.get(), new Item.Properties()));
+
+    public static final RegistrySupplier<Item> OAK_LADDER = ITEMS.register("oak_ladder", () -> new DescriptionBlockItem(BBBBlocks.OAK_LADDER.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> SPRUCE_LADDER = ITEMS.register("spruce_ladder", () -> new DescriptionBlockItem(BBBBlocks.SPRUCE_LADDER.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> BIRCH_LADDER = ITEMS.register("birch_ladder", () -> new DescriptionBlockItem(BBBBlocks.BIRCH_LADDER.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> JUNGLE_LADDER = ITEMS.register("jungle_ladder", () -> new DescriptionBlockItem(BBBBlocks.JUNGLE_LADDER.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> ACACIA_LADDER = ITEMS.register("acacia_ladder", () -> new DescriptionBlockItem(BBBBlocks.ACACIA_LADDER.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> DARK_OAK_LADDER = ITEMS.register("dark_oak_ladder", () -> new DescriptionBlockItem(BBBBlocks.DARK_OAK_LADDER.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> CRIMSON_LADDER = ITEMS.register("crimson_ladder", () -> new DescriptionBlockItem(BBBBlocks.CRIMSON_LADDER.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> WARPED_LADDER = ITEMS.register("warped_ladder", () -> new DescriptionBlockItem(BBBBlocks.WARPED_LADDER.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> MANGROVE_LADDER = ITEMS.register("mangrove_ladder", () -> new DescriptionBlockItem(BBBBlocks.MANGROVE_LADDER.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> BAMBOO_LADDER = ITEMS.register("bamboo_ladder", () -> new DescriptionBlockItem(BBBBlocks.BAMBOO_LADDER.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> CHERRY_LADDER = ITEMS.register("cherry_ladder", () -> new DescriptionBlockItem(BBBBlocks.CHERRY_LADDER.get(), new Item.Properties()));
+
+  
 
     public static final RegistrySupplier<Item> CORNERSTONE = ITEMS.register("bbb", () -> new Item(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON).fireResistant()));
     public static final RegistrySupplier<Item> HAMMER = ITEMS.register("hammer", () -> new HammerItem(new Item.Properties().stacksTo(1).durability(256)));

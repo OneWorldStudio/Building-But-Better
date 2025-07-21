@@ -91,11 +91,164 @@ public class BBBCreativeModeTab {
 
                     // Oak, Spruce, Birch, Jungle, Acacia, Dark Oak, Crimson, Warped, Mangrove, Bamboo, Cherry
 
-                    for (BBBWoodType woodType : BBBWoodType.values()) {
-                        for (RegistrySupplier<Item> item : BBBItems.getItems(woodType)) {
-                            output.accept(item.get());
-                        }
-                    }
+                    output.accept(OAK_BALUSTRADE.get());
+                    output.accept(SPRUCE_BALUSTRADE.get());
+                    output.accept(BIRCH_BALUSTRADE.get());
+                    output.accept(JUNGLE_BALUSTRADE.get());
+                    output.accept(ACACIA_BALUSTRADE.get());
+                    output.accept(DARK_OAK_BALUSTRADE.get());
+                    output.accept(CRIMSON_BALUSTRADE.get());
+                    output.accept(WARPED_BALUSTRADE.get());
+                    output.accept(MANGROVE_BALUSTRADE.get());
+                    output.accept(BAMBOO_BALUSTRADE.get());
+                    output.accept(CHERRY_BALUSTRADE.get());
+
+                    output.accept(OAK_LATTICE.get());
+                    output.accept(SPRUCE_LATTICE.get());
+                    output.accept(BIRCH_LATTICE.get());
+                    output.accept(JUNGLE_LATTICE.get());
+                    output.accept(ACACIA_LATTICE.get());
+                    output.accept(DARK_OAK_LATTICE.get());
+                    output.accept(CRIMSON_LATTICE.get());
+                    output.accept(WARPED_LATTICE.get());
+                    output.accept(MANGROVE_LATTICE.get());
+                    output.accept(BAMBOO_LATTICE.get());
+                    output.accept(CHERRY_LATTICE.get());
+
+                    output.accept(OAK_WALL.get());
+                    output.accept(SPRUCE_WALL.get());
+                    output.accept(BIRCH_WALL.get());
+                    output.accept(JUNGLE_WALL.get());
+                    output.accept(ACACIA_WALL.get());
+                    output.accept(DARK_OAK_WALL.get());
+                    output.accept(CRIMSON_WALL.get());
+                    output.accept(WARPED_WALL.get());
+                    output.accept(MANGROVE_WALL.get());
+                    output.accept(BAMBOO_WALL.get());
+                    output.accept(CHERRY_WALL.get());
+
+
+                    output.accept( OAK_BEAM.get());
+                    output.accept(SPRUCE_BEAM.get());
+                    output.accept(BIRCH_BEAM .get());
+                    output.accept(JUNGLE_BEAM.get());
+                    output.accept(ACACIA_BEAM.get());
+                    output.accept(DARK_OAK_BEAM.get());
+                    output.accept(CRIMSON_BEAM.get());
+                    output.accept(WARPED_BEAM.get());
+                    output.accept(MANGROVE_BEAM.get());
+                    output.accept(BAMBOO_BEAM.get());
+                    output.accept(CHERRY_BEAM.get());
+
+
+                    output.accept(OAK_BEAM_STAIRS.get());
+                    output.accept(SPRUCE_BEAM_STAIRS.get());
+                    output.accept(BIRCH_BEAM_STAIRS.get());
+                    output.accept(JUNGLE_BEAM_STAIRS.get());
+                    output.accept(ACACIA_BEAM_STAIRS.get());
+                    output.accept(DARK_OAK_BEAM_STAIRS.get());
+                    output.accept(CRIMSON_BEAM_STAIRS.get());
+                    output.accept(WARPED_BEAM_STAIRS.get());
+                    output.accept(MANGROVE_BEAM_STAIRS.get());
+                    output.accept(BAMBOO_BEAM_STAIRS.get());
+                    output.accept(CHERRY_BEAM_STAIRS.get());
+
+                    output.accept(OAK_BEAM_SLAB.get());
+                    output.accept(SPRUCE_BEAM_SLAB.get());
+                    output.accept(BIRCH_BEAM_SLAB.get());
+                    output.accept(JUNGLE_BEAM_SLAB.get());
+                    output.accept(ACACIA_BEAM_SLAB.get());
+                    output.accept(DARK_OAK_BEAM_SLAB.get());
+                    output.accept(CRIMSON_BEAM_SLAB.get());
+                    output.accept(WARPED_BEAM_SLAB.get());
+                    output.accept(MANGROVE_BEAM_SLAB.get());
+                    output.accept(BAMBOO_BEAM_SLAB.get());
+                    output.accept(CHERRY_BEAM_SLAB.get());
+
+                    output.accept(OAK_SUPPORT.get());
+                    output.accept(SPRUCE_SUPPORT.get());
+                    output.accept(BIRCH_SUPPORT.get());
+                    output.accept(JUNGLE_SUPPORT.get());
+                    output.accept(ACACIA_SUPPORT.get());
+                    output.accept(DARK_OAK_SUPPORT.get());
+                    output.accept(CRIMSON_SUPPORT.get());
+                    output.accept(WARPED_SUPPORT.get());
+                    output.accept(MANGROVE_SUPPORT.get());
+                    output.accept(BAMBOO_SUPPORT.get());
+                    output.accept(CHERRY_SUPPORT.get());
+
+                    output.accept(OAK_PALLET.get());
+                    output.accept(SPRUCE_PALLET.get());
+                    output.accept(BIRCH_PALLET.get());
+                    output.accept(JUNGLE_PALLET.get());
+                    output.accept(ACACIA_PALLET.get());
+                    output.accept(DARK_OAK_PALLET.get());
+                    output.accept(CRIMSON_PALLET.get());
+                    output.accept(WARPED_PALLET.get());
+                    output.accept(MANGROVE_PALLET.get());
+                    output.accept(BAMBOO_PALLET.get());
+                    output.accept(CHERRY_PALLET.get());
+
+                    output.accept(OAK_FRAME.get());
+                    output.accept(SPRUCE_FRAME.get());
+                    output.accept(BIRCH_FRAME.get());
+                    output.accept(JUNGLE_FRAME.get());
+                    output.accept(ACACIA_FRAME.get());
+                    output.accept(DARK_OAK_FRAME.get());
+                    output.accept(CRIMSON_FRAME.get());
+                    output.accept(WARPED_FRAME.get());
+                    output.accept(MANGROVE_FRAME.get());
+                    output.accept(BAMBOO_FRAME.get());
+                    output.accept(CHERRY_FRAME.get());
+
+
+                    output.accept(OAK_LANTERN.get());
+                    output.accept(SPRUCE_LANTERN.get());
+                    output.accept(BIRCH_LANTERN.get());
+                    output.accept(JUNGLE_LANTERN.get());
+                    output.accept(ACACIA_LANTERN.get());
+                    output.accept(DARK_OAK_LANTERN.get());
+                    output.accept(CRIMSON_LANTERN.get());
+                    output.accept(WARPED_LANTERN.get());
+                    output.accept(MANGROVE_LANTERN.get());
+                    output.accept(BAMBOO_LANTERN.get());
+                    output.accept(CHERRY_LANTERN.get());
+
+                    output.accept(OAK_TRIM.get());
+                    output.accept(SPRUCE_TRIM.get());
+                    output.accept(BIRCH_TRIM .get());
+                    output.accept(JUNGLE_TRIM.get());
+                    output.accept(ACACIA_TRIM.get());
+                    output.accept(DARK_OAK_TRIM.get());
+                    output.accept(CRIMSON_TRIM.get());
+                    output.accept(WARPED_TRIM.get());
+                    output.accept(MANGROVE_TRIM.get());
+                    output.accept(BAMBOO_TRIM.get());
+                    output.accept(CHERRY_TRIM.get());
+
+                    output.accept(OAK_LAYER.get());
+                    output.accept(SPRUCE_LAYER.get());
+                    output.accept(BIRCH_LAYER.get());
+                    output.accept(JUNGLE_LAYER.get());
+                    output.accept(ACACIA_LAYER.get());
+                    output.accept(DARK_OAK_LAYER.get());
+                    output.accept(CRIMSON_LAYER.get());
+                    output.accept(WARPED_LAYER.get());
+                    output.accept(MANGROVE_LAYER.get());
+                    output.accept(BAMBOO_LAYER.get());
+                    output.accept(CHERRY_LAYER.get());
+
+                    output.accept(OAK_LADDER.get());
+                    output.accept(SPRUCE_LADDER.get());
+                    output.accept(BIRCH_LADDER.get());
+                    output.accept(JUNGLE_LADDER.get());
+                    output.accept(ACACIA_LADDER.get());
+                    output.accept(DARK_OAK_LADDER.get());
+                    output.accept(CRIMSON_LADDER.get());
+                    output.accept(WARPED_LADDER.get());
+                    output.accept(MANGROVE_LADDER.get());
+                    output.accept(BAMBOO_LADDER.get());
+                    output.accept(CHERRY_LADDER.get());
 
                     output.accept(MOSS_LAYER.get());
                     output.accept(STONE_LAYER.get());

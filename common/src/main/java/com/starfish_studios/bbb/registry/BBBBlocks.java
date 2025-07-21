@@ -2,20 +2,12 @@ package com.starfish_studios.bbb.registry;
 
 import com.starfish_studios.bbb.BuildingButBetter;
 import com.starfish_studios.bbb.block.*;
-import com.starfish_studios.bbb.item.DescriptionBlockItem;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 
-import java.util.EnumMap;
-import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
-
-import static com.starfish_studios.bbb.registry.BBBItems.*;
 import static net.minecraft.world.level.material.PushReaction.DESTROY;
 
 public class BBBBlocks {
@@ -25,166 +17,166 @@ public class BBBBlocks {
     // Trim, Beam, Beam Stairs, Beam Slab, Pallets, Supports, Balustrades, Walls, Frames, Lanterns, Ladders, Lattices
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(BuildingButBetter.MOD_ID, Registries.BLOCK);
 
-    public static final Map<BBBWoodType, RegistrySupplier<Block>> BALUSTRADES = new EnumMap<>(BBBWoodType.class);
-    public static final Map<BBBWoodType, RegistrySupplier<Block>> LATTICE = new EnumMap<>(BBBWoodType.class);
-    public static final Map<BBBWoodType, RegistrySupplier<Block>> WALL = new EnumMap<>(BBBWoodType.class);
-    public static final Map<BBBWoodType, RegistrySupplier<Block>> BEAM = new EnumMap<>(BBBWoodType.class);
-    public static final Map<BBBWoodType, RegistrySupplier<Block>> BEAM_STAIRS = new EnumMap<>(BBBWoodType.class);
-    public static final Map<BBBWoodType, RegistrySupplier<Block>> BEAM_SLAB = new EnumMap<>(BBBWoodType.class);
-    public static final Map<BBBWoodType, RegistrySupplier<Block>> SUPPORT = new EnumMap<>(BBBWoodType.class);
-    public static final Map<BBBWoodType, RegistrySupplier<Block>> PALLET = new EnumMap<>(BBBWoodType.class);
-    public static final Map<BBBWoodType, RegistrySupplier<Block>> LADDER = new EnumMap<>(BBBWoodType.class);
-    public static final Map<BBBWoodType, RegistrySupplier<Block>> FRAMES = new EnumMap<>(BBBWoodType.class);
-    public static final Map<BBBWoodType, RegistrySupplier<Block>> LANTERN = new EnumMap<>(BBBWoodType.class);
-    public static final Map<BBBWoodType, RegistrySupplier<Block>> TRIM = new EnumMap<>(BBBWoodType.class);
-    public static final Map<BBBWoodType, RegistrySupplier<Block>> LAYER = new EnumMap<>(BBBWoodType.class);
 
-    static AtomicInteger ladderId = new AtomicInteger();
+    public static final RegistrySupplier<Block> OAK_BALUSTRADE = BLOCKS.register("oak_balustrade", () -> new BalustradeBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).noOcclusion()));
+    public static final RegistrySupplier<Block> SPRUCE_BALUSTRADE = BLOCKS.register("spruce_balustrade", () -> new BalustradeBlock(BlockBehaviour.Properties.copy(Blocks.SPRUCE_PLANKS).noOcclusion()));
+    public static final RegistrySupplier<Block> BIRCH_BALUSTRADE = BLOCKS.register("birch_balustrade", () -> new BalustradeBlock(BlockBehaviour.Properties.copy(Blocks.BIRCH_PLANKS).noOcclusion()));
+    public static final RegistrySupplier<Block> JUNGLE_BALUSTRADE = BLOCKS.register("jungle_balustrade", () -> new BalustradeBlock(BlockBehaviour.Properties.copy(Blocks.JUNGLE_PLANKS).noOcclusion()));
+    public static final RegistrySupplier<Block> ACACIA_BALUSTRADE = BLOCKS.register("acacia_balustrade", () -> new BalustradeBlock(BlockBehaviour.Properties.copy(Blocks.ACACIA_PLANKS).noOcclusion()));
+    public static final RegistrySupplier<Block> DARK_OAK_BALUSTRADE = BLOCKS.register("dark_oak_balustrade", () -> new BalustradeBlock(BlockBehaviour.Properties.copy(Blocks.DARK_OAK_PLANKS).noOcclusion()));
+    public static final RegistrySupplier<Block> CRIMSON_BALUSTRADE = BLOCKS.register("crimson_balustrade", () -> new BalustradeBlock(BlockBehaviour.Properties.copy(Blocks.CRIMSON_PLANKS).noOcclusion()));
+    public static final RegistrySupplier<Block> WARPED_BALUSTRADE = BLOCKS.register("warped_balustrade", () -> new BalustradeBlock(BlockBehaviour.Properties.copy(Blocks.WARPED_PLANKS).noOcclusion()));
+    public static final RegistrySupplier<Block> MANGROVE_BALUSTRADE = BLOCKS.register("mangrove_balustrade", () -> new BalustradeBlock(BlockBehaviour.Properties.copy(Blocks.MANGROVE_PLANKS).noOcclusion()));
+    public static final RegistrySupplier<Block> BAMBOO_BALUSTRADE = BLOCKS.register("bamboo_balustrade", () -> new BalustradeBlock(BlockBehaviour.Properties.copy(Blocks.BAMBOO_PLANKS).noOcclusion()));
+    public static final RegistrySupplier<Block> CHERRY_BALUSTRADE = BLOCKS.register("cherry_balustrade", () -> new BalustradeBlock(BlockBehaviour.Properties.copy(Blocks.CHERRY_PLANKS).noOcclusion()));
 
-    public static void register() {
+    public static final RegistrySupplier<Block> OAK_LATTICE = BLOCKS.register("oak_lattice", () -> new LatticeBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).noOcclusion().pushReaction(DESTROY)));
+    public static final RegistrySupplier<Block> SPRUCE_LATTICE = BLOCKS.register("spruce_lattice", () -> new LatticeBlock(BlockBehaviour.Properties.copy(Blocks.SPRUCE_PLANKS).noOcclusion().pushReaction(DESTROY)));
+    public static final RegistrySupplier<Block> BIRCH_LATTICE = BLOCKS.register("birch_lattice", () -> new LatticeBlock(BlockBehaviour.Properties.copy(Blocks.BIRCH_PLANKS).noOcclusion().pushReaction(DESTROY)));
+    public static final RegistrySupplier<Block> JUNGLE_LATTICE = BLOCKS.register("jungle_lattice", () -> new LatticeBlock(BlockBehaviour.Properties.copy(Blocks.JUNGLE_PLANKS).noOcclusion().pushReaction(DESTROY)));
+    public static final RegistrySupplier<Block> ACACIA_LATTICE = BLOCKS.register("acacia_lattice", () -> new LatticeBlock(BlockBehaviour.Properties.copy(Blocks.ACACIA_PLANKS).noOcclusion().pushReaction(DESTROY)));
+    public static final RegistrySupplier<Block> DARK_OAK_LATTICE = BLOCKS.register("dark_oak_lattice", () -> new LatticeBlock(BlockBehaviour.Properties.copy(Blocks.DARK_OAK_PLANKS).noOcclusion().pushReaction(DESTROY)));
+    public static final RegistrySupplier<Block> CRIMSON_LATTICE = BLOCKS.register("crimson_lattice", () -> new LatticeBlock(BlockBehaviour.Properties.copy(Blocks.CRIMSON_PLANKS).noOcclusion().pushReaction(DESTROY)));
+    public static final RegistrySupplier<Block> WARPED_LATTICE = BLOCKS.register("warped_lattice", () -> new LatticeBlock(BlockBehaviour.Properties.copy(Blocks.WARPED_PLANKS).noOcclusion().pushReaction(DESTROY)));
+    public static final RegistrySupplier<Block> MANGROVE_LATTICE = BLOCKS.register("mangrove_lattice", () -> new LatticeBlock(BlockBehaviour.Properties.copy(Blocks.MANGROVE_PLANKS).noOcclusion().pushReaction(DESTROY)));
+    public static final RegistrySupplier<Block> BAMBOO_LATTICE = BLOCKS.register("bamboo_lattice", () -> new LatticeBlock(BlockBehaviour.Properties.copy(Blocks.BAMBOO_PLANKS).noOcclusion().pushReaction(DESTROY)));
+    public static final RegistrySupplier<Block> CHERRY_LATTICE = BLOCKS.register("cherry_lattice", () -> new LatticeBlock(BlockBehaviour.Properties.copy(Blocks.CHERRY_PLANKS).noOcclusion().pushReaction(DESTROY)));
 
-        for (BBBWoodType type : BBBWoodType.values()) {
+    public static final RegistrySupplier<Block> OAK_WALL = BLOCKS.register("oak_wall", () -> new WoodenWallBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS)));
+    public static final RegistrySupplier<Block> SPRUCE_WALL = BLOCKS.register("spruce_wall", () -> new WoodenWallBlock(BlockBehaviour.Properties.copy(Blocks.SPRUCE_PLANKS)));
+    public static final RegistrySupplier<Block> BIRCH_WALL = BLOCKS.register("birch_wall", () -> new WoodenWallBlock(BlockBehaviour.Properties.copy(Blocks.BIRCH_PLANKS)));
+    public static final RegistrySupplier<Block> JUNGLE_WALL = BLOCKS.register("jungle_wall", () -> new WoodenWallBlock(BlockBehaviour.Properties.copy(Blocks.JUNGLE_PLANKS)));
+    public static final RegistrySupplier<Block> ACACIA_WALL = BLOCKS.register("acacia_wall", () -> new WoodenWallBlock(BlockBehaviour.Properties.copy(Blocks.ACACIA_PLANKS)));
+    public static final RegistrySupplier<Block> DARK_OAK_WALL = BLOCKS.register("dark_oak_wall", () -> new WoodenWallBlock(BlockBehaviour.Properties.copy(Blocks.DARK_OAK_PLANKS)));
+    public static final RegistrySupplier<Block> CRIMSON_WALL = BLOCKS.register("crimson_wall", () -> new WoodenWallBlock(BlockBehaviour.Properties.copy(Blocks.CRIMSON_PLANKS)));
+    public static final RegistrySupplier<Block> WARPED_WALL = BLOCKS.register("warped_wall", () -> new WoodenWallBlock(BlockBehaviour.Properties.copy(Blocks.WARPED_PLANKS)));
+    public static final RegistrySupplier<Block> MANGROVE_WALL = BLOCKS.register("mangrove_wall", () -> new WoodenWallBlock(BlockBehaviour.Properties.copy(Blocks.MANGROVE_PLANKS)));
+    public static final RegistrySupplier<Block> BAMBOO_WALL = BLOCKS.register("bamboo_wall", () -> new WoodenWallBlock(BlockBehaviour.Properties.copy(Blocks.BAMBOO_PLANKS)));
+    public static final RegistrySupplier<Block> CHERRY_WALL = BLOCKS.register("cherry_wall", () -> new WoodenWallBlock(BlockBehaviour.Properties.copy(Blocks.CHERRY_PLANKS)));
 
-            RegistrySupplier<Block> balustrade = BLOCKS.register(
-                    type.name().toLowerCase() + "_balustrade",
-                    () -> new BalustradeBlock(BlockBehaviour.Properties.copy(type.getBasePlank()).noOcclusion())
-            );
-            BALUSTRADES.put(type, balustrade);
-            BALUSTRADE_ITEMS.put(type, BBBItems.ITEMS.register(
-                    type.name().toLowerCase() + "_balustrade",
-                    () -> new DescriptionBlockItem(balustrade.get(), new Item.Properties())
-            ));
 
-            RegistrySupplier<Block>  lattice = BLOCKS.register(
-                    type.name().toLowerCase() + "_lattice",
-                    () -> new LatticeBlock(BlockBehaviour.Properties.copy(type.getBasePlank()).noOcclusion().pushReaction(DESTROY))
-            );
-            LATTICE.put(type, lattice);
-            LATTICE_ITEMS.put(type, BBBItems.ITEMS.register(
-                    type.name().toLowerCase() + "_lattice",
-                    () -> new DescriptionBlockItem(lattice.get(), new Item.Properties())
-            ));
+    public static final RegistrySupplier<Block> OAK_BEAM = BLOCKS.register("oak_beam", () -> new RotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.STRIPPED_OAK_LOG)));
+    public static final RegistrySupplier<Block> SPRUCE_BEAM = BLOCKS.register("spruce_beam", () -> new RotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.STRIPPED_OAK_LOG)));
+    public static final RegistrySupplier<Block> BIRCH_BEAM = BLOCKS.register("birch_beam", () -> new RotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.STRIPPED_OAK_LOG)));
+    public static final RegistrySupplier<Block> JUNGLE_BEAM = BLOCKS.register("jungle_beam", () -> new RotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.STRIPPED_OAK_LOG)));
+    public static final RegistrySupplier<Block> ACACIA_BEAM = BLOCKS.register("acacia_beam", () -> new RotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.STRIPPED_OAK_LOG)));
+    public static final RegistrySupplier<Block> DARK_OAK_BEAM = BLOCKS.register("dark_oak_beam", () -> new RotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.STRIPPED_OAK_LOG)));
+    public static final RegistrySupplier<Block> CRIMSON_BEAM = BLOCKS.register("crimson_beam", () -> new RotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.STRIPPED_OAK_LOG)));
+    public static final RegistrySupplier<Block> WARPED_BEAM = BLOCKS.register("warped_beam", () -> new RotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.STRIPPED_OAK_LOG)));
+    public static final RegistrySupplier<Block> MANGROVE_BEAM = BLOCKS.register("mangrove_beam", () -> new RotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.STRIPPED_OAK_LOG)));
+    public static final RegistrySupplier<Block> BAMBOO_BEAM = BLOCKS.register("bamboo_beam", () -> new RotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.STRIPPED_OAK_LOG)));
+    public static final RegistrySupplier<Block> CHERRY_BEAM = BLOCKS.register("cherry_beam", () -> new RotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.STRIPPED_OAK_LOG)));
 
-            RegistrySupplier<Block> wall = BLOCKS.register(
-                    type.name().toLowerCase() + "_wall",
-                    () -> new WoodenWallBlock(BlockBehaviour.Properties.copy(type.getBasePlank()))
-            );
-            WALL.put(type, wall);
-            WALL_ITEMS.put(type, BBBItems.ITEMS.register(
-                    type.name().toLowerCase() + "_wall",
-                    () -> new BlockItem(wall.get(), new Item.Properties())
-            ));
 
-            RegistrySupplier<Block> beam = BLOCKS.register(
-                    type.name().toLowerCase() + "_beam",
-                    () -> new RotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.STRIPPED_OAK_LOG))
-            );
-            BEAM.put(type, beam);
-            BEAM_ITEMS.put(type, BBBItems.ITEMS.register(
-                    type.name().toLowerCase() + "_beam",
-                    () -> new BlockItem(beam.get(), new Item.Properties())
-            ));
+    public static final RegistrySupplier<Block> OAK_BEAM_STAIRS = BLOCKS.register("oak_beam_stairs", () -> new StairBlock(Blocks.OAK_PLANKS.defaultBlockState(), BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS)));
+    public static final RegistrySupplier<Block> SPRUCE_BEAM_STAIRS = BLOCKS.register("spruce_beam_stairs", () -> new StairBlock(Blocks.SPRUCE_PLANKS.defaultBlockState(), BlockBehaviour.Properties.copy(Blocks.SPRUCE_PLANKS)));
+    public static final RegistrySupplier<Block> BIRCH_BEAM_STAIRS = BLOCKS.register("birch_beam_stairs", () -> new StairBlock(Blocks.BIRCH_PLANKS.defaultBlockState(), BlockBehaviour.Properties.copy(Blocks.BIRCH_PLANKS)));
+    public static final RegistrySupplier<Block> JUNGLE_BEAM_STAIRS = BLOCKS.register("jungle_beam_stairs", () -> new StairBlock(Blocks.JUNGLE_PLANKS.defaultBlockState(), BlockBehaviour.Properties.copy(Blocks.JUNGLE_PLANKS)));
+    public static final RegistrySupplier<Block> ACACIA_BEAM_STAIRS = BLOCKS.register("acacia_beam_stairs", () -> new StairBlock(Blocks.ACACIA_PLANKS.defaultBlockState(), BlockBehaviour.Properties.copy(Blocks.ACACIA_PLANKS)));
+    public static final RegistrySupplier<Block> DARK_OAK_BEAM_STAIRS = BLOCKS.register("dark_oak_beam_stairs", () -> new StairBlock(Blocks.DARK_OAK_PLANKS.defaultBlockState(), BlockBehaviour.Properties.copy(Blocks.DARK_OAK_PLANKS)));
+    public static final RegistrySupplier<Block> CRIMSON_BEAM_STAIRS = BLOCKS.register("crimson_beam_stairs", () -> new StairBlock(Blocks.CRIMSON_PLANKS.defaultBlockState(), BlockBehaviour.Properties.copy(Blocks.CRIMSON_PLANKS)));
+    public static final RegistrySupplier<Block> WARPED_BEAM_STAIRS = BLOCKS.register("warped_beam_stairs", () -> new StairBlock(Blocks.WARPED_PLANKS.defaultBlockState(), BlockBehaviour.Properties.copy(Blocks.WARPED_PLANKS)));
+    public static final RegistrySupplier<Block> MANGROVE_BEAM_STAIRS = BLOCKS.register("mangrove_beam_stairs", () -> new StairBlock(Blocks.MANGROVE_PLANKS.defaultBlockState(), BlockBehaviour.Properties.copy(Blocks.MANGROVE_PLANKS)));
+    public static final RegistrySupplier<Block> BAMBOO_BEAM_STAIRS = BLOCKS.register("bamboo_beam_stairs", () -> new StairBlock(Blocks.BAMBOO_PLANKS.defaultBlockState(), BlockBehaviour.Properties.copy(Blocks.BAMBOO_PLANKS)));
+    public static final RegistrySupplier<Block> CHERRY_BEAM_STAIRS = BLOCKS.register("cherry_beam_stairs", () -> new StairBlock(Blocks.CHERRY_PLANKS.defaultBlockState(), BlockBehaviour.Properties.copy(Blocks.CHERRY_PLANKS)));
 
-            RegistrySupplier<Block> beamStair = BLOCKS.register(
-                    type.name().toLowerCase() + "_beam_stairs",
-                    () -> new StairBlock(type.getBasePlank().defaultBlockState(), BlockBehaviour.Properties.copy(type.getBasePlank()))
-            );
-            BEAM_STAIRS.put(type, beamStair);
-            BEAM_STAIR_ITEMS.put(type, BBBItems.ITEMS.register(
-                    type.name().toLowerCase() + "_beam_stairs",
-                    () -> new BlockItem(beamStair.get(), new Item.Properties())
-            ));
+    public static final RegistrySupplier<Block> OAK_BEAM_SLAB = BLOCKS.register("oak_beam_slab", () -> new FacingSlabBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS)));
+    public static final RegistrySupplier<Block> SPRUCE_BEAM_SLAB = BLOCKS.register("spruce_beam_slab", () -> new FacingSlabBlock(BlockBehaviour.Properties.copy(Blocks.SPRUCE_PLANKS)));
+    public static final RegistrySupplier<Block> BIRCH_BEAM_SLAB = BLOCKS.register("birch_beam_slab", () -> new FacingSlabBlock(BlockBehaviour.Properties.copy(Blocks.BIRCH_PLANKS)));
+    public static final RegistrySupplier<Block> JUNGLE_BEAM_SLAB = BLOCKS.register("jungle_beam_slab", () -> new FacingSlabBlock(BlockBehaviour.Properties.copy(Blocks.JUNGLE_PLANKS)));
+    public static final RegistrySupplier<Block> ACACIA_BEAM_SLAB = BLOCKS.register("acacia_beam_slab", () -> new FacingSlabBlock(BlockBehaviour.Properties.copy(Blocks.ACACIA_PLANKS)));
+    public static final RegistrySupplier<Block> DARK_OAK_BEAM_SLAB = BLOCKS.register("dark_oak_beam_slab", () -> new FacingSlabBlock(BlockBehaviour.Properties.copy(Blocks.DARK_OAK_PLANKS)));
+    public static final RegistrySupplier<Block> CRIMSON_BEAM_SLAB = BLOCKS.register("crimson_beam_slab", () -> new FacingSlabBlock(BlockBehaviour.Properties.copy(Blocks.CRIMSON_PLANKS)));
+    public static final RegistrySupplier<Block> WARPED_BEAM_SLAB = BLOCKS.register("warped_beam_slab", () -> new FacingSlabBlock(BlockBehaviour.Properties.copy(Blocks.WARPED_PLANKS)));
+    public static final RegistrySupplier<Block> MANGROVE_BEAM_SLAB = BLOCKS.register("mangrove_beam_slab", () -> new FacingSlabBlock(BlockBehaviour.Properties.copy(Blocks.MANGROVE_PLANKS)));
+    public static final RegistrySupplier<Block> BAMBOO_BEAM_SLAB = BLOCKS.register("bamboo_beam_slab", () -> new FacingSlabBlock(BlockBehaviour.Properties.copy(Blocks.BAMBOO_PLANKS)));
+    public static final RegistrySupplier<Block> CHERRY_BEAM_SLAB = BLOCKS.register("cherry_beam_slab", () -> new FacingSlabBlock(BlockBehaviour.Properties.copy(Blocks.CHERRY_PLANKS)));
 
-            RegistrySupplier<Block> beamSlab = BLOCKS.register(
-                    type.name().toLowerCase() + "_beam_slab",
-                    () -> new FacingSlabBlock(BlockBehaviour.Properties.copy(type.getBasePlank()))
-            );
-            BEAM_SLAB.put(type, beamSlab);
-            BEAM_SLAB_ITEMS.put(type, BBBItems.ITEMS.register(
-                    type.name().toLowerCase() + "_beam_slab",
-                    () -> new BlockItem(beamSlab.get(), new Item.Properties())
-            ));
+    public static final RegistrySupplier<Block> OAK_SUPPORT = BLOCKS.register("oak_support", () -> new SupportBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).noOcclusion()));
+    public static final RegistrySupplier<Block> SPRUCE_SUPPORT = BLOCKS.register("spruce_support", () -> new SupportBlock(BlockBehaviour.Properties.copy(Blocks.SPRUCE_PLANKS).noOcclusion()));
+    public static final RegistrySupplier<Block> BIRCH_SUPPORT = BLOCKS.register("birch_support", () -> new SupportBlock(BlockBehaviour.Properties.copy(Blocks.BIRCH_PLANKS).noOcclusion()));
+    public static final RegistrySupplier<Block> JUNGLE_SUPPORT = BLOCKS.register("jungle_support", () -> new SupportBlock(BlockBehaviour.Properties.copy(Blocks.JUNGLE_PLANKS).noOcclusion()));
+    public static final RegistrySupplier<Block> ACACIA_SUPPORT = BLOCKS.register("acacia_support", () -> new SupportBlock(BlockBehaviour.Properties.copy(Blocks.ACACIA_PLANKS).noOcclusion()));
+    public static final RegistrySupplier<Block> DARK_OAK_SUPPORT = BLOCKS.register("dark_oak_support", () -> new SupportBlock(BlockBehaviour.Properties.copy(Blocks.DARK_OAK_PLANKS).noOcclusion()));
+    public static final RegistrySupplier<Block> CRIMSON_SUPPORT = BLOCKS.register("crimson_support", () -> new SupportBlock(BlockBehaviour.Properties.copy(Blocks.CRIMSON_PLANKS).noOcclusion()));
+    public static final RegistrySupplier<Block> WARPED_SUPPORT = BLOCKS.register("warped_support", () -> new SupportBlock(BlockBehaviour.Properties.copy(Blocks.WARPED_PLANKS).noOcclusion()));
+    public static final RegistrySupplier<Block> MANGROVE_SUPPORT = BLOCKS.register("mangrove_support", () -> new SupportBlock(BlockBehaviour.Properties.copy(Blocks.MANGROVE_PLANKS).noOcclusion()));
+    public static final RegistrySupplier<Block> BAMBOO_SUPPORT = BLOCKS.register("bamboo_support", () -> new SupportBlock(BlockBehaviour.Properties.copy(Blocks.BAMBOO_PLANKS).noOcclusion()));
+    public static final RegistrySupplier<Block> CHERRY_SUPPORT = BLOCKS.register("cherry_support", () -> new SupportBlock(BlockBehaviour.Properties.copy(Blocks.CHERRY_PLANKS).noOcclusion()));
 
-            RegistrySupplier<Block> support = BLOCKS.register(
-                    type.name().toLowerCase() + "_support",
-                    () -> new SupportBlock(BlockBehaviour.Properties.copy(type.getBasePlank()).noOcclusion())
-            );
-            SUPPORT.put(type, support);
-            SUPPORT_ITEMS.put(type, BBBItems.ITEMS.register(
-                    type.name().toLowerCase() + "_support",
-                    () -> new DescriptionBlockItem(support.get(), new Item.Properties())
-            ));
+    public static final RegistrySupplier<Block> OAK_PALLET = BLOCKS.register("oak_pallet", () -> new PalletBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).noOcclusion()));
+    public static final RegistrySupplier<Block> SPRUCE_PALLET = BLOCKS.register("spruce_pallet", () -> new PalletBlock(BlockBehaviour.Properties.copy(Blocks.SPRUCE_PLANKS).noOcclusion()));
+    public static final RegistrySupplier<Block> BIRCH_PALLET = BLOCKS.register("birch_pallet", () -> new PalletBlock(BlockBehaviour.Properties.copy(Blocks.BIRCH_PLANKS).noOcclusion()));
+    public static final RegistrySupplier<Block> JUNGLE_PALLET = BLOCKS.register("jungle_pallet", () -> new PalletBlock(BlockBehaviour.Properties.copy(Blocks.JUNGLE_PLANKS).noOcclusion()));
+    public static final RegistrySupplier<Block> ACACIA_PALLET = BLOCKS.register("acacia_pallet", () -> new PalletBlock(BlockBehaviour.Properties.copy(Blocks.ACACIA_PLANKS).noOcclusion()));
+    public static final RegistrySupplier<Block> DARK_OAK_PALLET = BLOCKS.register("dark_oak_pallet", () -> new PalletBlock(BlockBehaviour.Properties.copy(Blocks.DARK_OAK_PLANKS).noOcclusion()));
+    public static final RegistrySupplier<Block> CRIMSON_PALLET = BLOCKS.register("crimson_pallet", () -> new PalletBlock(BlockBehaviour.Properties.copy(Blocks.CRIMSON_PLANKS).noOcclusion()));
+    public static final RegistrySupplier<Block> WARPED_PALLET = BLOCKS.register("warped_pallet", () -> new PalletBlock(BlockBehaviour.Properties.copy(Blocks.WARPED_PLANKS).noOcclusion()));
+    public static final RegistrySupplier<Block> MANGROVE_PALLET = BLOCKS.register("mangrove_pallet", () -> new PalletBlock(BlockBehaviour.Properties.copy(Blocks.MANGROVE_PLANKS).noOcclusion()));
+    public static final RegistrySupplier<Block> BAMBOO_PALLET = BLOCKS.register("bamboo_pallet", () -> new PalletBlock(BlockBehaviour.Properties.copy(Blocks.BAMBOO_PLANKS).noOcclusion()));
+    public static final RegistrySupplier<Block> CHERRY_PALLET = BLOCKS.register("cherry_pallet", () -> new PalletBlock(BlockBehaviour.Properties.copy(Blocks.CHERRY_PLANKS).noOcclusion()));
 
-            RegistrySupplier<Block> pallet = BLOCKS.register(
-                    type.name().toLowerCase() + "_pallet",
-                    () -> new PalletBlock(BlockBehaviour.Properties.copy(type.getBasePlank()).noOcclusion())
-            );
-            PALLET.put(type, pallet);
-            PALLET_ITEMS.put(type, BBBItems.ITEMS.register(
-                    type.name().toLowerCase() + "_pallet",
-                    () -> new DescriptionBlockItem(pallet.get(), new Item.Properties())
-            ));
+    public static final RegistrySupplier<Block> OAK_FRAME = BLOCKS.register("oak_frame", () -> new FrameBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).noOcclusion().noCollission().pushReaction(DESTROY)));
+    public static final RegistrySupplier<Block> SPRUCE_FRAME = BLOCKS.register("spruce_frame", () -> new FrameBlock(BlockBehaviour.Properties.copy(Blocks.SPRUCE_PLANKS).noOcclusion().noCollission().pushReaction(DESTROY)));
+    public static final RegistrySupplier<Block> BIRCH_FRAME = BLOCKS.register("birch_frame", () -> new FrameBlock(BlockBehaviour.Properties.copy(Blocks.BIRCH_PLANKS).noOcclusion().noCollission().pushReaction(DESTROY)));
+    public static final RegistrySupplier<Block> JUNGLE_FRAME = BLOCKS.register("jungle_frame", () -> new FrameBlock(BlockBehaviour.Properties.copy(Blocks.JUNGLE_PLANKS).noOcclusion().noCollission().pushReaction(DESTROY)));
+    public static final RegistrySupplier<Block> ACACIA_FRAME = BLOCKS.register("acacia_frame", () -> new FrameBlock(BlockBehaviour.Properties.copy(Blocks.ACACIA_PLANKS).noOcclusion().noCollission().pushReaction(DESTROY)));
+    public static final RegistrySupplier<Block> DARK_OAK_FRAME = BLOCKS.register("dark_oak_frame", () -> new FrameBlock(BlockBehaviour.Properties.copy(Blocks.DARK_OAK_PLANKS).noOcclusion().noCollission().pushReaction(DESTROY)));
+    public static final RegistrySupplier<Block> CRIMSON_FRAME = BLOCKS.register("crimson_frame", () -> new FrameBlock(BlockBehaviour.Properties.copy(Blocks.CRIMSON_PLANKS).noOcclusion().noCollission().pushReaction(DESTROY)));
+    public static final RegistrySupplier<Block> WARPED_FRAME = BLOCKS.register("warped_frame", () -> new FrameBlock(BlockBehaviour.Properties.copy(Blocks.WARPED_PLANKS).noOcclusion().noCollission().pushReaction(DESTROY)));
+    public static final RegistrySupplier<Block> MANGROVE_FRAME = BLOCKS.register("mangrove_frame", () -> new FrameBlock(BlockBehaviour.Properties.copy(Blocks.MANGROVE_PLANKS).noOcclusion().noCollission().pushReaction(DESTROY)));
+    public static final RegistrySupplier<Block> BAMBOO_FRAME = BLOCKS.register("bamboo_frame", () -> new FrameBlock(BlockBehaviour.Properties.copy(Blocks.BAMBOO_PLANKS).noOcclusion().noCollission().pushReaction(DESTROY)));
+    public static final RegistrySupplier<Block> CHERRY_FRAME = BLOCKS.register("cherry_frame", () -> new FrameBlock(BlockBehaviour.Properties.copy(Blocks.CHERRY_PLANKS).noOcclusion().noCollission().pushReaction(DESTROY)));
 
-            RegistrySupplier<Block> frame = BLOCKS.register(
-                    type.name().toLowerCase() + "_frame",
-                    () -> new FrameBlock(BlockBehaviour.Properties.copy(type.getBasePlank()).noOcclusion().noCollission().pushReaction(DESTROY))
-            );
-            FRAMES.put(type, frame);
-            FRAME_ITEMS.put(type, BBBItems.ITEMS.register(
-                    type.name().toLowerCase() + "_frame",
-                    () -> new DescriptionBlockItem(frame.get(), new Item.Properties())
-            ));
 
-            RegistrySupplier<Block> lantern = BLOCKS.register(
-                    type.name().toLowerCase() + "_lantern",
-                    () -> new WoodenLanternBlock(BlockBehaviour.Properties.copy(type.getBasePlank()).lightLevel((blockStatex) -> 15).noOcclusion().pushReaction(DESTROY).strength(0.3F))
-            );
-            LANTERN.put(type, lantern);
-            LANTERN_ITEMS.put(type, BBBItems.ITEMS.register(
-                    type.name().toLowerCase() + "_lantern",
-                    () -> new DescriptionBlockItem(lantern.get(), new Item.Properties())
-            ));
+    public static final RegistrySupplier<Block> OAK_LANTERN = BLOCKS.register("oak_lantern", () -> new WoodenLanternBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).lightLevel((blockStatex) -> 15).noOcclusion().pushReaction(DESTROY).strength(0.3F)));
+    public static final RegistrySupplier<Block> SPRUCE_LANTERN = BLOCKS.register("spruce_lantern", () -> new WoodenLanternBlock(BlockBehaviour.Properties.copy(Blocks.SPRUCE_PLANKS).lightLevel((blockStatex) -> 15).noOcclusion().pushReaction(DESTROY).strength(0.3F)));
+    public static final RegistrySupplier<Block> BIRCH_LANTERN = BLOCKS.register("birch_lantern", () -> new WoodenLanternBlock(BlockBehaviour.Properties.copy(Blocks.BIRCH_PLANKS).lightLevel((blockStatex) -> 15).noOcclusion().pushReaction(DESTROY).strength(0.3F)));
+    public static final RegistrySupplier<Block> JUNGLE_LANTERN = BLOCKS.register("jungle_lantern", () -> new WoodenLanternBlock(BlockBehaviour.Properties.copy(Blocks.JUNGLE_PLANKS).lightLevel((blockStatex) -> 15).noOcclusion().pushReaction(DESTROY).strength(0.3F)));
+    public static final RegistrySupplier<Block> ACACIA_LANTERN = BLOCKS.register("acacia_lantern", () -> new WoodenLanternBlock(BlockBehaviour.Properties.copy(Blocks.ACACIA_PLANKS).lightLevel((blockStatex) -> 15).noOcclusion().pushReaction(DESTROY).strength(0.3F)));
+    public static final RegistrySupplier<Block> DARK_OAK_LANTERN = BLOCKS.register("dark_oak_lantern", () -> new WoodenLanternBlock(BlockBehaviour.Properties.copy(Blocks.DARK_OAK_PLANKS).lightLevel((blockStatex) -> 15).noOcclusion().pushReaction(DESTROY).strength(0.3F)));
+    public static final RegistrySupplier<Block> CRIMSON_LANTERN = BLOCKS.register("crimson_lantern", () -> new WoodenLanternBlock(BlockBehaviour.Properties.copy(Blocks.CRIMSON_PLANKS).lightLevel((blockStatex) -> 15).noOcclusion().pushReaction(DESTROY).strength(0.3F)));
+    public static final RegistrySupplier<Block> WARPED_LANTERN = BLOCKS.register("warped_lantern", () -> new WoodenLanternBlock(BlockBehaviour.Properties.copy(Blocks.WARPED_PLANKS).lightLevel((blockStatex) -> 15).noOcclusion().pushReaction(DESTROY).strength(0.3F)));
+    public static final RegistrySupplier<Block> MANGROVE_LANTERN = BLOCKS.register("mangrove_lantern", () -> new WoodenLanternBlock(BlockBehaviour.Properties.copy(Blocks.MANGROVE_PLANKS).lightLevel((blockStatex) -> 15).noOcclusion().pushReaction(DESTROY).strength(0.3F)));
+    public static final RegistrySupplier<Block> BAMBOO_LANTERN = BLOCKS.register("bamboo_lantern", () -> new WoodenLanternBlock(BlockBehaviour.Properties.copy(Blocks.BAMBOO_PLANKS).lightLevel((blockStatex) -> 15).noOcclusion().pushReaction(DESTROY).strength(0.3F)));
+    public static final RegistrySupplier<Block> CHERRY_LANTERN = BLOCKS.register("cherry_lantern", () -> new WoodenLanternBlock(BlockBehaviour.Properties.copy(Blocks.CHERRY_PLANKS).lightLevel((blockStatex) -> 15).noOcclusion().pushReaction(DESTROY).strength(0.3F)));
 
-            RegistrySupplier<Block> trim = BLOCKS.register(
-                    type.name().toLowerCase() + "_trim",
-                    () -> new FacingConnectingBlock(BlockBehaviour.Properties.copy(type.getBasePlank()))
-            );
-            TRIM.put(type, trim);
-            TRIM_ITEMS.put(type, BBBItems.ITEMS.register(
-                    type.name().toLowerCase() + "_trim",
-                    () -> new BlockItem(trim.get(), new Item.Properties())
-            ));
+    public static final RegistrySupplier<Block> OAK_TRIM = BLOCKS.register("oak_trim", () -> new FacingConnectingBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS)));
+    public static final RegistrySupplier<Block> SPRUCE_TRIM = BLOCKS.register("spruce_trim", () -> new FacingConnectingBlock(BlockBehaviour.Properties.copy(Blocks.SPRUCE_PLANKS)));
+    public static final RegistrySupplier<Block> BIRCH_TRIM = BLOCKS.register("birch_trim", () -> new FacingConnectingBlock(BlockBehaviour.Properties.copy(Blocks.BIRCH_PLANKS)));
+    public static final RegistrySupplier<Block> JUNGLE_TRIM = BLOCKS.register("jungle_trim", () -> new FacingConnectingBlock(BlockBehaviour.Properties.copy(Blocks.JUNGLE_PLANKS)));
+    public static final RegistrySupplier<Block> ACACIA_TRIM = BLOCKS.register("acacia_trim", () -> new FacingConnectingBlock(BlockBehaviour.Properties.copy(Blocks.ACACIA_PLANKS)));
+    public static final RegistrySupplier<Block> DARK_OAK_TRIM = BLOCKS.register("dark_oak_trim", () -> new FacingConnectingBlock(BlockBehaviour.Properties.copy(Blocks.DARK_OAK_PLANKS)));
+    public static final RegistrySupplier<Block> CRIMSON_TRIM = BLOCKS.register("crimson_trim", () -> new FacingConnectingBlock(BlockBehaviour.Properties.copy(Blocks.CRIMSON_PLANKS)));
+    public static final RegistrySupplier<Block> WARPED_TRIM = BLOCKS.register("warped_trim", () -> new FacingConnectingBlock(BlockBehaviour.Properties.copy(Blocks.WARPED_PLANKS)));
+    public static final RegistrySupplier<Block> MANGROVE_TRIM = BLOCKS.register("mangrove_trim", () -> new FacingConnectingBlock(BlockBehaviour.Properties.copy(Blocks.MANGROVE_PLANKS)));
+    public static final RegistrySupplier<Block> BAMBOO_TRIM = BLOCKS.register("bamboo_trim", () -> new FacingConnectingBlock(BlockBehaviour.Properties.copy(Blocks.BAMBOO_PLANKS)));
+    public static final RegistrySupplier<Block> CHERRY_TRIM = BLOCKS.register("cherry_trim", () -> new FacingConnectingBlock(BlockBehaviour.Properties.copy(Blocks.CHERRY_PLANKS)));
 
-            RegistrySupplier<Block> layer = BLOCKS.register(
-                    type.name().toLowerCase() + "_layer",
-                    () -> new LayerBlock(BlockBehaviour.Properties.copy(type.getBasePlank()))
-            );
-            LAYER.put(type, layer);
-            LAYER_ITEMS.put(type, BBBItems.ITEMS.register(
-                    type.name().toLowerCase() + "_layer",
-                    () -> new DescriptionBlockItem(layer.get(), new Item.Properties())
-            ));
+    public static final RegistrySupplier<Block> OAK_LAYER = BLOCKS.register("oak_layer", () -> new LayerBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS)));
+    public static final RegistrySupplier<Block> SPRUCE_LAYER = BLOCKS.register("spruce_layer", () -> new LayerBlock(BlockBehaviour.Properties.copy(Blocks.SPRUCE_PLANKS)));
+    public static final RegistrySupplier<Block> BIRCH_LAYER = BLOCKS.register("birch_layer", () -> new LayerBlock(BlockBehaviour.Properties.copy(Blocks.BIRCH_PLANKS)));
+    public static final RegistrySupplier<Block> JUNGLE_LAYER = BLOCKS.register("jungle_layer", () -> new LayerBlock(BlockBehaviour.Properties.copy(Blocks.JUNGLE_PLANKS)));
+    public static final RegistrySupplier<Block> ACACIA_LAYER = BLOCKS.register("acacia_layer", () -> new LayerBlock(BlockBehaviour.Properties.copy(Blocks.ACACIA_PLANKS)));
+    public static final RegistrySupplier<Block> DARK_OAK_LAYER = BLOCKS.register("dark_oak_layer", () -> new LayerBlock(BlockBehaviour.Properties.copy(Blocks.DARK_OAK_PLANKS)));
+    public static final RegistrySupplier<Block> CRIMSON_LAYER = BLOCKS.register("crimson_layer", () -> new LayerBlock(BlockBehaviour.Properties.copy(Blocks.CRIMSON_PLANKS)));
+    public static final RegistrySupplier<Block> WARPED_LAYER = BLOCKS.register("warped_layer", () -> new LayerBlock(BlockBehaviour.Properties.copy(Blocks.WARPED_PLANKS)));
+    public static final RegistrySupplier<Block> MANGROVE_LAYER = BLOCKS.register("mangrove_layer", () -> new LayerBlock(BlockBehaviour.Properties.copy(Blocks.MANGROVE_PLANKS)));
+    public static final RegistrySupplier<Block> BAMBOO_LAYER = BLOCKS.register("bamboo_layer", () -> new LayerBlock(BlockBehaviour.Properties.copy(Blocks.BAMBOO_PLANKS)));
+    public static final RegistrySupplier<Block> CHERRY_LAYER = BLOCKS.register("cherry_layer", () -> new LayerBlock(BlockBehaviour.Properties.copy(Blocks.CHERRY_PLANKS)));
 
-            if (type != BBBWoodType.BAMBOO) {
-                RegistrySupplier<Block> ladder = BLOCKS.register(
-                        type.name().toLowerCase() + "_ladder",
-                        () -> new BBBLadderBlock(ladderId.getAndIncrement() + 1, BlockBehaviour.Properties.copy(Blocks.LADDER))
-                );
-                LADDER.put(type, ladder);
-                LADDER_ITEMS.put(type, BBBItems.ITEMS.register(
-                        type.name().toLowerCase() + "_ladder",
-                        () -> new DescriptionBlockItem(ladder.get(), new Item.Properties())
-                ));
-            } else {
-                RegistrySupplier<Block> ladder = BLOCKS.register("bamboo_ladder", () -> new LadderBlock(BlockBehaviour.Properties.copy(Blocks.LADDER)));
-                LADDER.put(type, ladder);
-                LADDER_ITEMS.put(type, BBBItems.ITEMS.register(
-                        "bamboo_ladder",
-                        () -> new DescriptionBlockItem(ladder.get(), new Item.Properties())
-                ));
-            }
-        }
-    }
+    public static final RegistrySupplier<Block> OAK_LADDER = BLOCKS.register("oak_ladder", () -> new BBBLadderBlock(1, BlockBehaviour.Properties.copy(Blocks.LADDER)));
+    public static final RegistrySupplier<Block> SPRUCE_LADDER = BLOCKS.register("spruce_ladder", () -> new BBBLadderBlock(2, BlockBehaviour.Properties.copy(Blocks.LADDER)));
+    public static final RegistrySupplier<Block> BIRCH_LADDER = BLOCKS.register("birch_ladder", () -> new BBBLadderBlock(3,BlockBehaviour.Properties.copy(Blocks.LADDER)));
+    public static final RegistrySupplier<Block> JUNGLE_LADDER = BLOCKS.register("jungle_ladder", () -> new BBBLadderBlock(4, BlockBehaviour.Properties.copy(Blocks.LADDER)));
+    public static final RegistrySupplier<Block> ACACIA_LADDER = BLOCKS.register("acacia_ladder", () -> new BBBLadderBlock(5, BlockBehaviour.Properties.copy(Blocks.LADDER)));
+    public static final RegistrySupplier<Block> DARK_OAK_LADDER = BLOCKS.register("dark_oak_ladder", () -> new BBBLadderBlock(6, BlockBehaviour.Properties.copy(Blocks.LADDER)));
+    public static final RegistrySupplier<Block> CRIMSON_LADDER = BLOCKS.register("crimson_ladder", () -> new BBBLadderBlock(7, BlockBehaviour.Properties.copy(Blocks.LADDER)));
+    public static final RegistrySupplier<Block> WARPED_LADDER = BLOCKS.register("warped_ladder", () -> new BBBLadderBlock(8, BlockBehaviour.Properties.copy(Blocks.LADDER)));
+    public static final RegistrySupplier<Block> MANGROVE_LADDER = BLOCKS.register("mangrove_ladder", () -> new BBBLadderBlock(9, BlockBehaviour.Properties.copy(Blocks.LADDER)));
+    public static final RegistrySupplier<Block> BAMBOO_LADDER = BLOCKS.register("bamboo_ladder", () -> new LadderBlock(BlockBehaviour.Properties.copy(Blocks.LADDER)));
+    public static final RegistrySupplier<Block> CHERRY_LADDER = BLOCKS.register("cherry_ladder", () -> new BBBLadderBlock(10, BlockBehaviour.Properties.copy(Blocks.LADDER)));
+
 
     // region BLOCKS
     public static final RegistrySupplier<Block> STONE_BLOCK = BLOCKS.register("stone_block", () -> new BlockBlock(BlockBlock.Types.STONE, BlockBehaviour.Properties.copy((Blocks.STONE)).pushReaction(DESTROY)));

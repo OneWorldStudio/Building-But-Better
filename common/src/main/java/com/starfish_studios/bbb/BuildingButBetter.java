@@ -5,8 +5,6 @@ import com.starfish_studios.bbb.event.BlockUseEvent;
 import com.starfish_studios.bbb.registry.*;
 import dev.architectury.event.events.common.InteractionEvent;
 import eu.midnightdust.lib.config.MidnightConfig;
-import net.fabricmc.loader.api.FabricLoader;
-import net.mehvahdjukaar.every_compat.EveryCompat;
 
 public final class BuildingButBetter {
     public static final String MOD_ID = "bbb";
@@ -22,7 +20,6 @@ public final class BuildingButBetter {
 
         InteractionEvent.RIGHT_CLICK_BLOCK.register(BlockUseEvent::interact);
 
-        BBBBlocks.register();
         BBBBlocks.BLOCKS.register();
         BBBItems.ITEMS.register();
         BBBBlockEntityType.BLOCK_ENTITY_TYPES.register();

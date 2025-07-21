@@ -3,22 +3,12 @@ package com.starfish_studios.bbb;
 import com.starfish_studios.bbb.client.renderer.blockentity.BlockBlockRenderer;
 import com.starfish_studios.bbb.registry.BBBBlockEntityType;
 import com.starfish_studios.bbb.registry.BBBBlocks;
-import com.starfish_studios.bbb.registry.BBBWoodType;
 import dev.architectury.registry.client.rendering.BlockEntityRendererRegistry;
 import dev.architectury.registry.client.rendering.ColorHandlerRegistry;
 import dev.architectury.registry.client.rendering.RenderTypeRegistry;
-import dev.architectury.registry.registries.RegistrySupplier;
-import net.minecraft.client.color.block.BlockColor;
-import net.minecraft.client.color.item.ItemColor;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.level.FoliageColor;
-import net.minecraft.world.level.ItemLike;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
-
-import java.util.Map;
 
 public class BBBVanillaIntegration {
 
@@ -37,27 +27,54 @@ public class BBBVanillaIntegration {
 
         private static void registerBlockColors() {
 
-            for(Map.Entry<BBBWoodType, RegistrySupplier<Block>> block : BBBBlocks.LATTICE.entrySet()) {
-                ColorHandlerRegistry.registerBlockColors((state, world, pos, tintIndex) -> {
-                            if (world == null || pos == null) {
-                                return FoliageColor.getDefaultColor();
-                            }
-                            return BiomeColors.getAverageFoliageColor(world, pos);
-                        },
-                        block.getValue().get()
-                );
-            }
+            ColorHandlerRegistry.registerBlockColors((state, world, pos, tintIndex) -> {
+                        if (world == null || pos == null) {
+                            return FoliageColor.getDefaultColor();
+                        }
+                        return BiomeColors.getAverageFoliageColor(world, pos);
+                    },
+                    BBBBlocks.OAK_LATTICE.get(),
+                    BBBBlocks.SPRUCE_LATTICE.get(),
+                    BBBBlocks.BIRCH_LATTICE.get(),
+                    BBBBlocks.JUNGLE_LATTICE.get(),
+                    BBBBlocks.ACACIA_LATTICE.get(),
+                    BBBBlocks.DARK_OAK_LATTICE.get(),
+                    BBBBlocks.CRIMSON_LATTICE.get(),
+                    BBBBlocks.WARPED_LATTICE.get(),
+                    BBBBlocks.MANGROVE_LATTICE.get(),
+                    BBBBlocks.BAMBOO_LATTICE.get(),
+                    BBBBlocks.CHERRY_LATTICE.get()
+
+            );
         }
 
         private static void registerBlockRenderLayers() {
 
-            for(Map.Entry<BBBWoodType, RegistrySupplier<Block>> block : BBBBlocks.LATTICE.entrySet()) {
-                RenderTypeRegistry.register(RenderType.cutout(), block.getValue().get());
-            }
+            RenderTypeRegistry.register(RenderType.cutout(),
+                    BBBBlocks.OAK_LATTICE.get(),
+                    BBBBlocks.SPRUCE_LATTICE.get(),
+                    BBBBlocks.BIRCH_LATTICE.get(),
+                    BBBBlocks.JUNGLE_LATTICE.get(),
+                    BBBBlocks.ACACIA_LATTICE.get(),
+                    BBBBlocks.DARK_OAK_LATTICE.get(),
+                    BBBBlocks.CRIMSON_LATTICE.get(),
+                    BBBBlocks.WARPED_LATTICE.get(),
+                    BBBBlocks.MANGROVE_LATTICE.get(),
+                    BBBBlocks.BAMBOO_LATTICE.get(),
+                    BBBBlocks.CHERRY_LATTICE.get());
 
-            for(Map.Entry<BBBWoodType, RegistrySupplier<Block>> block : BBBBlocks.LADDER.entrySet()) {
-                RenderTypeRegistry.register(RenderType.cutout(), block.getValue().get());
-            }
+            RenderTypeRegistry.register(RenderType.cutout(),
+                    BBBBlocks.OAK_LADDER.get(),
+                    BBBBlocks.SPRUCE_LADDER.get(),
+                    BBBBlocks.BIRCH_LADDER.get(),
+                    BBBBlocks.JUNGLE_LADDER.get(),
+                    BBBBlocks.ACACIA_LADDER.get(),
+                    BBBBlocks.DARK_OAK_LADDER.get(),
+                    BBBBlocks.CRIMSON_LADDER.get(),
+                    BBBBlocks.WARPED_LADDER.get(),
+                    BBBBlocks.MANGROVE_LADDER.get(),
+                    BBBBlocks.BAMBOO_LADDER.get(),
+                    BBBBlocks.CHERRY_LADDER.get());
 
             RenderTypeRegistry.register(RenderType.cutout(),
                     BBBBlocks.IRON_FENCE.get(),
