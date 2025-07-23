@@ -5,7 +5,6 @@
         32
     ],
     "textures": {
-        "plant": "block/birch_leaves",
-        "particle": "block/birch_leaves"
+        "plant": "block/birch_leaves"
     }
 }

@@ -76,7 +76,13 @@ public class LayerBlock extends Block implements SimpleWaterloggedBlock {
                 level.playSound(player, pos, level.getBlockState(pos).getBlock().getSoundType(level.getBlockState(pos)).getBreakSound(), player.getSoundSource(), 1.0F, 1.0F);
                 return InteractionResult.SUCCESS;
             } else if (state.getValue(LAYERS) == 1) {
-                return InteractionResult.FAIL;
+                level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
+                Block.popResource(level, pos, this.asItem().getDefaultInstance());
+                player.getItemInHand(hand).hurtAndBreak(1, player, (playerEntity) -> {
+                    playerEntity.broadcastBreakEvent(hand);
+                });
+                level.playSound(player, pos, level.getBlockState(pos).getBlock().getSoundType(level.getBlockState(pos)).getBreakSound(), player.getSoundSource(), 1.0F, 1.0F);
+                return InteractionResult.SUCCESS;
             }
         }
         return InteractionResult.PASS;
@@ -129,43 +135,54 @@ public class LayerBlock extends Block implements SimpleWaterloggedBlock {
         return context.getItemInHand().is(this.asItem()) && state.getValue(LAYERS) < 4 || super.canBeReplaced(state, context);
     }
 
+
+    private static boolean isFull(BlockState state) {
+        return state.getValue(LAYERS) == 4;
+    }
+
+    private static BlockState removeWaterIfFull(BlockState state) {
+        return isFull(state) ? state.setValue(WATERLOGGED, false) : state;
+    }
+
     @Override
-    public BlockState getStateForPlacement(BlockPlaceContext context) {
-        if (context.getPlayer() != null && context.getPlayer().isShiftKeyDown()) {
-            BlockState state = context.getLevel().getBlockState(context.getClickedPos());
-            Direction[] var2 = context.getNearestLookingDirections();
-            FluidState fluidState = context.getLevel().getFluidState(context.getClickedPos());
+    public BlockState getStateForPlacement(BlockPlaceContext ctx) {
+        BlockPos pos = ctx.getClickedPos();
+        FluidState fluid = ctx.getLevel().getFluidState(pos);
+        BlockState existing = ctx.getLevel().getBlockState(pos);
 
-            if (state.getBlock() == this) {
-                return state.setValue(LAYERS, Math.min(4, state.getValue(LAYERS) + 1));
-            }
+        if (existing.is(this)) {
+            BlockState stacked = existing.setValue(LAYERS, Math.min(4, existing.getValue(LAYERS) + 1));
+            return removeWaterIfFull(stacked);
+        }
 
-            for (Direction direction : var2) {
-                if (direction.getAxis() == Direction.Axis.Y) {
-                    state = this.defaultBlockState().setValue(FACING, context.getNearestLookingVerticalDirection().getOpposite());
+        BlockState placed;
+        if (ctx.getPlayer() != null && ctx.getPlayer().isShiftKeyDown()) {
+            Direction[] lookDirs = ctx.getNearestLookingDirections();
+            for (Direction d : lookDirs) {
+                if (d.getAxis() == Direction.Axis.Y) {
+                    placed = this.defaultBlockState()
+                            .setValue(FACING, ctx.getNearestLookingVerticalDirection().getOpposite())
+                            .setValue(WATERLOGGED, fluid.getType() == Fluids.WATER);
                 } else {
-                    state = this.defaultBlockState().setValue(FACING, direction.getOpposite());
+                    placed = this.defaultBlockState()
+                            .setValue(FACING, d.getOpposite())
+                            .setValue(WATERLOGGED, fluid.getType() == Fluids.WATER);
                 }
-                return state;
+                return removeWaterIfFull(placed);
             }
-            if (state.is(this)) {
-                return state.setValue(WATERLOGGED, false).setValue(LAYERS, 4);
-            } else {
-                return state.setValue(WATERLOGGED, fluidState.getType() == Fluids.WATER);
-            }
+            placed = this.defaultBlockState()
+                    .setValue(FACING, Direction.UP)
+                    .setValue(WATERLOGGED, fluid.getType() == Fluids.WATER);
+            return removeWaterIfFull(placed);
         } else {
-            BlockPos pos = context.getClickedPos();
-            BlockState state = context.getLevel().getBlockState(pos);
-            if (state.is(this)) {
-                return state.setValue(LAYERS, Math.min(4, state.getValue(LAYERS) + 1));
+            BlockState base = this.defaultBlockState()
+                    .setValue(FACING, Direction.UP)
+                    .setValue(WATERLOGGED, fluid.getType() == Fluids.WATER);
+            Direction face = ctx.getClickedFace();
+            if (face == Direction.DOWN || (face != Direction.UP && ctx.getClickLocation().y - pos.getY() > 0.5)) {
+                base = base.setValue(FACING, Direction.DOWN);
             }
-            FluidState fluidState = context.getLevel().getFluidState(pos);
-            BlockState state2 = this.defaultBlockState().setValue(FACING, Direction.UP).setValue(WATERLOGGED, fluidState.getType() == Fluids.WATER);
-            Direction direction = context.getClickedFace();
-            if (direction == Direction.DOWN || direction != Direction.UP && context.getClickLocation().y - (double) pos.getY() > 0.5) {
-                return state2.setValue(FACING, Direction.DOWN);
-            }
-            return state2;
+            return removeWaterIfFull(base);
         }
     }
 

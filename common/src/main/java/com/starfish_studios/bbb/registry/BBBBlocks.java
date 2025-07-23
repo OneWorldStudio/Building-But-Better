@@ -7,6 +7,9 @@ import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
+
+import java.util.function.ToIntFunction;
 
 import static net.minecraft.world.level.material.PushReaction.DESTROY;
 
@@ -300,8 +303,12 @@ public class BBBBlocks {
     public static final RegistrySupplier<Block> STONE_TILE_STAIRS = BLOCKS.register("stone_tile_stairs", () -> new StairBlock((Blocks.STONE_BRICKS.defaultBlockState()), BlockBehaviour.Properties.copy(Blocks.STONE_BRICKS)));
     public static final RegistrySupplier<Block> STONE_TILE_SLAB = BLOCKS.register("stone_tile_slab", () -> new SlabBlock(BlockBehaviour.Properties.copy(Blocks.STONE_BRICKS)));
 
-    public static final RegistrySupplier<Block> BRAZIER = BLOCKS.register("brazier", () -> new BrazierBlock(BlockBehaviour.Properties.copy((Blocks.IRON_BLOCK)).lightLevel(lit -> 15).noOcclusion().pushReaction(DESTROY).strength(1.0F, 1.5F)));
-    public static final RegistrySupplier<Block> SOUL_BRAZIER = BLOCKS.register("soul_brazier", () -> new BrazierBlock(BlockBehaviour.Properties.copy((Blocks.IRON_BLOCK)).lightLevel(lit -> 10).noOcclusion().pushReaction(DESTROY).strength(1.0F, 1.5F)));
+    private static ToIntFunction<BlockState> litLevel(int lit) {
+        return s -> s.getValue(BrazierBlock.LIT) ? lit : 0;
+    }
+
+    public static final RegistrySupplier<Block> BRAZIER = BLOCKS.register("brazier", () -> new BrazierBlock(BlockBehaviour.Properties.copy((Blocks.IRON_BLOCK)).lightLevel(litLevel(15)).noOcclusion().pushReaction(DESTROY).strength(1.0F, 1.5F)));
+    public static final RegistrySupplier<Block> SOUL_BRAZIER = BLOCKS.register("soul_brazier", () -> new BrazierBlock(BlockBehaviour.Properties.copy((Blocks.IRON_BLOCK)).lightLevel(litLevel(10)).noOcclusion().pushReaction(DESTROY).strength(1.0F, 1.5F)));
 
     public static final RegistrySupplier<Block> ROPE = BLOCKS.register("rope", () -> new ChainBlock(BlockBehaviour.Properties.copy((Blocks.OAK_PLANKS)).forceSolidOn().strength(0.1F).sound(SoundType.WOOL).noOcclusion()));
 

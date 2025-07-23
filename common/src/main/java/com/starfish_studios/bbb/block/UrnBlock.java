@@ -1,6 +1,7 @@
 package com.starfish_studios.bbb.block;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.ItemTags;
@@ -48,10 +49,18 @@ public class UrnBlock extends Block implements SimpleWaterloggedBlock {
         if (player.getItemInHand(interactionHand).getItem() == Items.DIRT && !blockState.getValue(SOILED)) {
             level.playSound(player, blockPos, SoundEvents.GRAVEL_PLACE, SoundSource.BLOCKS, 1.0F, 1.0F);
             level.setBlock(blockPos, blockState.setValue(SOILED, true), 3);
+            if (!player.getAbilities().instabuild) {
+                ItemStack itemStack = player.getItemInHand(interactionHand);
+                itemStack.shrink(1);
+                if (itemStack.isEmpty()) {
+                    player.setItemInHand(interactionHand, ItemStack.EMPTY);
+                }
+            }
             return InteractionResult.SUCCESS;
         } else if (blockState.getValue(SOILED) && player.getItemInHand(interactionHand).is(ItemTags.SHOVELS)) {
             level.playSound(player, blockPos, SoundEvents.GRAVEL_BREAK, SoundSource.BLOCKS, 1.0F, 1.0F);
-            popResource(level, blockPos, new ItemStack(Items.DIRT));
+            Direction direction = Direction.UP;
+            popResourceFromFace(level, blockPos, direction, new ItemStack(Items.DIRT));
             level.setBlock(blockPos, blockState.setValue(SOILED, false), 3);
             return InteractionResult.SUCCESS;
         }

@@ -3,7 +3,6 @@
 	"parent": "minecraft:block/block",
 	"texture_size": [32, 32],
 	"textures": {
-		"particle": "block/vine",
 		"plant": "block/vine"
 	},
 	"elements": [

@@ -61,6 +61,13 @@ public class BrazierBlock extends Block implements SimpleWaterloggedBlock {
             level.playSound(null, blockPos, SoundEvents.FLINTANDSTEEL_USE, SoundSource.BLOCKS, 1.0F, level.random.nextFloat() * 0.4F + 0.8F);
             level.setBlock(blockPos, blockState.setValue(LIT, true), 11);
             return InteractionResult.SUCCESS;
+        } else if (itemStack.getItem() == Items.FIRE_CHARGE && !blockState.getValue(LIT)) {
+            if (!player.isCreative()) {
+                itemStack.shrink(1);
+            }
+            level.playSound(null, blockPos, SoundEvents.FIRECHARGE_USE, SoundSource.BLOCKS, 1.0F, level.random.nextFloat() * 0.4F + 0.8F);
+            level.setBlock(blockPos, blockState.setValue(LIT, true), 11);
+            return InteractionResult.SUCCESS;
         }
         return InteractionResult.PASS;
     }
@@ -174,7 +181,7 @@ public class BrazierBlock extends Block implements SimpleWaterloggedBlock {
     public static void makeParticles(Level level, BlockPos blockPos, boolean bl, boolean bl2) {
         RandomSource randomSource = level.getRandom();
         SimpleParticleType simpleParticleType = bl ? ParticleTypes.CAMPFIRE_SIGNAL_SMOKE : ParticleTypes.CAMPFIRE_COSY_SMOKE;
-        level.addAlwaysVisibleParticle(simpleParticleType, true, (double)blockPos.getX() + 0.5 + randomSource.nextDouble() / 3.0 * (double)(randomSource.nextBoolean() ? 1 : -1), (double)blockPos.getY() + randomSource.nextDouble() + randomSource.nextDouble(), (double)blockPos.getZ() + 0.5 + randomSource.nextDouble() / 3.0 * (double)(randomSource.nextBoolean() ? 1 : -1), 0.0, 0.07, 0.0);
+        level.addAlwaysVisibleParticle(simpleParticleType, true, (double)blockPos.getX() + 0.5 + randomSource.nextDouble() / 3.0 * (double)(randomSource.nextBoolean() ? 1 : -1), (double)blockPos.getY() + randomSource.nextDouble() + randomSource.nextDouble() + 1, (double)blockPos.getZ() + 0.5 + randomSource.nextDouble() / 3.0 * (double)(randomSource.nextBoolean() ? 1 : -1), 0.0, 0.07, 0.0);
         if (bl2) {
             level.addParticle(ParticleTypes.SMOKE, (double)blockPos.getX() + 0.5 + randomSource.nextDouble() / 4.0 * (double)(randomSource.nextBoolean() ? 1 : -1), (double)blockPos.getY() + 0.4, (double)blockPos.getZ() + 0.5 + randomSource.nextDouble() / 4.0 * (double)(randomSource.nextBoolean() ? 1 : -1), 0.0, 0.005, 0.0);
         }

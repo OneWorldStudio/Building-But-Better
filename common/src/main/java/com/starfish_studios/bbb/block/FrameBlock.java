@@ -56,6 +56,8 @@ public class FrameBlock extends Block implements SimpleWaterloggedBlock {
     private static final VoxelShape SOUTH_CENTER = Block.box(4, 0, 0, 12, 16, 3);
     private static final VoxelShape WEST_CENTER = Block.box(13, 0, 4, 16, 16, 12);
 
+    private static final VoxelShape FALLBACK = Block.box(0, 0, 0, 1, 1, 1);
+
     // side-sticks
     private static final VoxelShape[] NORTH_SIDES = {
             Block.box(0, 15, 13, 16, 16, 16),
@@ -105,10 +107,10 @@ public class FrameBlock extends Block implements SimpleWaterloggedBlock {
             Direction.WEST, WEST_SIDES
     );
 
-    private static final int TOP_IDX = 0;
-    private static final int BOTTOM_IDX = 1;
-    private static final int LEFT_IDX = 2;
-    private static final int RIGHT_IDX = 3;
+    private static final int TOP_INDEX = 0;
+    private static final int BOTTOM_INDEX = 1;
+    private static final int LEFT_INDEX = 2;
+    private static final int RIGHT_INDEX = 3;
 
     public FrameBlock(Properties properties) {
         super(properties);
@@ -135,8 +137,8 @@ public class FrameBlock extends Block implements SimpleWaterloggedBlock {
                     FrameStickDirection.HORIZONTAL
             };
             FrameStickDirection current = state.getValue(FRAME_CENTER);
-            int idx = java.util.Arrays.asList(cycle).indexOf(current);
-            FrameStickDirection next = cycle[(idx + 1) % cycle.length];
+            int index = java.util.Arrays.asList(cycle).indexOf(current);
+            FrameStickDirection next = cycle[(index + 1) % cycle.length];
 
             BlockState updated = state.setValue(FRAME_CENTER, next);
             level.setBlock(pos, updated, 3);
@@ -165,26 +167,11 @@ public class FrameBlock extends Block implements SimpleWaterloggedBlock {
 
     @SuppressWarnings("deprecation")
     @Override
-    public void attack(@NotNull BlockState state, Level level, @NotNull BlockPos pos, @NotNull Player player) {
-        if (!level.isClientSide && state.getValue(FRAME_CENTER) != FrameStickDirection.NONE) {
+    public void attack(BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull Player player) {
+        if (state.getValue(FRAME_CENTER) != FrameStickDirection.NONE) {
             BlockState reset = state.setValue(FRAME_CENTER, FrameStickDirection.NONE);
             level.setBlock(pos, reset, 3);
         }
-    }
-
-    @SuppressWarnings("deprecation")
-    @Override
-    public @NotNull VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter level, @NotNull BlockPos pos, @NotNull CollisionContext context) {
-        if (showsFullOutline(context, state)) {
-            return FULL_SHAPES.get(state.getValue(FACING));
-        }
-        return buildShape(state);
-    }
-
-    @SuppressWarnings("deprecation")
-    @Override
-    public @NotNull VoxelShape getCollisionShape(@NotNull BlockState state, @NotNull BlockGetter level, @NotNull BlockPos pos, @NotNull CollisionContext context) {
-        return buildShape(state);
     }
 
     private boolean showsFullOutline(CollisionContext context, BlockState state) {
@@ -196,6 +183,27 @@ public class FrameBlock extends Block implements SimpleWaterloggedBlock {
         return false;
     }
 
+    @SuppressWarnings("deprecation")
+    @Override
+    public @NotNull VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter level, @NotNull BlockPos pos, @NotNull CollisionContext context) {
+        if (showsFullOutline(context, state)) {
+            return FULL_SHAPES.get(state.getValue(FACING));
+        }
+
+        VoxelShape shape = buildShape(state);
+
+        if (shape.isEmpty() && context == CollisionContext.empty()) {
+            return FALLBACK;
+        }
+        return shape;
+    }
+
+    @SuppressWarnings("deprecation")
+    @Override
+    public @NotNull VoxelShape getCollisionShape(@NotNull BlockState state, @NotNull BlockGetter level, @NotNull BlockPos pos, @NotNull CollisionContext context) {
+        return buildShape(state);
+    }
+
     private VoxelShape buildShape(BlockState state) {
         Direction facing = state.getValue(FACING);
         VoxelShape shape = state.getValue(FRAME_CENTER) != FrameStickDirection.NONE
@@ -203,10 +211,10 @@ public class FrameBlock extends Block implements SimpleWaterloggedBlock {
                 : Shapes.empty();
 
         VoxelShape[] parts = SIDE_SHAPES.get(facing);
-        if (state.getValue(TOP)) shape = Shapes.or(shape, parts[TOP_IDX]);
-        if (state.getValue(BOTTOM)) shape = Shapes.or(shape, parts[BOTTOM_IDX]);
-        if (state.getValue(LEFT)) shape = Shapes.or(shape, parts[LEFT_IDX]);
-        if (state.getValue(RIGHT)) shape = Shapes.or(shape, parts[RIGHT_IDX]);
+        if (state.getValue(TOP))    shape = Shapes.or(shape, parts[TOP_INDEX]);
+        if (state.getValue(BOTTOM)) shape = Shapes.or(shape, parts[BOTTOM_INDEX]);
+        if (state.getValue(LEFT))   shape = Shapes.or(shape, parts[LEFT_INDEX]);
+        if (state.getValue(RIGHT))  shape = Shapes.or(shape, parts[RIGHT_INDEX]);
 
         return shape;
     }
@@ -230,7 +238,9 @@ public class FrameBlock extends Block implements SimpleWaterloggedBlock {
     @Nullable
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
-        return this.defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
+        FluidState fluidState = context.getLevel().getFluidState(context.getClickedPos());
+        return this.defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite())
+                .setValue(WATERLOGGED, fluidState.getType() == Fluids.WATER);
     }
 
     @Override

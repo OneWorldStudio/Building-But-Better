@@ -5,7 +5,6 @@
         32
     ],
     "textures": {
-        "plant": "block/acacia_leaves",
-        "particle": "block/acacia_leaves"
+        "plant": "block/acacia_leaves"
     }
 }

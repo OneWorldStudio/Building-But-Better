@@ -5,7 +5,6 @@
         32
     ],
     "textures": {
-        "plant": "block/mangrove_leaves",
-        "particle": "block/mangrove_leaves"
+        "plant": "block/mangrove_leaves"
     }
 }
