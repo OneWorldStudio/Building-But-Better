@@ -46,15 +46,15 @@ public class FrameBlock extends Block implements SimpleWaterloggedBlock {
 
     // full-block outline shapes
     private static final VoxelShape NORTH = Block.box(0, 0, 8, 16, 16, 16);
-    private static final VoxelShape EAST  = Block.box(0, 0, 0, 8, 16, 16);
+    private static final VoxelShape EAST = Block.box(0, 0, 0, 8, 16, 16);
     private static final VoxelShape SOUTH = Block.box(0, 0, 0, 16, 16, 8);
-    private static final VoxelShape WEST  = Block.box(8, 0, 0, 16, 16, 16);
+    private static final VoxelShape WEST = Block.box(8, 0, 0, 16, 16, 16);
 
     // center-stick collision shapes
     private static final VoxelShape NORTH_CENTER = Block.box(4, 0, 13, 12, 16, 16);
-    private static final VoxelShape EAST_CENTER  = Block.box(0, 0, 4, 3, 16, 12);
+    private static final VoxelShape EAST_CENTER = Block.box(0, 0, 4, 3, 16, 12);
     private static final VoxelShape SOUTH_CENTER = Block.box(4, 0, 0, 12, 16, 3);
-    private static final VoxelShape WEST_CENTER  = Block.box(13, 0, 4, 16, 16, 12);
+    private static final VoxelShape WEST_CENTER = Block.box(13, 0, 4, 16, 16, 12);
 
     // side-sticks
     private static final VoxelShape[] NORTH_SIDES = {
@@ -64,7 +64,7 @@ public class FrameBlock extends Block implements SimpleWaterloggedBlock {
             Block.box(0, 0, 13, 1, 16, 16)
     };
 
-    private static final VoxelShape[] EAST_SIDES  = {
+    private static final VoxelShape[] EAST_SIDES = {
             Block.box(0, 15, 0, 3, 16, 16),
             Block.box(0, -1, 0, 3, 0, 16),
             Block.box(0, 0, 15, 3, 16, 16),
@@ -78,7 +78,7 @@ public class FrameBlock extends Block implements SimpleWaterloggedBlock {
             Block.box(15, 0, 0, 16, 16, 3)
     };
 
-    private static final VoxelShape[] WEST_SIDES  = {
+    private static final VoxelShape[] WEST_SIDES = {
             Block.box(13, 15, 0, 16, 16, 16),
             Block.box(13, -1, 0, 16, 0, 16),
             Block.box(13, 0, 0, 16, 16, 1),
@@ -86,29 +86,29 @@ public class FrameBlock extends Block implements SimpleWaterloggedBlock {
     };
     private static final Map<Direction, VoxelShape> FULL_SHAPES = Util.make(Maps.newEnumMap(Direction.class), m -> {
         m.put(Direction.NORTH, NORTH);
-        m.put(Direction.EAST,  EAST);
+        m.put(Direction.EAST, EAST);
         m.put(Direction.SOUTH, SOUTH);
-        m.put(Direction.WEST,  WEST);
+        m.put(Direction.WEST, WEST);
     });
 
     private static final Map<Direction, VoxelShape> CENTER_SHAPES = Map.of(
             Direction.NORTH, NORTH_CENTER,
-            Direction.EAST,  EAST_CENTER,
+            Direction.EAST, EAST_CENTER,
             Direction.SOUTH, SOUTH_CENTER,
-            Direction.WEST,  WEST_CENTER
+            Direction.WEST, WEST_CENTER
     );
 
     private static final Map<Direction, VoxelShape[]> SIDE_SHAPES = Map.of(
             Direction.NORTH, NORTH_SIDES,
-            Direction.EAST,  EAST_SIDES,
+            Direction.EAST, EAST_SIDES,
             Direction.SOUTH, SOUTH_SIDES,
-            Direction.WEST,  WEST_SIDES
+            Direction.WEST, WEST_SIDES
     );
 
-    private static final int TOP_IDX    = 0;
+    private static final int TOP_IDX = 0;
     private static final int BOTTOM_IDX = 1;
-    private static final int LEFT_IDX   = 2;
-    private static final int RIGHT_IDX  = 3;
+    private static final int LEFT_IDX = 2;
+    private static final int RIGHT_IDX = 3;
 
     public FrameBlock(Properties properties) {
         super(properties);
@@ -140,13 +140,23 @@ public class FrameBlock extends Block implements SimpleWaterloggedBlock {
 
             BlockState updated = state.setValue(FRAME_CENTER, next);
             level.setBlock(pos, updated, 3);
-            level.playSound(player, pos,
-                    Blocks.SCAFFOLDING.defaultBlockState()
-                            .getSoundType()
-                            .getPlaceSound(),
-                    player.getSoundSource(),
-                    1.0F,
-                    1.0F);
+            if (state.is(BBBTags.BBBBlockTags.WOODEN_FRAMES)) {
+                level.playSound(player, pos,
+                        Blocks.SCAFFOLDING.defaultBlockState()
+                                .getSoundType()
+                                .getPlaceSound(),
+                        player.getSoundSource(),
+                        1.0F,
+                        1.0F);
+            } else if (state.is(BBBTags.BBBBlockTags.STONE_FRAMES)) {
+                level.playSound(player, pos,
+                        Blocks.STONE.defaultBlockState()
+                                .getSoundType()
+                                .getPlaceSound(),
+                        player.getSoundSource(),
+                        1.0F,
+                        1.0F);
+            }
             return InteractionResult.SUCCESS;
         }
         return InteractionResult.PASS;
@@ -159,7 +169,6 @@ public class FrameBlock extends Block implements SimpleWaterloggedBlock {
         if (!level.isClientSide && state.getValue(FRAME_CENTER) != FrameStickDirection.NONE) {
             BlockState reset = state.setValue(FRAME_CENTER, FrameStickDirection.NONE);
             level.setBlock(pos, reset, 3);
-            level.playSound(null, pos, Blocks.SCAFFOLDING.defaultBlockState().getSoundType().getBreakSound(), player.getSoundSource(), 1.0F, 1.0F);
         }
     }
 
@@ -189,17 +198,19 @@ public class FrameBlock extends Block implements SimpleWaterloggedBlock {
 
     private VoxelShape buildShape(BlockState state) {
         Direction facing = state.getValue(FACING);
-        if (state.getValue(FRAME_CENTER) != FrameStickDirection.NONE) {
-            return CENTER_SHAPES.get(facing);
-        }
+        VoxelShape shape = state.getValue(FRAME_CENTER) != FrameStickDirection.NONE
+                ? CENTER_SHAPES.get(facing)
+                : Shapes.empty();
+
         VoxelShape[] parts = SIDE_SHAPES.get(facing);
-        VoxelShape shape = Shapes.empty();
-        if (state.getValue(TOP))    shape = Shapes.or(shape, parts[TOP_IDX]);
+        if (state.getValue(TOP)) shape = Shapes.or(shape, parts[TOP_IDX]);
         if (state.getValue(BOTTOM)) shape = Shapes.or(shape, parts[BOTTOM_IDX]);
-        if (state.getValue(LEFT))   shape = Shapes.or(shape, parts[LEFT_IDX]);
-        if (state.getValue(RIGHT))  shape = Shapes.or(shape, parts[RIGHT_IDX]);
+        if (state.getValue(LEFT)) shape = Shapes.or(shape, parts[LEFT_IDX]);
+        if (state.getValue(RIGHT)) shape = Shapes.or(shape, parts[RIGHT_IDX]);
+
         return shape;
     }
+
 
     @SuppressWarnings("deprecation")
     @Override
@@ -249,19 +260,30 @@ public class FrameBlock extends Block implements SimpleWaterloggedBlock {
                 && !state.getValue(RIGHT);
     }
 
-
     private BlockState getConnectedState(BlockState state, LevelAccessor level, BlockPos pos) {
         EnumMap<Direction, Boolean> connections = new EnumMap<>(Direction.class);
-        for (Direction direction : Direction.values()) {
-            BlockPos off = pos.relative(direction);
-            connections.put(direction, validConnection(level.getBlockState(off), level, off, direction));
-        }
         Direction facing = state.getValue(FACING);
-        return state.setValue(TOP, !connections.get(Direction.UP))
+
+        for (Direction direction : Direction.values()) {
+            BlockPos neighborPos = pos.relative(direction);
+            BlockState neighborState = level.getBlockState(neighborPos);
+
+            boolean canConnect;
+            if (neighborState.getBlock() instanceof FrameBlock) {
+                canConnect = neighborState.getValue(FACING) == facing;
+            } else {
+                canConnect = validConnection(neighborState, level, neighborPos, direction);
+            }
+            connections.put(direction, canConnect);
+        }
+
+        return state
+                .setValue(TOP, !connections.get(Direction.UP))
                 .setValue(BOTTOM, !connections.get(Direction.DOWN))
                 .setValue(LEFT, !connections.get(facing.getClockWise()))
                 .setValue(RIGHT, !connections.get(facing.getCounterClockWise()));
     }
+
 
     public boolean validConnection(BlockState state, BlockGetter getter, BlockPos pos, Direction direction) {
         if (state.getBlock() instanceof LayerBlock) {

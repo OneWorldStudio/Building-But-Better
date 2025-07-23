@@ -59,32 +59,35 @@ public class BlockUseEvent {
         //TODO : HAMMER + STONE FENCES
         final boolean isStoneFence = level.getBlockState(blockPos).is(BBBTags.BBBBlockTags.STONE_FENCES);
         if (isHammer && isStoneFence) {
-            if (!level.getBlockState(blockPos).getValue(StoneFenceBlock.NORTH) &&
-                    !level.getBlockState(blockPos).getValue(StoneFenceBlock.EAST) &&
-                    !level.getBlockState(blockPos).getValue(StoneFenceBlock.SOUTH) &&
-                    !level.getBlockState(blockPos).getValue(StoneFenceBlock.WEST)) {
+            BlockState state = level.getBlockState(blockPos);
+            boolean north = state.getValue(StoneFenceBlock.NORTH);
+            boolean east = state.getValue(StoneFenceBlock.EAST);
+            boolean south = state.getValue(StoneFenceBlock.SOUTH);
+            boolean west = state.getValue(StoneFenceBlock.WEST);
+
+            if (!north && !east && !south && !west) {
                 return EventResult.pass();
-            } else if (player.isShiftKeyDown()) {
-                if (!level.getBlockState(blockPos).getValue(StoneFenceBlock.NORTH) &&
-                        !level.getBlockState(blockPos).getValue(StoneFenceBlock.EAST) &&
-                        !level.getBlockState(blockPos).getValue(StoneFenceBlock.SOUTH) &&
-                        !level.getBlockState(blockPos).getValue(StoneFenceBlock.WEST)) {
-                    return EventResult.pass();
-                } else if (level.getBlockState(blockPos).getValue(StoneFenceBlock.PILLAR)) {
-                    level.setBlock(blockPos, level.getBlockState(blockPos).setValue(StoneFenceBlock.PILLAR, false), 3);
+            }
+
+            if (player.isShiftKeyDown()) {
+                boolean isNS = north && south;
+                boolean isEW = east && west;
+                if (isNS || isEW) {
+                    boolean currentPillar = state.getValue(StoneFenceBlock.PILLAR);
+                    level.setBlock(blockPos,
+                            state.setValue(StoneFenceBlock.PILLAR, !currentPillar), 3);
                 } else {
-                    level.setBlock(blockPos, level.getBlockState(blockPos).setValue(StoneFenceBlock.PILLAR, true), 3);
+                    return EventResult.pass();
                 }
             } else {
-                if (level.getBlockState(blockPos).getValue(StoneFenceBlock.SIDE_FILL)) {
-                    level.setBlock(blockPos, level.getBlockState(blockPos).setValue(StoneFenceBlock.SIDE_FILL, false), 3);
-                } else {
-                    level.setBlock(blockPos, level.getBlockState(blockPos).setValue(StoneFenceBlock.SIDE_FILL, true), 3);
-                }
+                boolean fill = state.getValue(StoneFenceBlock.SIDE_FILL);
+                level.setBlock(blockPos,
+                        state.setValue(StoneFenceBlock.SIDE_FILL, !fill), 3);
             }
-            level.playSound(player, blockPos, level.getBlockState(blockPos).getBlock().getSoundType(level.getBlockState(blockPos)).getPlaceSound(), player.getSoundSource(), 1.0F, 1.0F);
+            level.playSound(player, blockPos,
+                    state.getBlock().getSoundType(state).getPlaceSound(),
+                    player.getSoundSource(), 1.0F, 1.0F);
             return EventResult.interruptTrue();
-
         }
         return EventResult.pass();
     }

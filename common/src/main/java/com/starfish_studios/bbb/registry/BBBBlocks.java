@@ -163,6 +163,7 @@ public class BBBBlocks {
     public static final RegistrySupplier<Block> WARPED_LAYER = BLOCKS.register("warped_layer", () -> new LayerBlock(BlockBehaviour.Properties.copy(Blocks.WARPED_PLANKS)));
     public static final RegistrySupplier<Block> MANGROVE_LAYER = BLOCKS.register("mangrove_layer", () -> new LayerBlock(BlockBehaviour.Properties.copy(Blocks.MANGROVE_PLANKS)));
     public static final RegistrySupplier<Block> BAMBOO_LAYER = BLOCKS.register("bamboo_layer", () -> new LayerBlock(BlockBehaviour.Properties.copy(Blocks.BAMBOO_PLANKS)));
+    public static final RegistrySupplier<Block> BAMBOO_MOSAIC_LAYER = BLOCKS.register("bamboo_mosaic_layer", () -> new LayerBlock(BlockBehaviour.Properties.copy(Blocks.BAMBOO_MOSAIC)));
     public static final RegistrySupplier<Block> CHERRY_LAYER = BLOCKS.register("cherry_layer", () -> new LayerBlock(BlockBehaviour.Properties.copy(Blocks.CHERRY_PLANKS)));
 
     public static final RegistrySupplier<Block> OAK_LADDER = BLOCKS.register("oak_ladder", () -> new BBBLadderBlock(1, BlockBehaviour.Properties.copy(Blocks.LADDER)));
@@ -292,7 +293,7 @@ public class BBBBlocks {
     public static final RegistrySupplier<Block> QUARTZ_FRAME = BLOCKS.register("quartz_frame", () -> new FrameBlock(BlockBehaviour.Properties.copy((Blocks.QUARTZ_BLOCK)).noOcclusion().noCollission().pushReaction(DESTROY)));
     // endregion
 
-    public static final RegistrySupplier<Block> POLISHED_STONE = BLOCKS.register("polished_stone", () -> new Block(BlockBehaviour.Properties.copy((Blocks.SMOOTH_STONE))));
+    public static final RegistrySupplier<Block> POLISHED_STONE = BLOCKS.register("polished_stone", () -> new TwoFacingConnectingBlock(BlockBehaviour.Properties.copy((Blocks.SMOOTH_STONE))));
     public static final RegistrySupplier<Block> POLISHED_STONE_STAIRS = BLOCKS.register("polished_stone_stairs", () -> new StairBlock((Blocks.SMOOTH_STONE.defaultBlockState()), BlockBehaviour.Properties.copy(Blocks.SMOOTH_STONE)));
     public static final RegistrySupplier<Block> POLISHED_STONE_SLAB = BLOCKS.register("polished_stone_slab", () -> new SlabBlock(BlockBehaviour.Properties.copy(Blocks.SMOOTH_STONE)));
     public static final RegistrySupplier<Block> STONE_TILES = BLOCKS.register("stone_tiles", () -> new Block(BlockBehaviour.Properties.copy((Blocks.STONE_BRICKS))));

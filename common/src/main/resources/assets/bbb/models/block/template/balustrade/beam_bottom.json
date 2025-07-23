@@ -1,7 +1,8 @@
 {
+	"format_version": "1.21.6",
 	"credit": "Made with Blockbench",
 	"textures": {
-		"beam_top": "bbb:block/beam/oak_top",
+		"beam_bottom": "bbb:block/beam/oak_top",
 		"particle": "block/oak_planks"
 	},
 	"elements": [
@@ -10,7 +11,7 @@
 			"to": [12, 0, 12],
 			"rotation": {"angle": 0, "axis": "y", "origin": [0, -16, 0]},
 			"faces": {
-				"down": {"uv": [8, 8, 0, 0], "texture": "#beam_top"}
+				"down": {"uv": [8, 8, 0, 0], "texture": "#beam_bottom"}
 			}
 		}
 	],
@@ -30,7 +31,7 @@
 			"scale": [0.4, 0.4, 0.4]
 		},
 		"firstperson_lefthand": {
-			"rotation": [0, 225, 0],
+			"rotation": [0, -135, 0],
 			"scale": [0.4, 0.4, 0.4]
 		},
 		"ground": {
@@ -38,7 +39,7 @@
 			"scale": [0.25, 0.25, 0.25]
 		},
 		"gui": {
-			"rotation": [30, 225, 0],
+			"rotation": [30, -135, 0],
 			"scale": [0.625, 0.625, 0.625]
 		},
 		"fixed": {

@@ -160,6 +160,7 @@ public class BBBItems {
     public static final RegistrySupplier<Item> WARPED_LAYER = ITEMS.register("warped_layer", () -> new DescriptionBlockItem(BBBBlocks.WARPED_LAYER.get(), new Item.Properties()));
     public static final RegistrySupplier<Item> MANGROVE_LAYER = ITEMS.register("mangrove_layer", () -> new DescriptionBlockItem(BBBBlocks.MANGROVE_LAYER.get(), new Item.Properties()));
     public static final RegistrySupplier<Item> BAMBOO_LAYER = ITEMS.register("bamboo_layer", () -> new DescriptionBlockItem(BBBBlocks.BAMBOO_LAYER.get(), new Item.Properties()));
+    public static final RegistrySupplier<Item> BAMBOO_MOSAIC_LAYER = ITEMS.register("bamboo_mosaic_layer", () -> new DescriptionBlockItem(BBBBlocks.BAMBOO_MOSAIC_LAYER.get(), new Item.Properties()));
     public static final RegistrySupplier<Item> CHERRY_LAYER = ITEMS.register("cherry_layer", () -> new DescriptionBlockItem(BBBBlocks.CHERRY_LAYER.get(), new Item.Properties()));
 
     public static final RegistrySupplier<Item> OAK_LADDER = ITEMS.register("oak_ladder", () -> new DescriptionBlockItem(BBBBlocks.OAK_LADDER.get(), new Item.Properties()));

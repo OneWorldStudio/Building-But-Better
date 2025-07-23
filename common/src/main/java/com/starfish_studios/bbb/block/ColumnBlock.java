@@ -174,42 +174,24 @@ public class ColumnBlock extends Block implements SimpleWaterloggedBlock {
     }
 
     private static ColumnType determineColumnType(BlockState state, BlockState up, BlockState down) {
-        boolean connectsAbove = canConnect(state, up, Direction.AxisDirection.POSITIVE);
-        boolean connectsBelow = canConnect(state, down, Direction.AxisDirection.NEGATIVE);
+        boolean connectsAbove = canConnect(state, up);
+        boolean connectsBelow = canConnect(state, down);
         if (connectsAbove && !connectsBelow) return ColumnType.BOTTOM;
         if (!connectsAbove && connectsBelow) return ColumnType.TOP;
         if (connectsAbove) return ColumnType.MIDDLE;
         return ColumnType.NONE;
     }
 
-    private static boolean canConnect(BlockState state, BlockState other, Direction.AxisDirection dir) {
-        if (!other.is(state.getBlock()) || state.getValue(AXIS) != other.getValue(AXIS)) {
+    private static boolean canConnect(BlockState state, BlockState other) {
+        if (!(other.getBlock() instanceof ColumnBlock)) {
             return false;
         }
-
-        boolean thisFull  = isFull(state);
-        boolean otherFull = isFull(other);
-        Direction.Axis axis = state.getValue(AXIS);
-
-        boolean thisEnd, otherEnd;
-        if (axis == Direction.Axis.Z) {
-            if (dir == Direction.AxisDirection.POSITIVE) {
-                thisEnd  = !state.getValue(LAYER_1_AABB);
-                otherEnd = !other.getValue(LAYER_1_AABB);
-            } else {
-                thisEnd  = !state.getValue(LAYER_4_AABB);
-                otherEnd = !other.getValue(LAYER_4_AABB);
-            }
-        } else {
-            if (dir == Direction.AxisDirection.POSITIVE) {
-                thisEnd  = !state.getValue(LAYER_4_AABB);
-                otherEnd = !other.getValue(LAYER_4_AABB);
-            } else {
-                thisEnd  = !state.getValue(LAYER_1_AABB);
-                otherEnd = !other.getValue(LAYER_1_AABB);
-            }
+        if (state.getValue(AXIS) != other.getValue(AXIS)) {
+            return false;
         }
-        return (thisFull && otherFull) || (thisEnd && otherEnd);
+        boolean thisFull = isFull(state);
+        boolean otherFull = isFull(other);
+        return thisFull == otherFull;
     }
 
 

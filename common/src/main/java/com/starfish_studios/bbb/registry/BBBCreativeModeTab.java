@@ -236,6 +236,7 @@ public class BBBCreativeModeTab {
                     output.accept(WARPED_LAYER.get());
                     output.accept(MANGROVE_LAYER.get());
                     output.accept(BAMBOO_LAYER.get());
+                    output.accept(BAMBOO_MOSAIC_LAYER.get());
                     output.accept(CHERRY_LAYER.get());
 
                     output.accept(OAK_LADDER.get());
