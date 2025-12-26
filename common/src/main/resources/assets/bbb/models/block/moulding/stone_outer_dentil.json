@@ -1,0 +1,7 @@
+{
+    "parent": "bbb:block/template/moulding_outer_dentil",
+    "textures": {
+        "texture": "bbb:block/moulding/stone",
+        "particle": "block/stone"
+    }
+}

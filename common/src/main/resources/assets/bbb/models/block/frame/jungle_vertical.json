@@ -1,0 +1,7 @@
+{
+    "parent": "bbb:block/template/frame/vertical",
+    "textures": {
+        "texture": "bbb:block/frame/jungle_sticks",
+        "particle": "block/jungle_planks"
+    }
+}

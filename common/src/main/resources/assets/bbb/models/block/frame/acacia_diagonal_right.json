@@ -1,0 +1,7 @@
+{
+    "parent": "bbb:block/template/frame/diagonal_right",
+    "textures": {
+        "texture": "bbb:block/frame/acacia_sticks",
+        "particle": "block/acacia_planks"
+    }
+}

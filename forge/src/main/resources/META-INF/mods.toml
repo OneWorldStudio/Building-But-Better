@@ -1,0 +1,36 @@
+modLoader = "javafml"
+loaderVersion = "[47,)"
+#issueTrackerURL = ""
+license = "https://github.com/starfish-studios/Building-But-Better/blob/main/LICENSE"
+
+[[mods]]
+modId = "bbb"
+version = "${version}"
+displayName = "Building But Better"
+authors = "Starfish Studios"
+description = '''
+A mod focused on adding new building blocks with customizability and interactions!\n\n§c§l§u§o! Pre-releases WILL be buggy ! §cPlease report any issues on our GitHub or Discord.\n\n§9§l§uCHANGELOG (2.0pre2)§7
+\n- Fixed Polish Stone + gave it connection features\n- Fixed missing Bamboo Mosaic Layer - was breaking Axe tags\n- Fix Column connections\n- Fix Frame block sounds\n- Fixed Iron Fences (hopefully, not crashing on my end)\n- Added Wooden Frames tag\n- Made Frames only connect to Frames facing the same direction\n- Forced Stone Fences to always have their pillar state to true if they are not connected to anything\n- Generally improved Stone Fences - can only have center pillar toggled if in-between 2 other fences\n- Fixed mip-mapping issues\n- Fixed Balustrade bottom textures\n- Fixed Lattice culling\n- Fixed Braziers giving off light when unlit + lighting them with Fire Charges\n- Fixed Frame hitbox crashes + not waterlogging properly\n- Fixed Lattices not waterlogging properly\n- Fixed Layers not removing waterlogging property when turned into a full block\n- Fixed Urn Dirt duplication\n- Fixed missing Moulding faces\n- Half-baked WIP Lattice particle fix
+'''
+#logoFile = ""
+
+[[dependencies.building_but_better]]
+modId = "forge"
+mandatory = true
+versionRange = "[47,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.building_but_better]]
+modId = "minecraft"
+mandatory = true
+versionRange = "[1.20.1,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.building_but_better]]
+modId = "architectury"
+mandatory = true
+versionRange = "[9.2.14,)"
+ordering = "AFTER"
+side = "BOTH"

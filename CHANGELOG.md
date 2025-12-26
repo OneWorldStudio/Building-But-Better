@@ -1,25 +1,9 @@
-# CHANGELOG
-- ### Updated Fabric Loader to 0.16.5.
-- ### Added native EveryCompat support.
-- ### There's a config now !!
-- ### Urns can now be interacted with Dirt -- when they are filled in this way, plants can be placed atop them.
-  - To remove the Dirt, simply right-click the Urn with any Shovel -- this uses the #minecraft:shovels tag, so any item tagged as a Shovel will work. 
-  - Urns utilize Supplementaries' "prevents_offset_above" tag, so when using Supplementaries, plants will not have a random offset when placed inside of Urns. This prevents them from being placed on the edges of the Urn.
-- ### Stone Frames + Frame Tweaks
- - ***Frames should no longer crash when connected to a non-solid block!***
-  - Frames now have custom hitboxes, and can be interacted through. Their more precise hitboxes will be replaced with a larger hitbox when holding Hammers or Frames or crouching. 
-    - **There is a config available to change these hitboxes to always be visible or to not get show at all when crouching.**
-    - Frame tooltips also change depending on which config option you have enabled!
-  - Stone Frames act the same as normal wooden Frames -- the only differences are their materials and styles.
-  - Frames now have custom sizing when placed in Item Frames, allowing them to encompass the Item Frame _(but with a different shape)_, allowing for further Frame customization and build opportunities.
-  - Wooden Frames and stone Frames alike no longer have an odd pixel gap when placed on corners. The corner gap fills -- this is a simple model change.
-  - Frames no longer have z-fighting when customized with Debug Sticks or placed on opposing corners.
-- ### Added Balustrades
-  - Balustrades replace the functionality of placing Trapdoors on top of Lecterns, but in all wood types.
-  - Balustrades can be interacted with a Hammer on either their top or bottom half to toggle the top and bottom respectively. Their center beam cannot be toggled, and uses the texture of Wooden Walls / Beams so they can better connect with them.
-  - Balustrades can be **SHIFT** + right-clicked with a Hammer to tilt the top cube to represent a slightly taller Lectern. Doing so will give them a custom hitbox, but they will act the same otherwise.
-- ### Added Lattices
-  - Can connect horizontally and vertically, but do not connect via corners.
-  - Plants like Leaves and certain other plants like Glow Berries and Vines can be placed on them.
-    - Glow Berries placed on them can be Bone Mealed to grow.
-  - They can be climbed.
+## 2.0pre2
+- Frames' code has been almost entirely redone; they no longer connect to non-solid blocks or blocks with smaller models.
+- Layers now have a rotate/mirror method -- this should allow them to properly save and load when put into structures.
+- Block descriptions now use "Left Control" instead of "Left Shift" to show their tooltips.
+   - I had noticed that when trying to fast-transfer them to containers you would sort of get flashbanged.
+- Fixed HangingEntityMixin - should now have a higher priority + survive while in Frames
+- Columns now have proper waterlogging - if their layers have not been removed, they can not be waterlogged. If their layers are replaced, they will lose any existing waterlogged state.
+- Added Hammer compatibility with Another Furniture.
+- Removed buggy "Paintings surviving in Frames" mechanic

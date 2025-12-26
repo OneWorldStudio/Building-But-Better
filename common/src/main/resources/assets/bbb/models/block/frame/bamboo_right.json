@@ -1,0 +1,7 @@
+{
+    "parent": "bbb:block/template/frame/right",
+    "textures": {
+        "texture": "bbb:block/frame/bamboo",
+        "particle": "block/bamboo_planks"
+    }
+}

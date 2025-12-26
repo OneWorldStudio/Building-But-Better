@@ -1,0 +1,10 @@
+{
+    "parent": "bbb:block/template/lattice/tinted_plant",
+    "texture_size": [
+        32,
+        32
+    ],
+    "textures": {
+        "plant": "block/jungle_leaves"
+    }
+}

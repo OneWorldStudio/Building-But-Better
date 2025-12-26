@@ -1,0 +1,7 @@
+{
+    "parent": "bbb:block/template/frame/horizontal",
+    "textures": {
+        "texture": "bbb:block/frame/spruce_sticks",
+        "particle": "block/spruce_planks"
+    }
+}

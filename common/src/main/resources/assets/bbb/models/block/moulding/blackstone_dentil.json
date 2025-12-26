@@ -1,0 +1,7 @@
+{
+    "parent": "bbb:block/template/moulding_dentil",
+    "textures": {
+        "texture": "bbb:block/moulding/blackstone",
+        "particle": "block/polished_blackstone"
+    }
+}
